@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+env/
+venv/
+
+# Scans (large files — keep out of git, store via Git LFS or separate)
+scans/*.pdf
+scans/*.tiff
+scans/*.png
+
+# OCR intermediate
+ocr/raw/
+ocr/*.txt
+
+# Notebook artifacts
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
