@@ -50,8 +50,8 @@ The mathematics of nonlinear dynamics remains timeless and essential for modern 
 ## Author
 
 **Dr. Bounthong VONGXAYA**
-PhD in Physics (Magna Cum Laude), TU Dresden, Germany
-MSc in Physics & Mathematics, Belarusian State University
+PhD in Physics (Magna Cum Laude), TU Dresden, Germany,
+Master of Science in Physics and Mathematics (Mention of Excellence), Belarusian State University
 
 ---
 
