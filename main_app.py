@@ -91,13 +91,15 @@ current_page = nav_ids[nav_labels.index(selection)]
 st.sidebar.markdown("---")
 
 # ============================================================
-# TAB: MODERN COURSE (English, streamlined)
+# COURSE STRUCTURE (full hierarchical)
 # ============================================================
 
-COURSE_SECTIONS = [
+COURSE_CHAPTERS = [
     {
         'id': 'intro',
+        'icon': '🎯',
         'title': 'Introduction',
+        'subtitle': 'What Are Nonlinear Systems?',
         'content': """
 **Nonlinear systems are everywhere.** A pendulum swinging through large angles,
 a population with limited resources, weather patterns — all are inherently nonlinear.
@@ -114,75 +116,170 @@ a population with limited resources, weather patterns — all are inherently non
 - Bistability and hysteresis
 - Chaos and the butterfly effect
 """,
-        'sim': None,
+        'simulation': None,
     },
     {
-        'id': 'pendulum',
-        'title': '1. The Nonlinear Pendulum',
-        'content': """
+        'id': 'ch1',
+        'icon': '📐',
+        'title': 'Chapter 1: Foundations',
+        'subtitle': 'Physical Systems & Numerical Methods',
+        'sections': [
+            {
+                'id': 'pendulum',
+                'title': '1.1 The Nonlinear Pendulum',
+                'content': """
+The **mathematical pendulum** is the classic starting point for nonlinear dynamics.
+
 For small angles, $$\\sin\\theta \\approx \\theta$$ gives the linear equation.
-For **large angles**, the full nonlinear equation:
+But for **large angles**, the full nonlinear equation applies:
 
 $$\\ddot{\\theta} + \\gamma \\dot{\\theta} + \\omega_0^2 \\sin\\theta = F \\cos(\\omega t)$$
 
 **Key insight:** The period now depends on amplitude — impossible in linear systems.
 """,
-        'sim': 'pendulum',
+                'simulation': 'pendulum',
+            },
+            {
+                'id': 'numerics',
+                'title': '1.2 Numerical Integration',
+                'content': """
+Most nonlinear equations cannot be solved analytically. We use **numerical methods**.
+
+**Euler Method** (simplest):
+$$y_{n+1} = y_n + h \\cdot f(t_n, y_n)$$
+
+**Runge-Kutta 4** (workhorse):
+$$\\begin{aligned}
+k_1 &= h f(t_n, y_n) \\\\
+k_2 &= h f(t_n + \\frac{h}{2}, y_n + \\frac{k_1}{2}) \\\\
+k_3 &= h f(t_n + \\frac{h}{2}, y_n + \\frac{k_2}{2}) \\\\
+k_4 &= h f(t_n + h, y_n + k_3)
+\\end{aligned}$$
+
+RK4 is used in all simulations throughout this course.
+""",
+                'simulation': 'numerics',
+            },
+            {
+                'id': 'phasespace',
+                'title': '1.3 Phase Space',
+                'content': """
+Instead of plotting just $$x(t)$$, we plot **$$x$$ vs $$\\dot{x}$$** — the **phase portrait**.
+
+- **Closed curve** = periodic oscillation
+- **Spiral** = damped motion
+- **Strange attractor** = chaotic motion
+""",
+                'simulation': 'phase_space',
+            },
+            {
+                'id': 'duffing_intro',
+                'title': '1.4 The Duffing Oscillator',
+                'content': """
+The Duffing oscillator adds a **nonlinear restoring force**:
+
+$$\\ddot{x} + \\delta \\dot{x} + \\alpha x + \\beta x^3 = \\gamma \\cos(\\omega t)$$
+
+With $$\\alpha < 0, \\beta > 0$$, the system has a **double-well potential**.
+""",
+                'simulation': 'duffing',
+            },
+            {
+                'id': 'vdp_intro',
+                'title': '1.5 The Van der Pol Oscillator',
+                'content': """
+$$\\ddot{x} - \\mu(1 - x^2)\\dot{x} + x = F \\cos(\\omega t)$$
+
+For $$\\mu > 0$$, the system spontaneously oscillates — producing a stable **limit cycle**.
+""",
+                'simulation': 'vdp',
+            },
+        ]
     },
     {
-        'id': 'bifurcation',
-        'title': '2. Bifurcations & Chaos',
-        'content': """
-The **logistic map** shows period doubling to chaos:
+        'id': 'ch2',
+        'icon': '🌀',
+        'title': 'Chapter 2: Phenomena',
+        'subtitle': 'Explore Nonlinear Behavior Through Simulations',
+        'sections': [
+            {
+                'id': 'bifurcation',
+                'title': '2.1 Bifurcations & Period Doubling',
+                'content': """
+The **logistic map** is the simplest system showing period doubling:
 
 $$x_{n+1} = r \\cdot x_n \\cdot (1 - x_n)$$
 
-As $$r$$ increases: Fixed point → Period 2 → Period 4 → ... → **Chaos**
+As $$r$$ increases from 2.5 to 4.0, the system undergoes:
+Fixed point → Period 2 → Period 4 → ... → **Chaos**
 """,
-        'sim': 'logistic',
-    },
-    {
-        'id': 'lorenz',
-        'title': '3. The Lorenz Attractor',
-        'content': """
+                'simulation': 'logistic',
+            },
+            {
+                'id': 'limit_cycles',
+                'title': '2.2 Limit Cycles & Relaxation Oscillations',
+                'content': """
+A **limit cycle** is an isolated closed trajectory — the system settles
+into a stable oscillation regardless of initial conditions.
+
+In the Van der Pol oscillator, increasing $$\\mu$$ transforms:
+- $$\\mu \\ll 1$$: Nearly sinusoidal
+- $$\\mu \\gg 1$$: **Relaxation oscillation** — slow build-up, rapid discharge
+""",
+                'simulation': 'vdp',
+            },
+            {
+                'id': 'bistability',
+                'title': '2.3 Bistability & Hysteresis',
+                'content': """
+In the Duffing oscillator, **two stable states can coexist** for the same
+parameters. Which one the system chooses depends on its history — **hysteresis**.
+""",
+                'simulation': 'duffing',
+            },
+            {
+                'id': 'chaos',
+                'title': '2.4 Chaos & the Butterfly Effect',
+                'content': """
+The **Lorenz system** is the most famous example of deterministic chaos:
+
 $$\\begin{aligned}
 \\dot{x} &= \\sigma(y - x) \\\\
 \\dot{y} &= x(\\rho - z) - y \\\\
 \\dot{z} &= xy - \\beta z
 \\end{aligned}$$
 
-For $$\\rho > 24.7$$, the trajectory forms a **strange attractor** — bounded but never repeating.
+For $$\\rho > 24.7$$, the trajectory forms a **strange attractor**.
 """,
-        'sim': 'lorenz',
-    },
-    {
-        'id': 'duffing',
-        'title': '4. Duffing Oscillator',
-        'content': """
-$$\\ddot{x} + \\delta \\dot{x} + \\alpha x + \\beta x^3 = \\gamma \\cos(\\omega t)$$
+                'simulation': 'lorenz',
+            },
+            {
+                'id': 'sensitivity',
+                'title': '2.5 Sensitivity to Initial Conditions',
+                'content': """
+The **double pendulum** is the most直观 example of sensitive dependence.
 
-With $$\\alpha < 0, \\beta > 0$$: **double-well potential**, bistability, hysteresis.
+Two pendulums starting with a **0.001 radian difference** diverge to
+completely different trajectories within seconds.
 """,
-        'sim': 'duffing',
+                'simulation': 'double',
+            },
+        ]
     },
     {
-        'id': 'vdp',
-        'title': '5. Van der Pol Oscillator',
-        'content': """
-$$\\ddot{x} - \\mu(1 - x^2)\\dot{x} + x = F \\cos(\\omega t)$$
-
-For $$\\mu > 0$$: **self-excited oscillations** and stable limit cycles.
-""",
-        'sim': 'vdp',
-    },
-    {
-        'id': 'double',
-        'title': '6. Double Pendulum',
-        'content': """
-Two pendulums connected end-to-end. **Deterministic chaos** in action —
-a 0.001 rad difference leads to completely different trajectories within seconds.
-""",
-        'sim': 'double',
+        'id': 'ch3',
+        'icon': '🔬',
+        'title': 'Chapter 3: Interactive Lab',
+        'subtitle': 'Free Exploration Mode',
+        'content': 'Choose any system and explore freely.',
+        'sections': [
+            {'id': 'lab_pendulum', 'title': 'Pendulum Lab', 'simulation': 'pendulum'},
+            {'id': 'lab_duffing', 'title': 'Duffing Lab', 'simulation': 'duffing'},
+            {'id': 'lab_vdp', 'title': 'Van der Pol Lab', 'simulation': 'vdp'},
+            {'id': 'lab_lorenz', 'title': 'Lorenz Lab', 'simulation': 'lorenz'},
+            {'id': 'lab_logistic', 'title': 'Logistic Map Lab', 'simulation': 'logistic'},
+            {'id': 'lab_double', 'title': 'Double Pendulum Lab', 'simulation': 'double'},
+        ]
     },
 ]
 
@@ -226,6 +323,41 @@ ARCHIVE_CHAPTERS = [
         'pages': list(range(30, 64)),
     },
 ]
+
+# ============================================================
+# SIDEBAR NAVIGATION (per-page)
+# ============================================================
+
+# Course navigation
+if current_page == 'course':
+    st.sidebar.markdown("### 📚 Course Contents")
+    ch_titles = [f"{ch['icon']} {ch['title']}" for ch in COURSE_CHAPTERS]
+    ch_sel = st.sidebar.radio("", ch_titles, key="course_ch")
+    current_ch = [ch for ch in COURSE_CHAPTERS if f"{ch['icon']} {ch['title']}" == ch_sel][0]
+    current_section = None
+    if 'sections' in current_ch:
+        sec_titles = [s['title'] for s in current_ch['sections']]
+        sec_sel = st.sidebar.radio("Section", sec_titles, key="course_sec")
+        current_section = [s for s in current_ch['sections'] if s['title'] == sec_sel][0]
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("💡 **Adjust sliders below to explore**")
+
+# Archive navigation
+elif current_page == 'archive':
+    st.sidebar.markdown("### 📖 Inhalt")
+    arch_titles = [ch['title'] for ch in ARCHIVE_CHAPTERS]
+    arch_sel = st.sidebar.radio("", arch_titles, key="arch_ch")
+    current_arch_ch = [ch for ch in ARCHIVE_CHAPTERS if ch['title'] == arch_sel][0]
+    arch_pages = current_arch_ch['pages']
+    if 'sections' in current_arch_ch:
+        sec_labels = ["All"] + [s[0] for s in current_arch_ch['sections']]
+        sec_sel = st.sidebar.radio("", sec_labels, key="arch_sec")
+        if sec_sel != "All":
+            for s_t, s_p in current_arch_ch['sections']:
+                if sec_sel == s_t:
+                    arch_pages = s_p
+                    break
+    st.sidebar.markdown("---")
 
 # ============================================================
 # SIMULATION RENDERERS
@@ -352,6 +484,66 @@ def sim_double_sim():
     st.pyplot(fig)
     st.info(f"Final separation: {diff[-1]:.4f} (from 0.001) — Butterfly effect!")
 
+def sim_numerics():
+    """Euler vs RK4 comparison."""
+    st.markdown("**Compare Euler vs Runge-Kutta 4 accuracy**")
+    col1, col2 = st.columns(2)
+    with col1:
+        method = st.selectbox("Method", ["RK4", "Euler", "Both"], key="u_nm")
+    with col2:
+        h = st.selectbox("Step size h", [0.1, 0.05, 0.02, 0.01], index=2, key="u_nh")
+
+    def euler(y, h):
+        x, v = y; return np.array([x + h*v, v - h*x])
+    def rk4(y, h):
+        def f(s): return np.array([s[1], -s[0]])
+        k1 = f(y); k2 = f(y + 0.5*h*k1); k3 = f(y + 0.5*h*k2); k4 = f(y + h*k3)
+        return y + h/6 * (k1 + 2*k2 + 2*k3 + k4)
+
+    steps = int(20/h)
+    t = np.linspace(0, 20, steps)
+    x_exact = np.cos(t)
+    fig, ax = plt.subplots(figsize=(10, 4))
+    ax.plot(t, x_exact, 'k-', lw=1.5, alpha=0.5, label='Exact')
+
+    if method in ['Euler', 'Both']:
+        y = np.array([1.0, 0.0]); xe = [y[0]]
+        for i in range(1, steps): y = euler(y, h); xe.append(y[0])
+        ax.plot(t, xe, 'r-', lw=0.8, label=f'Euler')
+    if method in ['RK4', 'Both']:
+        y = np.array([1.0, 0.0]); xr = [y[0]]
+        for i in range(1, steps): y = rk4(y, h); xr.append(y[0])
+        ax.plot(t, xr, 'b--', lw=0.8, label=f'RK4')
+
+    ax.set_xlabel('Time'); ax.set_ylabel('x')
+    ax.set_title('Euler vs RK4'); ax.legend(); ax.grid(alpha=0.3)
+    st.pyplot(fig)
+
+def sim_phase_space():
+    """Phase space demo."""
+    col1, col2 = st.columns(2)
+    with col1:
+        th0 = st.slider("θ₀ (°)", 10, 179, 45, 1, key="u_pth2")
+    with col2:
+        w0 = st.slider("Initial velocity", 0.0, 5.0, 0.0, 0.1, key="u_pw2")
+    th0r = np.radians(th0)
+    t, th, om = sim_pend(th0r, w0, 20.0)
+    c1, c2 = st.columns(2)
+    with c1:
+        fig, ax = plt.subplots(figsize=(7, 3))
+        ax.plot(t, th, 'b-', lw=0.7); ax.axhline(y=0, color='gray', ls='--', alpha=0.3)
+        ax.set_xlabel('Time (s)'); ax.set_ylabel('θ (rad)')
+        ax.set_title('Time Series'); ax.grid(alpha=0.3)
+        st.pyplot(fig)
+    with c2:
+        fig, ax = plt.subplots(figsize=(5, 5))
+        ax.plot(th, om, 'r-', lw=0.5)
+        ax.scatter(th[0], om[0], c='g', s=50, zorder=5, label='Start')
+        ax.scatter(th[-1], om[-1], c='r', s=50, zorder=5, label='End')
+        ax.set_xlabel('θ'); ax.set_ylabel('dθ/dt')
+        ax.set_title('Phase Portrait'); ax.legend(); ax.grid(alpha=0.3); ax.axis('equal')
+        st.pyplot(fig)
+
 SIM_MAP = {
     'pendulum': sim_pendulum,
     'logistic': sim_logistic,
@@ -359,6 +551,8 @@ SIM_MAP = {
     'duffing': sim_duffing_sim,
     'vdp': sim_vdp_sim,
     'double': sim_double_sim,
+    'numerics': sim_numerics,
+    'phase_space': sim_phase_space,
 }
 
 # ============================================================
@@ -370,13 +564,31 @@ def render_course():
     st.markdown("**Explore nonlinear phenomena through interactive simulations**")
     st.markdown("---")
 
-    for sec in COURSE_SECTIONS:
-        st.subheader(sec['title'])
-        st.markdown(sec['content'])
-        if sec['sim'] and sec['sim'] in SIM_MAP:
-            st.markdown("---")
-            SIM_MAP[sec['sim']]()
+    # Show current chapter info
+    ch = current_ch
+    st.markdown(f"## {ch['icon']} {ch['title']}")
+    subtitle = ch.get('subtitle', '')
+    if subtitle:
+        st.markdown(f"**{subtitle}**")
+    st.markdown("---")
+
+    if current_section:
+        # Show section content
+        sec = current_section
+        st.markdown(sec.get('content', ''))
         st.markdown("---")
+        sim_id = sec.get('simulation')
+        if sim_id and sim_id in SIM_MAP:
+            SIM_MAP[sim_id]()
+    else:
+        # Show chapter overview
+        content = ch.get('content', '')
+        if content:
+            st.markdown(content)
+        sim_id = ch.get('simulation')
+        if sim_id and sim_id in SIM_MAP:
+            st.markdown("---")
+            SIM_MAP[sim_id]()
 
 def render_archive():
     st.title("📗 Ordnung und Chaos bei nichtlinearen Schwingungen")
@@ -384,22 +596,8 @@ def render_archive():
     st.markdown("---")
 
     book_text = load_book()
-    book_nav = st.sidebar.radio("Chapter", [ch['title'] for ch in ARCHIVE_CHAPTERS], key="arch_nav")
-    current_ch = [ch for ch in ARCHIVE_CHAPTERS if ch['title'] == book_nav][0]
-
-    # Section selector for Kapitel I
-    pages = current_ch['pages']
-    if 'sections' in current_ch:
-        sec_labels = ["All pages"] + [s[0] for s in current_ch['sections']]
-        sec_sel = st.sidebar.radio("Section", sec_labels, key="arch_sec")
-        if sec_sel != "All pages":
-            for sec_title, sec_pages in current_ch['sections']:
-                if sec_sel == sec_title:
-                    pages = sec_pages
-                    break
-
-    st.markdown(f"**{book_nav}** (pages {pages[0]}–{pages[-1]})")
-    content = get_page_range(book_text, pages[0], pages[-1])
+    st.markdown(f"**{arch_sel}** (pages {arch_pages[0]}–{arch_pages[-1]})")
+    content = get_page_range(book_text, arch_pages[0], arch_pages[-1])
     render_book_content(content)
 
 def render_lab():
