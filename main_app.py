@@ -86,7 +86,7 @@ st.sidebar.markdown("---")
 
 nav_labels = [item[0] for item in NAV_ITEMS]
 nav_ids = [item[1] for item in NAV_ITEMS]
-selection = st.sidebar.radio("", nav_labels, index=0)
+selection = st.sidebar.radio("Section", nav_labels, index=0)
 current_page = nav_ids[nav_labels.index(selection)]
 st.sidebar.markdown("---")
 
