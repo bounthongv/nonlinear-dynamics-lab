@@ -53,6 +53,32 @@ def get_page_range(book_text, start, end):
             parts.append(f'## Page {p}\n{content}')
     return '\n\n'.join(parts)
 
+
+def render_book_content(markdown_text):
+    """
+    Render book content with proper LaTeX handling.
+
+    Splits text around $$...$$ blocks and renders equations with
+    st.latex() for proper display, while text goes through st.markdown().
+    """
+    import re
+
+    # Split by display math $$...$$
+    parts = re.split(r'(\$\$.*?\$\$)', markdown_text, flags=re.DOTALL)
+
+    for part in parts:
+        if part.startswith('$$') and part.endswith('$$'):
+            # Extract the LaTeX inside the delimiters
+            latex_content = part[2:-2].strip()
+            # Remove any trailing \n and --- separators
+            latex_content = latex_content.rstrip('\n')
+            if latex_content:
+                st.latex(latex_content)
+        elif part.strip():
+            # Check for inline math and render with markdown
+            # Streamlit handles $...$ inline math in markdown
+            st.markdown(part, unsafe_allow_html=True)
+
 # ============================================================
 # SIMULATION WRAPPERS (for embedding in book pages)
 # ============================================================
@@ -199,23 +225,41 @@ def embedded_vdp(key_suffix=""):
 
 
 # ============================================================
-# CHAPTER STRUCTURE
+# CHAPTER STRUCTURE — With Hierarchical Table of Contents
 # ============================================================
 
 CHAPTERS = [
     {
         'id': 'vorwort',
-        'title': 'Vorwort',
         'icon': '📖',
+        'title': 'Vorwort',
         'pages': [1],
-        'sim': None,
-        'sim_func': None,
+        'toc': [
+            ('📖 Vorwort', [1], None, False),
+        ],
+        'sections': [
+            ('Vorwort', [1], None, None),
+        ],
     },
     {
         'id': 'ch1',
-        'title': 'Kapitel I: Nichtlineare Schwingungen',
         'icon': '🔬',
+        'title': 'Kapitel I: Zur Physik der nichtlinearen Schwingungen',
         'pages': list(range(2, 16)),
+        'toc': [
+            ('🔬 Kapitel I', None, None, True),
+            ('    1. Behandelte nichtlineare Systeme', None, None, True),
+            ('        1.1 Getriebenes mathematisches Pendel', [2, 3], 'pendulum', False),
+            ('        1.2 Sinusoidal erregter Federschwinger (Duffing)', [3, 4], 'duffing', False),
+            ('        1.3 Pohlsches Rad', [4], 'pendulum', False),
+            ('        1.4 Parametrisch getriebenes Pendel', [5], 'pendulum', False),
+            ('    2. Nichtlineare Phänomene', None, None, True),
+            ('        2.1 Bewegungsgleichung, Phasenraum', [5, 6], 'pendulum', False),
+            ('        2.2 Amplitudenabhängigkeit der Periode', [7, 8, 9], 'pendulum', False),
+            ('        2.3 Dissipatives System. Attraktor', [10, 11], None, False),
+            ('        2.4 Grenzzyklus. Sprungphänomen', [11, 12, 13, 14], 'vdp', False),
+            ('        2.5 Stroboskopische Abbildung', [14, 15], 'lorenz', False),
+        ],
         'sections': [
             ('Einführung & Pendel', [2, 3, 4], 'pendulum', embedded_pendulum),
             ('Duffing-Oszillator', [3, 4], 'duffing', embedded_duffing),
@@ -223,14 +267,23 @@ CHAPTERS = [
             ('Amplitudenabhängigkeit', [7, 8, 9], 'pendulum', embedded_pendulum),
             ('Dissipatives System', [10, 11], None, None),
             ('Grenzzyklus & Bistabilität', [11, 12, 13, 14], 'vdp', embedded_vdp),
-            ('Stroboskopische Abbildung', [14, 15], 'pendulum', embedded_pendulum),
+            ('Stroboskopische Abbildung', [14, 15], 'lorenz', embedded_lorenz),
         ],
     },
     {
         'id': 'ch2',
-        'title': 'Kapitel II: Aufgaben',
         'icon': '✏️',
+        'title': 'Kapitel II: Aufgaben und Experimente',
         'pages': [16, 17],
+        'toc': [
+            ('✏️ Kapitel II', None, None, True),
+            ('    Aufgabe 1: Freies ungedämpftes Pendel', [16], None, False),
+            ('    Aufgabe 2: Phasenportraits und Separatrix', [16], None, False),
+            ('    Aufgabe 3: Fixpunkt-Attraktor', [16], None, False),
+            ('    Aufgabe 4: Resonanzkurve & Sprungphänomen', [17], None, False),
+            ('    Aufgabe 5: Feigenbaum-Kaskade', [17], None, False),
+            ('    Aufgabe 6: Lyapunov-Exponent', [17], None, False),
+        ],
         'sections': [
             ('Aufgabe 1: Freies Pendel', [16], 'pendulum', embedded_pendulum),
             ('Aufgabe 2: Separatrix', [16], 'pendulum', embedded_pendulum),
@@ -242,9 +295,17 @@ CHAPTERS = [
     },
     {
         'id': 'ch3',
-        'title': 'Kapitel III: Theoretische Grundlagen',
         'icon': '📐',
+        'title': 'Kapitel III: Theoretische Grundlagen',
         'pages': list(range(18, 30)),
+        'toc': [
+            ('📐 Kapitel III', None, None, True),
+            ('    i. Lineare vs. Nichtlineare DGLs', [18], None, False),
+            ('    ii. Autonomisierung', [18], None, False),
+            ('    iii. Phasenraumvolumen', [18], None, False),
+            ('    iv. Runge-Kutta Verfahren', [18], None, False),
+            ('    v. Coulombsche Reibung', [18], None, False),
+        ],
         'sections': [
             ('Lineare vs. Nichtlineare DGLs', [18], None, None),
             ('Runge-Kutta Verfahren', [18], None, None),
@@ -252,12 +313,25 @@ CHAPTERS = [
     },
     {
         'id': 'ch4',
-        'title': 'Kapitel IV: Dokumentation',
         'icon': '📋',
+        'title': 'Kapitel IV: Benutzerdokumentation',
         'pages': list(range(30, 64)),
+        'toc': [
+            ('📋 Kapitel IV', None, None, True),
+            ('    Seiten 30–63', [30, 63], None, False),
+        ],
         'sections': [],
     },
 ]
+
+# Map from TOC entry to section for simulation
+def find_section_for_toc(chapter, label):
+    """Find which section a TOC label belongs to."""
+    for sec_title, sec_pages, sim_name, sim_func in chapter['sections']:
+        # Check if the label text contains the section title
+        if any(word in label for word in sec_title.split()[:3]):
+            return (sec_pages, sim_func)
+    return (chapter['pages'], None)
 
 # ============================================================
 # MAIN APP
@@ -272,41 +346,52 @@ st.sidebar.markdown("*Ordnung und Chaos bei nichtlinearen Schwingungen (1995/202
 st.sidebar.markdown("Dr. Bounthong VONGXAYA")
 st.sidebar.markdown("---")
 
-# Chapter selection
-chapter_names = {ch['id']: ch for ch in CHAPTERS}
-chapter_id = st.sidebar.radio(
-    "Kapitel",
-    [ch['id'] for ch in CHAPTERS],
-    format_func=lambda x: f"{chapter_names[x]['icon']} {chapter_names[x]['title']}"
-)
+# --- Table of Contents ---
+st.sidebar.markdown("### 📑 Inhaltsverzeichnis")
 
-current_chapter = chapter_names[chapter_id]
+# Track current selection in session state
+if 'toc_selection' not in st.session_state:
+    st.session_state.toc_selection = ('vorwort', '📖 Vorwort')
 
-# Section selection (if applicable)
-selected_section = None
+# Build the ToC tree
+toc_key_counter = [0]
+
+for ch in CHAPTERS:
+    # Chapter header with expander
+    with st.sidebar.expander(f"{ch['icon']} {ch['title']}", expanded=(ch['id'] == st.session_state.toc_selection[0])):
+        for label, pages, sim_type, is_heading in ch['toc']:
+            if is_heading:
+                # Section heading (bold, not clickable)
+                st.markdown(f"**{label}**")
+            else:
+                # Leaf item (clickable)
+                page_str = f" (S.{pages[0]})" if pages else ""
+                btn_label = f"{label}{page_str}"
+                if st.button(btn_label, key=f"toc_{ch['id']}_{toc_key_counter[0]}", use_container_width=True):
+                    st.session_state.toc_selection = (ch['id'], label)
+                toc_key_counter[0] += 1
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("💡 **Tipp:** Klicke auf ein Kapitel oder Thema im Inhaltsverzeichnis.")
+
+# Determine which chapter and page to show
+target_chapter_id, target_label = st.session_state.toc_selection
+current_chapter = [ch for ch in CHAPTERS if ch['id'] == target_chapter_id][0]
+
+# Find which pages and simulation to show
 selected_pages = current_chapter['pages']
 selected_sim_func = None
 
-if 'sections' in current_chapter and current_chapter['sections']:
-    section_options = [(None, f"📄 Alle Seiten ({current_chapter['pages'][0]}–{current_chapter['pages'][-1]})")]
-    for sec_title, sec_pages, sim_name, sim_func in current_chapter['sections']:
-        label = f"{sec_title} (S. {sec_pages[0]})"
-        section_options.append(((sec_title, sec_pages, sim_func), label))
-
-    selected = st.sidebar.radio(
-        "Abschnitt",
-        section_options,
-        format_func=lambda x: x[1],
-        key="section_select"
-    )
-    selected_value = selected[0] if selected else None
-    if selected_value:
-        selected_section = selected_value[0]
-        selected_pages = selected_value[1]
-        selected_sim_func = selected_value[2]
-
-st.sidebar.markdown("---")
-st.sidebar.markdown("💡 **Tipp:** Ändere die Parameter in den Simulationen und beobachte die Effekte in Echtzeit!")
+for label, pages, sim_type, is_heading in current_chapter['toc']:
+    if label == target_label and pages:
+        selected_pages = pages
+        # Find the matching simulation
+        for sec_title, sec_pages, sim_name, sim_func in current_chapter['sections']:
+            if set(sec_pages).intersection(set(pages)):
+                if sim_func:
+                    selected_sim_func = sim_func
+                break
+        break
 
 # ============================================================
 # MAIN CONTENT
@@ -319,62 +404,163 @@ book_text = load_book()
 
 # Get page content
 content = get_page_range(book_text, selected_pages[0], selected_pages[-1])
-st.markdown(content)
+render_book_content(content)
 
 # --- Interactive simulation section ---
+sim_section_name = target_label if target_label else current_chapter.get('title', '')
+
 if selected_sim_func:
     st.markdown("---")
     st.subheader("🔬 Interaktive Simulation")
     st.markdown("_Verändere die Parameter und beobachte das Verhalten des Systems in Echtzeit._")
-    selected_sim_func(key_suffix=f"_{chapter_id}_{selected_pages[0]}")
-
-elif current_chapter['id'] == 'ch1' and selected_section and 'Pendel' in selected_section:
-    st.markdown("---")
-    st.subheader("🔬 Interaktive Simulation")
-    embedded_pendulum(key_suffix=f"_{chapter_id}_{selected_pages[0]}")
+    selected_sim_func(key_suffix=f"_{target_chapter_id}_{selected_pages[0]}")
 
 elif current_chapter['id'] == 'ch2':
     st.markdown("---")
-    st.subheader("✏️ Aufgabe — Verwende die Simulation zur Bearbeitung")
-    st.markdown("""
-    **Anleitung:**  
-    Ändere die Parameter im Simulator unten, um das in der Aufgabe beschriebene
-    Phänomen zu untersuchen. Beobachte die Änderungen in den Diagrammen.
-    """)
+    st.subheader("✏️ Aufgabe — Interaktive Simulation")
 
-    if selected_section and '1' in selected_section:
-        embedded_pendulum(key_suffix="ex1")
-    elif selected_section and '2' in selected_section:
-        embedded_pendulum(key_suffix="ex2")
-    elif selected_section and '3' in selected_section:
-        embedded_pendulum(key_suffix="ex3")
-    elif selected_section and '4' in selected_section:
-        embedded_duffing(key_suffix="ex4")
-    elif selected_section and '5' in selected_section:
-        embedded_logistic(key_suffix="ex5")
-    elif selected_section and '6' in selected_section:
-        embedded_logistic(key_suffix="ex6")
+    if 'Aufgabe 1' in target_label:
+        st.info("**Aufgabe 1:** Variiere θ₀ von 5° bis 175° bei γ=0, notiere die Periode T für jeden Wert. Vergleiche mit T₀=2π√(L/g).")
+        col1, col2 = st.columns([1, 1])
+        with col1:
+            theta0 = st.slider("θ₀ (°)", 5, 175, 45, 1, key="ex1_th")
+            show_T = st.checkbox("Zeige T/T₀", True, key="ex1_T")
+        with col2:
+            gamma = st.slider("Dämpfung γ", 0.0, 0.5, 0.0, 0.01, key="ex1_g")
+        theta0_rad = np.radians(theta0)
+        t, th, om = sim_pend(theta0_rad, 0.0, 30.0, gamma=gamma)
+        fig, ax = plt.subplots(figsize=(8, 3))
+        ax.plot(t, th, 'b-', lw=0.6)
+        ax.set_xlabel('Zeit (s)'); ax.set_ylabel('φ (rad)')
+        ax.set_title(f'Pendel — θ₀={theta0}°')
+        ax.grid(alpha=0.3)
+        st.pyplot(fig)
+        if show_T:
+            T_small = small_angle_period()
+            actual_T = period_estimate(theta0_rad)
+            if actual_T:
+                st.metric("T (gemessen)", f"{actual_T:.3f}s", f"{actual_T/T_small:.3f} × T₀")
 
-# Lorenz attractor special case for pages that discuss it
-if current_chapter['id'] == 'ch1' and selected_section and 'stroboskopisch' in selected_section:
+    elif 'Aufgabe 2' in target_label:
+        st.info("**Aufgabe 2:** Finde die Separatrix! Bei φ₀=0, welche φ̇₀ bringt das Pendel genau bis zur oberen Ruhelage (φ=180°)?")
+        col1, col2 = st.columns(2)
+        with col1:
+            theta0 = st.slider("θ₀ (°)", 0, 30, 0, 1, key="ex2_th")
+        with col2:
+            omega0 = st.slider("φ̇₀ (Anfangsgeschw.)", 0.0, 10.0, 5.0, 0.1, key="ex2_w")
+        theta0_rad = np.radians(theta0)
+        t, th, om = sim_pend(theta0_rad, omega0, 20.0)
+        fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+        axes[0].plot(t, th, 'b-', lw=0.6)
+        axes[0].set_xlabel('Zeit'); axes[0].set_ylabel('φ (rad)')
+        axes[0].set_title(f'φ₀={theta0}°, φ̇₀={omega0}'); axes[0].grid(alpha=0.3)
+        axes[1].plot(th, om, 'r-', lw=0.4)
+        axes[1].set_xlabel('φ'); axes[1].set_ylabel('φ̇')
+        axes[1].set_title('Phasenportrait'); axes[1].grid(alpha=0.3); axes[1].axis('equal')
+        st.pyplot(fig)
+        if np.abs(th[-1]) > 0.1:
+            st.success("✅ Das Pendel überschlägt — Rotation!")
+        else:
+            st.warning("⚠️ Das Pendel schwingt — noch keine Rotation")
+
+    elif 'Aufgabe 3' in target_label:
+        st.info("**Aufgabe 3:** Beobachte das Schrumpfen des Phasenraumvolumens.")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            theta0 = st.slider("θ₀ (°)", 10, 179, 90, 1, key="ex3_th")
+        with col2:
+            gamma = st.slider("Dämpfung b", 0.01, 0.5, 0.05, 0.01, key="ex3_g")
+        with col3:
+            t_span = st.slider("Zeit (s)", 5, 60, 30, 5, key="ex3_t")
+        theta0_rad = np.radians(theta0)
+        t, th, om = sim_pend(theta0_rad, 0.0, t_span, gamma=gamma)
+        c1, c2 = st.columns(2)
+        with c1:
+            fig, ax = plt.subplots(figsize=(7, 3))
+            ax.plot(t, th, 'b-', lw=0.6)
+            ax.set_xlabel('Zeit'); ax.set_ylabel('φ (rad)')
+            ax.set_title(f'Gedämpftes Pendel — b={gamma}'); ax.grid(alpha=0.3)
+            st.pyplot(fig)
+        with c2:
+            fig, ax = plt.subplots(figsize=(5, 4))
+            ax.plot(th, om, 'r-', lw=0.4)
+            ax.set_xlabel('φ'); ax.set_ylabel('φ̇')
+            ax.set_title('Spirale zum Fixpunkt')
+            ax.grid(alpha=0.3); ax.axis('equal')
+            st.pyplot(fig)
+
+    elif 'Aufgabe 4' in target_label:
+        st.info("**Aufgabe 4:** Fahre die Resonanzkurve des Duffing-Oszillators.")
+        col1, col2 = st.columns(2)
+        with col1:
+            gamma_f = st.slider("Anregung A", 0.05, 0.5, 0.3, 0.01, key="ex4_g")
+            omega_f = st.slider("Frequenz ω", 0.5, 2.0, 1.2, 0.01, key="ex4_w")
+        with col2:
+            delta = st.slider("Dämpfung δ", 0.05, 0.5, 0.2, 0.01, key="ex4_d")
+        t, x, v = sim_duff(0.5, 0.0, 100.0, delta=delta, gamma=gamma_f, omega=omega_f)
+        fig, ax = plt.subplots(figsize=(8, 3))
+        ax.plot(t[-2000:], x[-2000:], 'b-', lw=0.5)
+        ax.set_xlabel('Zeit'); ax.set_ylabel('x')
+        ax.set_title(f'Stationäre Schwingung — ω={omega_f:.2f}')
+        ax.grid(alpha=0.3)
+        st.pyplot(fig)
+        amp = (x[-2000:].max() - x[-2000:].min()) / 2
+        st.metric("Amplitude", f"{amp:.3f}")
+
+    elif 'Aufgabe 5' in target_label:
+        st.info("**Aufgabe 5:** Erhöhe r von 2.5→4.0 und finde die Bifurkationspunkte.")
+        col1, col2 = st.columns(2)
+        with col1:
+            r = st.slider("r", 2.5, 4.0, 3.5, 0.001, key="ex5_r")
+        with col2:
+            x0 = st.slider("x₀", 0.01, 0.99, 0.5, 0.01, key="ex5_x")
+        xs = iterate(x0, r, 200)
+        fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+        axes[0].plot(range(50, len(xs)), xs[50:], 'b-', lw=0.6)
+        axes[0].set_xlabel('n'); axes[0].set_ylabel('x_n')
+        axes[0].set_title(f'Stationär — r={r:.4f}'); axes[0].grid(alpha=0.3)
+        axes[0].set_ylim(0, 1)
+        axes[1].scatter(range(len(xs)-1), xs[:-1], s=1, alpha=0.5)
+        axes[1].set_xlabel('n'); axes[1].set_ylabel('x_n')
+        axes[1].set_title('Alle Iterationen'); axes[1].grid(alpha=0.3)
+        st.pyplot(fig)
+        lyap = lyap_log(r)
+        st.metric("Lyapunov-Exponent", f"{lyap:.4f}", delta="CHAOS" if lyap > 0 else "Ordnung", delta_color="inverse")
+
+    elif 'Aufgabe 6' in target_label:
+        st.info("**Aufgabe 6:** Starte zwei Trajektorien mit 0.001° Unterschied und beobachte die exponentielle Divergenz!")
+        col1, col2 = st.columns(2)
+        with col1:
+            r = st.slider("r (für Chaos >3.57)", 3.5, 4.0, 3.9, 0.001, key="ex6_r")
+        with col2:
+            n = st.slider("Iterationen", 20, 100, 50, 5, key="ex6_n")
+        xs1 = iterate(0.5000, r, n)
+        xs2 = iterate(0.5001, r, n)
+        diff = np.abs(xs1 - xs2)
+        fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+        axes[0].plot(range(len(xs1)), xs1, 'b-', lw=0.6, label='x₀=0.5000')
+        axes[0].plot(range(len(xs2)), xs2, 'r--', lw=0.6, label='x₀=0.5001')
+        axes[0].set_xlabel('n'); axes[0].set_ylabel('x_n')
+        axes[0].set_title('Zwei benachbarte Trajektorien'); axes[0].legend(); axes[0].grid(alpha=0.3)
+        axes[1].semilogy(range(len(diff)), diff + 1e-16, 'k-', lw=0.8)
+        axes[1].set_xlabel('n'); axes[1].set_ylabel('|Δx|')
+        axes[1].set_title('Exponentielle Divergenz'); axes[1].grid(alpha=0.3)
+        st.pyplot(fig)
+        st.metric("Endgültige Abweichung", f"{diff[-1]:.6f}", f"Start: 0.0001")
+
+    # Notes section for all exercises
+    st.markdown("---")
+    st.subheader("📝 Notizen")
+    notes = st.text_area("Deine Beobachtungen:", height=150,
+                         placeholder="Was hast du beobachtet? Wie verändert sich das System?")
+    if notes:
+        st.success("Notizen gespeichert (für diese Sitzung).")
+
+# Lorenz attractor special case for chapters that discuss it
+if current_chapter['id'] == 'ch1' and 'Stroboskopische' in target_label:
     st.markdown("---")
     st.subheader("🦋 Lorenz-Attraktor")
     embedded_lorenz(key_suffix=f"lor_{selected_pages[0]}")
-
-# ============================================================
-# EXERCISE SECTION (for Kapitel II)
-# ============================================================
-
-if current_chapter['id'] == 'ch2':
-    st.markdown("---")
-    st.subheader("📝 Notizen & Lösungen")
-    st.markdown("""
-    *Hier kannst du deine Beobachtungen notieren.*
-    """)
-    notes = st.text_area("Deine Notizen:", height=150,
-                         placeholder="Was hast du beobachtet? Wie verändert sich das System bei verschiedenen Parametern?")
-    if notes:
-        st.success("Notizen gespeichert (für diese Sitzung).")
 
 # ============================================================
 # FOOTER

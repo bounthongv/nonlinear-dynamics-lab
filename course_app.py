@@ -726,7 +726,7 @@ st.sidebar.markdown("---")
 # Chapter selector
 chap_ids = [ch['id'] for ch in CHAPTERS]
 chap_labels = [f"{ch['icon']} {ch['title']}" for ch in CHAPTERS]
-selected_idx = st.sidebar.radio("", chap_labels, index=0)
+selected_idx = st.sidebar.radio("Chapter", chap_labels, index=0)
 selected_id = chap_ids[chap_labels.index(selected_idx)]
 current = [ch for ch in CHAPTERS if ch['id'] == selected_id][0]
 
