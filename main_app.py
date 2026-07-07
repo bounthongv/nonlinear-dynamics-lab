@@ -74,9 +74,9 @@ def styled_plot(fig, title=None):
 
 NAV_ITEMS = [
     ("🚀 Modern Course", "course"),
-    ("📗 Archive (1995)", "archive"),
     ("🔬 Simulation Lab", "lab"),
-    ("ℹ️ About", "about"),
+    ("📗 Archive (1995)", "archive"),
+    ("📖 About", "about"),
 ]
 
 st.sidebar.title("🌀 Nonlinear Dynamics")
@@ -115,6 +115,8 @@ a population with limited resources, weather patterns — all are inherently non
 - Limit cycles and self-excited oscillations
 - Bistability and hysteresis
 - Chaos and the butterfly effect
+
+> 📖 **Want to go deeper?** This course is a streamlined introduction. The full theoretical foundation — including detailed derivations, historical context, and 63 pages of in-depth physics — is available in the **Archive** (English translation coming soon). Navigate to *📗 Archive (1995)* in the sidebar to explore the complete original textbook.
 """,
         'simulation': None,
     },
@@ -332,7 +334,7 @@ ARCHIVE_CHAPTERS = [
 if current_page == 'course':
     st.sidebar.markdown("### 📚 Course Contents")
     ch_titles = [f"{ch['icon']} {ch['title']}" for ch in COURSE_CHAPTERS]
-    ch_sel = st.sidebar.radio("", ch_titles, key="course_ch")
+    ch_sel = st.sidebar.radio("Chapter", ch_titles, key="course_ch")
     current_ch = [ch for ch in COURSE_CHAPTERS if f"{ch['icon']} {ch['title']}" == ch_sel][0]
     current_section = None
     if 'sections' in current_ch:
@@ -344,15 +346,25 @@ if current_page == 'course':
 
 # Archive navigation
 elif current_page == 'archive':
-    st.sidebar.markdown("### 📖 Inhalt")
+    st.sidebar.markdown("### 📖 Buchnavigation")
+    
+    # Language toggle
+    if 'archive_lang' not in st.session_state:
+        st.session_state.archive_lang = 'de'
+    lang = st.sidebar.radio("Sprache / Language", ["🇩🇪 Deutsch", "🇬🇧 English"],
+                           index=0 if st.session_state.archive_lang == 'de' else 1,
+                           key="archive_lang_radio")
+    st.session_state.archive_lang = 'de' if 'Deutsch' in lang else 'en'
+    st.sidebar.markdown("---")
+    
     arch_titles = [ch['title'] for ch in ARCHIVE_CHAPTERS]
-    arch_sel = st.sidebar.radio("", arch_titles, key="arch_ch")
+    arch_sel = st.sidebar.radio("Kapitel / Chapter", arch_titles, key="arch_ch")
     current_arch_ch = [ch for ch in ARCHIVE_CHAPTERS if ch['title'] == arch_sel][0]
     arch_pages = current_arch_ch['pages']
     if 'sections' in current_arch_ch:
-        sec_labels = ["All"] + [s[0] for s in current_arch_ch['sections']]
-        sec_sel = st.sidebar.radio("", sec_labels, key="arch_sec")
-        if sec_sel != "All":
+        sec_labels = ["Alle / All"] + [s[0] for s in current_arch_ch['sections']]
+        sec_sel = st.sidebar.radio("Abschnitt / Section", sec_labels, key="arch_sec")
+        if sec_sel != "Alle / All":
             for s_t, s_p in current_arch_ch['sections']:
                 if sec_sel == s_t:
                     arch_pages = s_p
@@ -591,18 +603,43 @@ def render_course():
             SIM_MAP[sim_id]()
 
 def render_archive():
-    st.title("📗 Ordnung und Chaos bei nichtlinearen Schwingungen")
-    st.markdown("*Original German edition (1995)*")
+    lang = st.session_state.get('archive_lang', 'de')
+    title = "📗 Ordnung und Chaos bei nichtlinearen Schwingungen"
+    subtitle = "*Original German edition (1995) — Deutsch Verlag, Frankfurt am Main*"
+    source_file = 'ocr/book_transcribed.md'
+    page_label = "Seiten"
+
+    if lang == 'en':
+        title = "📗 Order and Chaos in Nonlinear Oscillations"
+        subtitle = "*English translation — based on the original German edition (1995)*"
+        source_file = 'ocr/book_transcribed_en.md'
+        page_label = "Pages"
+
+    st.title(title)
+    st.markdown(subtitle)
     st.markdown("---")
 
-    book_text = load_book()
-    st.markdown(f"**{arch_sel}** (pages {arch_pages[0]}–{arch_pages[-1]})")
+    # Try to load the selected language file
+    try:
+        with open(source_file, 'r', encoding='utf-8') as f:
+            book_text = f.read()
+    except FileNotFoundError:
+        if lang == 'en':
+            st.info("🌍 English translation is being prepared. Please check back later, or read the original German version.")
+            # Fallback to German
+            with open('ocr/book_transcribed.md', 'r', encoding='utf-8') as f:
+                book_text = f.read()
+        else:
+            st.error("Book file not found.")
+            return
+
+    st.markdown(f"**{arch_sel}** ({page_label} {arch_pages[0]}–{arch_pages[-1]})")
     content = get_page_range(book_text, arch_pages[0], arch_pages[-1])
     render_book_content(content)
 
 def render_lab():
     st.title("🔬 Simulation Lab")
-    st.markdown("**Free exploration — choose any system and play with parameters**")
+    st.markdown("**Full simulation playground — all systems, all controls, no distractions**")
     st.markdown("---")
 
     lab_systems = [
@@ -614,19 +651,168 @@ def render_lab():
         ("Double Pendulum", 'double'),
     ]
 
-    selected_lab = st.selectbox("Select System", [s[0] for s in lab_systems], key="lab_sel")
-    sim_id = [s[1] for s in lab_systems if s[0] == selected_lab][0]
+    # Sidebar system selector
+    st.sidebar.markdown("### 🎛️ Lab Controls")
+    lab_sel = st.sidebar.selectbox("System", [s[0] for s in lab_systems], key="lab_sys")
+    sim_id = [s[1] for s in lab_systems if s[0] == lab_sel][0]
+    st.sidebar.markdown("---")
 
-    st.markdown("---")
-    if sim_id in SIM_MAP:
-        SIM_MAP[sim_id]()
+    # Full parameter controls in sidebar
+    if sim_id == 'pendulum':
+        st.sidebar.markdown("**Parameters**")
+        theta0 = st.sidebar.slider("θ₀ (°)", 5, 179, 45, 1)
+        gamma = st.sidebar.slider("Damping γ", 0.0, 1.0, 0.0, 0.01)
+        forcing = st.sidebar.slider("Forcing F", 0.0, 1.0, 0.0, 0.01)
+        omega_f = st.sidebar.slider("ω (forcing)", 0.5, 2.0, 1.2, 0.01)
+        t_span = st.sidebar.slider("Time (s)", 10, 60, 20, 5)
+        th0_rad = np.radians(theta0)
+        t, th, om = sim_pend(th0_rad, 0.0, t_span, gamma=gamma, F=forcing, omega=omega_f)
+        c1, c2 = st.columns(2)
+        with c1:
+            fig, ax = plt.subplots(figsize=(8, 3))
+            ax.plot(t, th, 'b-', lw=0.7)
+            ax.set_xlabel('Time (s)'); ax.set_ylabel('θ (rad)')
+            ax.set_title(f'Pendulum — θ₀={theta0}°, γ={gamma}'); ax.grid(alpha=0.3)
+            st.pyplot(fig)
+        with c2:
+            fig, ax = plt.subplots(figsize=(5, 4))
+            ax.plot(th, om, 'r-', lw=0.5)
+            ax.set_xlabel('θ'); ax.set_ylabel('dθ/dt')
+            ax.set_title('Phase Portrait'); ax.grid(alpha=0.3); ax.axis('equal')
+            st.pyplot(fig)
 
+    elif sim_id == 'logistic':
+        r = st.sidebar.slider("r", 2.5, 4.0, 3.8, 0.001)
+        x0 = st.sidebar.slider("x₀", 0.01, 0.99, 0.5, 0.01)
+        n_iter = st.sidebar.slider("Iterations", 50, 500, 100, 10)
+        show_bif = st.sidebar.checkbox("Show bifurcation", True)
+
+        xs = iterate(x0, r, n_iter)
+        lyap = lyap_log(r)
+
+        c1, c2 = st.columns(2)
+        with c1:
+            fig, ax = plt.subplots(figsize=(8, 3))
+            ax.plot(range(len(xs)), xs, 'b-', lw=0.6)
+            ax.set_xlabel('n'); ax.set_ylabel('x_n')
+            ax.set_title(f'Logistic Map — r={r:.4f}')
+            ax.set_ylim(-0.05, 1.05); ax.grid(alpha=0.3)
+            st.pyplot(fig)
+            st.metric("Lyapunov Exponent", f"{lyap:.4f}",
+                      delta="CHAOS" if lyap > 0 else "Periodic", delta_color="inverse")
+        with c2:
+            with st.spinner("Computing..."):
+                rv = np.linspace(2.5, 4.0, 400)
+                rp, xp = bifurcation_points(rv, n_transient=500, n_samples=100)
+            fig, ax = plt.subplots(figsize=(6, 4))
+            ax.scatter(rp, xp, s=0.1, c='k', alpha=0.4)
+            ax.axvline(x=r, color='r', ls='--', lw=1)
+            ax.set_xlabel('r'); ax.set_ylabel('x')
+            ax.set_title('Bifurcation Diagram')
+            ax.set_xlim(2.5, 4.0); ax.set_ylim(-0.05, 1.05); ax.grid(alpha=0.3)
+            st.pyplot(fig)
+
+    elif sim_id == 'lorenz':
+        rho = st.sidebar.slider("ρ", 0.0, 50.0, 28.0, 0.5)
+        sigma = st.sidebar.slider("σ", 5.0, 20.0, 10.0, 0.5)
+        t_s = st.sidebar.slider("Time", 10, 80, 40, 5)
+        view_3d = st.sidebar.checkbox("3D view", True)
+        view_ts = st.sidebar.checkbox("Time series", True)
+
+        t, x, y, z = sim_lorenz(1.0, 1.0, 1.0, t_s, sigma=sigma, rho=rho)
+
+        if view_3d:
+            fig = plt.figure(figsize=(9, 7))
+            ax = fig.add_subplot(111, projection='3d')
+            ax.plot(x, y, z, 'b-', lw=0.4, alpha=0.8)
+            ax.set_xlabel('X'); ax.set_ylabel('Y'); ax.set_zlabel('Z')
+            ax.set_title(f'Lorenz — σ={sigma}, ρ={rho}')
+            st.pyplot(fig)
+        if view_ts:
+            fig, axes = plt.subplots(3, 1, figsize=(10, 5), sharex=True)
+            axes[0].plot(t, x, 'b-', lw=0.5); axes[0].set_ylabel('x'); axes[0].grid(alpha=0.3)
+            axes[1].plot(t, y, 'g-', lw=0.5); axes[1].set_ylabel('y'); axes[1].grid(alpha=0.3)
+            axes[2].plot(t, z, 'r-', lw=0.5); axes[2].set_ylabel('z')
+            axes[2].set_xlabel('Time'); axes[2].grid(alpha=0.3)
+            st.pyplot(fig)
+
+    elif sim_id == 'duffing':
+        gamma_f = st.sidebar.slider("Forcing γ", 0.0, 0.8, 0.3, 0.01)
+        delta = st.sidebar.slider("Damping δ", 0.0, 0.5, 0.2, 0.01)
+        omega_f = st.sidebar.slider("ω (forcing)", 0.5, 2.0, 1.2, 0.01)
+        t_s = st.sidebar.slider("Time", 20, 200, 100, 10)
+        show_potential = st.sidebar.checkbox("Show potential", True)
+
+        t, x, v = sim_duff(0.5, 0.0, t_s, delta=delta, gamma=gamma_f, omega=omega_f)
+
+        c1, c2 = st.columns(2)
+        with c1:
+            fig, ax = plt.subplots(figsize=(7, 5))
+            ax.plot(x[-3000:], v[-3000:], 'r-', lw=0.3)
+            ax.set_xlabel('x'); ax.set_ylabel("x'")
+            ax.set_title('Phase Portrait (steady state)'); ax.grid(alpha=0.3)
+            st.pyplot(fig)
+        with c2:
+            if show_potential:
+                xp = np.linspace(-2.5, 2.5, 200)
+                V = potential(xp)
+                fig, ax = plt.subplots(figsize=(7, 4))
+                ax.plot(xp, V, 'b-', lw=2)
+                ax.set_xlabel('x'); ax.set_ylabel('V(x)')
+                ax.set_title('Potential'); ax.grid(alpha=0.3)
+                st.pyplot(fig)
+
+    elif sim_id == 'vdp':
+        mu = st.sidebar.slider("μ", 0.0, 10.0, 1.0, 0.1)
+        F = st.sidebar.slider("Forcing F", 0.0, 1.0, 0.0, 0.01)
+        t_s = st.sidebar.slider("Time", 20, 150, 80, 5)
+
+        t, x, v = sim_vdp(0.1, 0.1, t_s, mu=mu, F=F)
+
+        c1, c2 = st.columns(2)
+        with c1:
+            fig, ax = plt.subplots(figsize=(8, 3))
+            ax.plot(t, x, 'b-', lw=0.6)
+            ax.set_xlabel('Time'); ax.set_ylabel('x')
+            ax.set_title(f'Van der Pol — μ={mu:.1f}'); ax.grid(alpha=0.3)
+            st.pyplot(fig)
+        with c2:
+            fig, ax = plt.subplots(figsize=(5, 4))
+            ax.plot(x, v, 'r-', lw=0.4)
+            ax.set_xlabel('x'); ax.set_ylabel("x'")
+            ax.set_title('Limit Cycle'); ax.grid(alpha=0.3); ax.axis('equal')
+            st.pyplot(fig)
+
+    elif sim_id == 'double':
+        th1_0 = st.sidebar.slider("θ₁₀ (rad)", 0.0, np.pi, np.pi/2, 0.1)
+        th2_0 = st.sidebar.slider("θ₂₀ (rad)", 0.0, np.pi, 0.0, 0.1)
+        t_s = st.sidebar.slider("Time (s)", 5, 60, 30, 5)
+        show_traj = st.sidebar.checkbox("Both trajectories", True)
+
+        t, th1, th2, w1, w2, x1, y1, x2, y2 = sim_double(th1_0, th2_0, 0, 0, t_s)
+        _, _, _, _, _, _, _, x2b, y2b = sim_double(th1_0+0.001, th2_0, 0, 0, t_s)
+
+        fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+        axes[0].plot(x2, y2, 'b-', lw=0.3, alpha=0.7, label='Primary')
+        if show_traj:
+            axes[0].plot(x2b, y2b, 'r-', lw=0.3, alpha=0.5, label='+0.001')
+        axes[0].scatter([0], [0], color='k', s=30, zorder=5)
+        axes[0].set_xlabel('x'); axes[0].set_ylabel('y')
+        axes[0].set_title('Trajectory'); axes[0].legend(fontsize=8); axes[0].axis('equal'); axes[0].grid(alpha=0.3)
+
+        diff = np.sqrt((x2-x2b)**2 + (y2-y2b)**2)
+        axes[1].semilogy(np.linspace(0, t_s, len(diff)), diff+1e-16, 'k-', lw=0.8)
+        axes[1].set_xlabel('Time (s)'); axes[1].set_ylabel('Distance')
+        axes[1].set_title('Exponential Divergence'); axes[1].grid(alpha=0.3)
+        st.pyplot(fig)
+
+    # Notes
     st.markdown("---")
     st.subheader("📝 Lab Notes")
-    st.text_area("Your observations:", height=120, placeholder="What did you discover?")
+    st.text_area("", height=100, placeholder="Record your observations here...", key="lab_notes")
 
 def render_about():
-    st.title("ℹ️ About")
+    st.title("📖 About")
     st.markdown("---")
 
     col1, col2 = st.columns([2, 1])
@@ -637,18 +823,11 @@ def render_about():
         **PhD in Physics** (Magna Cum Laude), TU Dresden, Germany  
         **Master of Science in Physics and Mathematics** (Mention of Excellence), Belarusian State University
 
-        This interactive laboratory is based on my 1995 book  
-        *"Ordnung und Chaos bei nichtlinearen Schwingungen"*
-        (Deutsch Verlag, Frankfurt am Main).
-
-        ### Academic Background
+        ### Background
         - 40+ years in IT architecture, software development, and education
         - Former Director of IT Center, National University of Laos
         - IT Consultant & Senior Project Manager, APIS Co. Ltd.
-
-        ### What This Project Does
-        The original 1994 Pascal simulations have been rebuilt in modern Python,
-        creating an interactive educational platform for nonlinear dynamics.
+        - Author of *"Ordnung und Chaos bei nichtlinearen Schwingungen"* (1995)
 
         ### Contact
         - Email: bounthongv@gmail.com
@@ -657,20 +836,18 @@ def render_about():
 
         ### Languages
         Lao (native) | English, Russian, German (professional) | Thai (fluent)
+
+        ### Tech Stack
+        Python, NumPy, Matplotlib, Streamlit, Gemini AI
         """)
 
     with col2:
-        st.markdown("""
-        #### Quick Links
-        - [GitHub Repository](https://github.com/bounthongv/nonlinear-dynamics-lab)
-        - [WorldCat Book Entry](https://search.worldcat.org/title/75499739)
-
-        #### Tech Stack
-        - Python, NumPy, Matplotlib
-        - Streamlit (web framework)
-        - Gemini AI (OCR transcription)
-        - RK4 numerical integration
-        """)
+        st.markdown("#### Quick Links")
+        st.markdown("- [GitHub Repository](https://github.com/bounthongv/nonlinear-dynamics-lab)")
+        st.markdown("- [WorldCat Book Entry](https://search.worldcat.org/title/75499739)")
+        st.markdown("---")
+        st.markdown("#### Course Syllabus")
+        st.markdown("[Download Syllabus](https://github.com/bounthongv/nonlinear-dynamics-lab/blob/main/docs/course_syllabus.md)")
 
 # ============================================================
 # DISPATCH
