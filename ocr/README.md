@@ -11,22 +11,9 @@ Use a vision-capable AI (Claude, GPT-4o, Gemini) to transcribe each page.
 Copy this prompt and send it with each page image:
 
 > **Prompt:**
-> ```
-> This is a scanned page from my 1995 German book "Ordnung und Chaos bei nichtlinearen Schwingungen" (Order and Chaos in Nonlinear Oscillations).
+> This is a scanned page from my 1995 German book 'Ordnung und Chaos bei nichtlinearen Schwingungen'. Transcribe ALL text exactly in German. Preserve equations in LaTeX format ($$...$$). Mark illegible words as [illegible]. Output as ## Page [N].
 >
-> Please transcribe ALL text exactly as written (in German), preserving:
-> - All mathematical equations in LaTeX format
-> - Figure captions
-> - Page numbers
-> - Footnotes
->
-> The book uses Fraktur font. Do not summarize — transcribe everything.
->
-> Output format:
-> ## Page [NUMBER]
->
-> [transcribed text with LaTeX equations]
-> ```
+> For each figure, note its number and caption, and describe what it shows (plot type, axes, key features). Mark figure locations as: ![Figure X.Y: brief description]
 
 ### Batch Strategy
 
