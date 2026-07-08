@@ -116,7 +116,7 @@ a population with limited resources, weather patterns — all are inherently non
 - Bistability and hysteresis
 - Chaos and the butterfly effect
 
-> 📖 **Want to go deeper?** This course is a streamlined introduction. The full theoretical foundation — including detailed derivations, historical context, and 63 pages of in-depth physics — is available in the **Archive** (English translation coming soon). Navigate to *📗 Archive (1995)* in the sidebar to explore the complete original textbook.
+> 📖 **Want to go deeper?** This course is a streamlined introduction. The full theoretical foundation — including detailed derivations, historical context, and 63 pages of in-depth physics — is available in both **German and English** in the **Archive**. Navigate to *📗 Archive (1995)* in the sidebar and toggle between languages.
 """,
         'simulation': None,
     },
