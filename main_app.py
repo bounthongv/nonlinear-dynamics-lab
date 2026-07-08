@@ -54,30 +54,33 @@ def get_page_range(book_text, start, end):
     return '\n\n'.join(parts)
 def render_book_content(markdown_text):
     """Render book content with equation support AND figure images."""
-    lines = markdown_text.split('\n')
+    # First split by display math blocks (handles multi-line equations)
+    blocks = re.split(r'(\$\$.*?\$\$)', markdown_text, flags=re.DOTALL)
     
-    for line in lines:
-        if not line.strip():
+    for block in blocks:
+        if not block.strip():
             continue
         
-        # Check if this is a figure reference
-        img_match = re.match(r'!\[Figure\]\(([^)]+)\)', line.strip())
-        if img_match:
-            img_path = img_match.group(1)
-            if os.path.exists(img_path):
-                st.image(img_path, use_container_width=True)
-            else:
-                st.markdown(f'*[Figure not available: {img_path}]*')
+        # Check if this is a display equation
+        if block.startswith('$$') and block.endswith('$$'):
+            latex = block[2:-2].strip().rstrip('\n')
+            if latex:
+                st.latex(latex)
         else:
-            # Render as markdown with equation handling
-            parts = re.split(r'(\$\$.*?\$\$)', line, flags=re.DOTALL)
-            for part in parts:
-                if part.startswith('$$') and part.endswith('$$'):
-                    latex = part[2:-2].strip().rstrip('\n')
-                    if latex:
-                        st.latex(latex)
-                elif part.strip():
-                    st.markdown(part, unsafe_allow_html=True)
+            # Process non-equation content line by line
+            for line in block.split('\n'):
+                if not line.strip():
+                    continue
+                # Check if this is a figure reference
+                img_match = re.match(r'!\[Figure\]\(([^)]+)\)', line.strip())
+                if img_match:
+                    img_path = img_match.group(1)
+                    if os.path.exists(img_path):
+                        st.image(img_path, width=600)
+                    else:
+                        st.markdown(f'*[Figure not available: {img_path}]*')
+                else:
+                    st.markdown(line, unsafe_allow_html=True)
 
 def styled_plot(fig, title=None):
     if title:
