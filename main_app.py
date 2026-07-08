@@ -24,6 +24,7 @@ from python.lorenz_attractor import simulate as sim_lorenz
 from python.duffing_oscillator import simulate as sim_duff, potential
 from python.van_der_pol import simulate as sim_vdp
 from python.double_pendulum import simulate as sim_double
+from python.fractal_dimension import fractal_dimension_of_lorenz, fractal_dimension_of_duffing
 
 rcParams['figure.dpi'] = 100
 
@@ -701,7 +702,111 @@ def render_lab():
     st.title("🔬 Simulation Lab")
     st.markdown("**Full simulation playground — all systems, all controls, no distractions**")
     st.markdown("---")
+    
+    # ============================================================
+    # PEDAGOGICAL GUIDES
+    # ============================================================
+    GUIDES = {
+        'pendulum': """
+**🎯 Learning Objective:** Understand how amplitude affects period in nonlinear oscillations.
 
+**📋 Steps:**
+1. Start with **θ₀ = 5°**, γ = 0, F = 0 → observe near-sinusoidal motion
+2. Increase **θ₀ to 120°** → see the waveform become non-sinusoidal
+3. Add **damping γ = 0.1** → watch oscillations decay to zero
+4. Add **forcing F = 0.3** → observe transition to steady periodic motion
+
+**🔍 What to Observe:**
+- Small angles: period is constant (linear regime)
+- Large angles: period **increases** with amplitude (nonlinear!)
+- Damping: phase space spirals to fixed point
+- Forcing: system settles to limit cycle regardless of start
+
+**💡 The Physics:** The period depends on amplitude because sin(θ) ≠ θ for large angles.
+""",
+        'logistic': """
+**🎯 Learning Objective:** Discover the period-doubling route to chaos.
+
+**📋 Steps:**
+1. Set **r = 2.8** → observe a single fixed point
+2. Increase **r to 3.2** → see period-2 oscillation (alternating values)
+3. Try **r = 3.5** → period-4! Then **r = 3.56** → period-8...
+4. Set **r = 3.9** → CHAOS! No repeating pattern
+
+**🔍 What to Observe:**
+- The Lyapunov exponent: positive = chaos, negative = order
+- The r marker line on the bifurcation diagram shows where you are
+- Zoom into the bifurcation diagram — it's self-similar (fractal!)
+
+**💡 The Physics:** The Feigenbaum constant δ ≈ 4.669 governs the rate of period-doubling. It's universal across ALL systems that reach chaos via period-doubling.
+""",
+        'lorenz': """
+**🎯 Learning Objective:** Observe the butterfly attractor and measure its fractal dimension.
+
+**📋 Steps:**
+1. Set **ρ = 28** (classic chaos) → see the butterfly
+2. Try **ρ = 14** → no chaos, stable fixed points
+3. Try **ρ = 24** → still stable, just before chaos onset
+4. Set **ρ = 28** again and check the **fractal dimension** value
+
+**🔍 What to Observe:**
+- The trajectory NEVER repeats exactly — yet stays bounded
+- The two lobes of the butterfly are visited unpredictably
+- Fractal dimension D2 ≈ 2.06 means the attractor is between a surface (2D) and a volume (3D)
+
+**💡 The Physics:** Lorenz discovered this system in 1963 while modeling atmospheric convection. It's the origin of the term **"butterfly effect"** — a butterfly flapping its wings in Brazil can cause a tornado in Texas.
+""",
+        'duffing': """
+**🎯 Learning Objective:** Explore bistability, hysteresis, and the double-well potential.
+
+**📋 Steps:**
+1. Set **γ = 0.3, ω = 1.2** → observe oscillation in one well
+2. Increase **γ to 0.5** → the particle may jump between wells
+3. Try starting at **x₀ = 0.5 vs x₀ = -0.5** → different attractors!
+4. Sweep ω slowly → see the **jump phenomenon**
+
+**🔍 What to Observe:**
+- Two stable states can coexist at the same parameters
+- Which one you get depends on **history** (hysteresis)
+- The potential diagram shows the two wells
+
+**💡 The Physics:** The negative linear stiffness (α < 0) creates a double-well potential. This models many real systems: buckled beams, superconducting circuits, and even climate regimes.
+""",
+        'vdp': """
+**🎯 Learning Objective:** Understand self-excited oscillations and relaxation oscillators.
+
+**📋 Steps:**
+1. Set **μ = 0.1** → nearly sinusoidal oscillation
+2. Increase **μ to 1.0** → wave becomes sharper
+3. Try **μ = 5.0** → **relaxation oscillation**! Slow buildup, rapid discharge
+4. Add **forcing F = 0.5** → explore forced oscillations
+
+**🔍 What to Observe:**
+- The system oscillates **even without external forcing** (self-excited)
+- The limit cycle attracts ALL nearby trajectories
+- At large μ, the waveform is distinctly different from a sine wave
+
+**💡 The Physics:** Van der Pol developed this model for vacuum tube oscillators. It describes heartbeats, neural firing, and bridge oscillations. The nonlinear damping term -μ(1-x²) pumps energy at small amplitudes and dissipates at large amplitudes.
+""",
+        'double': """
+**🎯 Learning Objective:** Witness deterministic chaos and sensitivity to initial conditions.
+
+**📋 Steps:**
+1. Start with **θ₁₀ = π/2, θ₂₀ = 0** → watch the chaotic dance
+2. Check "Both trajectories" → see how a **0.001 rad difference** leads to completely different paths
+3. Try **θ₁₀ = 0.1** → nearly regular motion (small energy)
+4. Try **θ₁₀ = π** → fully chaotic
+
+**🔍 What to Observe:**
+- The two trajectories start almost identically but DIVERGE exponentially
+- The divergence plot shows exponential growth (straight line on log scale)
+- This is **not random** — the equations are completely deterministic
+
+**💡 The Physics:** The double pendulum has 4 degrees of freedom (θ₁, θ₂, ω₁, ω₂). This is enough for chaos to appear. The exponential divergence means long-term prediction is impossible — the **butterfly effect** in action.
+""",
+    }
+
+    # Lab system selector
     lab_systems = [
         ("Pendulum", 'pendulum'),
         ("Logistic Map", 'logistic'),
@@ -716,6 +821,12 @@ def render_lab():
     lab_sel = st.sidebar.selectbox("System", [s[0] for s in lab_systems], key="lab_sys")
     sim_id = [s[1] for s in lab_systems if s[0] == lab_sel][0]
     st.sidebar.markdown("---")
+
+    # Show pedagogical guide
+    if sim_id in GUIDES:
+        with st.expander("📖 Lab Guide — What to do & what to observe", expanded=False):
+            st.markdown(GUIDES[sim_id])
+        st.markdown("---")
 
     # Full parameter controls in sidebar
     if sim_id == 'pendulum':
@@ -795,6 +906,14 @@ def render_lab():
             axes[2].plot(t, z, 'r-', lw=0.5); axes[2].set_ylabel('z')
             axes[2].set_xlabel('Time'); axes[2].grid(alpha=0.3)
             st.pyplot(fig)
+        
+        # Fractal dimension
+        with st.spinner("Computing fractal dimension..."):
+            D2 = fractal_dimension_of_lorenz(t, x, y, z)
+        if D2 > 0:
+            st.metric("Fractal Dimension D₂", f"{D2:.3f}",
+                     help="D₂ ≈ 2.06 for classic Lorenz. Between a surface (2D) and a volume (3D).")
+        st.markdown("---")
 
     elif sim_id == 'duffing':
         gamma_f = st.sidebar.slider("Forcing γ", 0.0, 0.8, 0.3, 0.01)
