@@ -644,7 +644,6 @@ def render_archive():
     except FileNotFoundError:
         if lang == 'en':
             st.info("🌍 English translation is being prepared. Please check back later, or read the original German version.")
-            # Fallback to German
             with open('ocr/book_transcribed.md', 'r', encoding='utf-8') as f:
                 book_text = f.read()
         else:
@@ -652,8 +651,31 @@ def render_archive():
             return
 
     st.markdown(f"**{arch_sel}** ({page_label} {arch_pages[0]}–{arch_pages[-1]})")
+
+    # Toggle to show original scanned pages
+    show_scans = st.checkbox("📄 Show original scanned pages with figures", value=False, key="show_scans")
+
+    # Get content
     content = get_page_range(book_text, arch_pages[0], arch_pages[-1])
-    render_book_content(content)
+
+    if show_scans:
+        # Show scanned images and text in tabs
+        tab_text, tab_scans = st.tabs(["📝 Transcribed Text", "📄 Original Scans"])
+
+        with tab_text:
+            render_book_content(content)
+
+        with tab_scans:
+            st.markdown(f"**Original scanned pages {arch_pages[0]}–{arch_pages[-1]}**")
+            for p in arch_pages:
+                scan_file = f"scans/pages/page_{p:03d}.png"
+                import os
+                if os.path.exists(scan_file):
+                    st.image(scan_file, caption=f"Original page {p}", use_container_width=True)
+                else:
+                    st.info(f"Scan for page {p} not available")
+    else:
+        render_book_content(content)
 
 def render_lab():
     st.title("🔬 Simulation Lab")
