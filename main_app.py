@@ -15,6 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 import re
+import os
 
 # Import all simulation modules
 from python.logistic_map import iterate, bifurcation_points, lyapunov_exponent as lyap_log
@@ -51,9 +52,28 @@ def get_page_range(book_text, start, end):
         if content and content != '*[Page not found]*':
             parts.append(f'## Page {p}\n{content}')
     return '\n\n'.join(parts)
-
 def render_book_content(markdown_text):
-    parts = re.split(r'(\$\$.*?\$\$)', markdown_text, flags=re.DOTALL)
+    """Render book content with equation support AND figure images."""
+    # Handle figure images first
+    lines = markdown_text.split('\n')
+    output_lines = []
+    for line in lines:
+        img_match = re.match(r'!\[Figure\]\(([^)]+)\)', line)
+        if img_match:
+            img_path = img_match.group(1)
+            # Show the image alongside any caption
+            if os.path.exists(img_path):
+                output_lines.append(f'<div style="text-align: center;">')
+                output_lines.append(f'<img src="{img_path}" style="max-width:90%; border:1px solid #ddd; border-radius:4px; padding:4px;">')
+                output_lines.append(f'</div>')
+            else:
+                output_lines.append(f'*[Figure image not available: {img_path}]*')
+        else:
+            output_lines.append(line)
+    modified = '\n'.join(output_lines)
+    
+    # Now split for equation rendering
+    parts = re.split(r'(\$\$.*?\$\$)', modified, flags=re.DOTALL)
     for part in parts:
         if part.startswith('$$') and part.endswith('$$'):
             latex = part[2:-2].strip().rstrip('\n')

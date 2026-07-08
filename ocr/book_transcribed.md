@@ -185,7 +185,7 @@ Die Anzahl der dynamischen (oder Zustands-) Variablen ist nun $n=3$ ($\phi, \Ome
 
 Üblicherweise wird die Entwicklung eines dynamischen Systems im Zustands- oder Phasenraum dargestellt, dessen Koordinatenrichtungen durch die Zustandsvariablen gebildet werden. Ein Punkt im Phasenraum repräsentiert also einen momentanen Systemzustand. Die im Zeitablauf (gemäß den Bewegungsgleichungen) durchlaufenen Punkte bilden die Phasenbahn oder Phasentrajektorie.
 
-![Figure 2.1: 3D plot of a phase trajectory (black) of a periodic motion in a three-dimensional phase space, along with its 2D projection (gray) onto the (\phi, \Omega) plane.]
+![Figure](docs/figures/fig_2_1_3d_trajectory.png)
 Abb. 2.1: Phasentrajektorie (schwarz) einer periodischen Bewegung im dreidimensionalen Phasenraum. Sie ist spiralförmig und kann sich nicht schneiden. Ihre Projektion (grau) auf die $\phi$-$\Omega$-Ebene kann Schnittpunkte enthalten.
 
 Die Dimension des Phasenraums des getriebenen Pendels ist drei. Für eine anschaulichere 2-dimensionale Darstellung projiziert man die Zeitdimension heraus, indem man die Phasentrajektorien auf die $(\phi, \Omega)$ Ebene projiziert. Den zweidimensionalen Unterraum $(\phi, \Omega)$ bzw. $(\phi, \dot{\phi})$ nennt man Phasenebene oder auch Phasenraum. Da die Lösung des autonomen Systems (2.1.3) bei Vorgabe von Anfangswerten $q_i(t=0)$ eindeutig bestimmt ist, kann durch jeden Punkt des $n$-dimensionalen Phasenraumes nur eine Trajektorie gehen, d.h., die Trajektorien dürfen sich nicht schneiden - weder untereinander, noch sich selbst. Die in einen Unterraum projizierten Trajektorien können sich aber schneiden.
@@ -232,17 +232,17 @@ Wenn man die nichtlinearen Differentialgleichungen (2.2.1) numerisch löst, sieh
 
 ## Page 8
 
-![Figure 2.2.1a: Plot of angle \phi (in degrees) vs. time t for small amplitudes, showing standard sinusoidal behavior.]
+![Figure](docs/figures/fig_2_2_1a_small_angle.png)
 Abb. 2.2.1a: Winkel-Zeit-Funktion des freien ungedämpften Pendels bei kleinen Ausschlagwinkeln.
 
-![Figure 2.2.1b: Plot of angle \phi (in degrees) vs. time t for larger amplitudes, where the period increases as the maximum angle increases.]
+![Figure](docs/figures/fig_2_2_1b_large_angle.png)
 Abb. 2.2.1b: Winkel-Zeit-Funktion des freien ungedämpften Pendels bei großen Ausschlagwinkeln.
 
 **Die Periodenlänge vergrößert sich mit Vergrößerung der Auslenkung.** Für die nichtlineare Schwingung hat der Begriff "Eigenfrequenz", im Sinn eines konstanten Werts, der nur von Systemparametern abhängt, seine physikalische Bedeutung verloren, die Schwingung ist nicht mehr harmonisch.
 
 Nähert sich die Schwingungsamplitude dem Wert $\pi$, so hält sich das Pendel für immer längere Zeit in der Umgebung von $\phi = \pm\pi$ $^1$) auf. Der Punkt $\phi = \pi$ ist ein instabiler Gleichgewichtspunkt (instabiler Fixpunkt).
 
-![Figure 2.2.2: Plots of angle \phi vs. time and angular velocity \dot{\phi} vs. time for an amplitude near 179.9 degrees, showing long plateaus near the peak.]
+![Figure](docs/figures/fig_2_2_2_near_180.png)
 Abb. 2.2.2: Winkel-Zeit-Funktion des freien ungedämpften Pendels für eine Amplitude von $179.9^\circ$
 
 ---
@@ -261,7 +261,7 @@ Für Schwingungen ohne Überschläge sind die Phasentrajektorien geschlossene Ku
 
 Startet man die Bewegung von verschiedenen Gebieten der Phasenebene, die durch die Separatrix getrennt sind, so werden verschiedene Bewegungsformen - Schwingung oder Rotation - ausgeführt.
 
-![Figure 2.2.3: Phase portrait (angular velocity \dot{\phi} vs. angle \phi) of the free undamped pendulum, showing closed loops for oscillations, open curves for rotations, and the separating separatrix lines.]
+![Figure](docs/figures/fig_2_2_3_phase_portrait_ensemble.png)
 Abb. 2.2.3: Phasentrajektorien des freien ungedämpften Pendels für verschiedene Anfangsbedingungen.
 
 ---
@@ -297,7 +297,7 @@ auffassen. Die Amplitude der Schwingung nimmt also mit der Zeit exponentiell ab.
 
 Die numerische Lösung der nichtlinearen Gleichungen (2.3.1) bestätigt dieses Verhalten. Die Phasentrajektorien $\phi = \phi(\dot{\phi})$ schrumpfen auf den sog. **Fixpunkt - Attraktor** ($\phi_0 = 0, \dot{\phi}_0 = 0$) zusammen (Abb.2.3.1).
 
-![Figure 2.3.1a: Damped oscillation curve showing the angle decaying over time toward zero.]
+![Figure](docs/figures/fig_2_3_1a_damped_oscillation.png)
 Abb. 2.3.1a: Winkel-Zeit-Funktion des freien gedämpften Pendels.
 
 ---
@@ -306,7 +306,7 @@ Abb. 2.3.1a: Winkel-Zeit-Funktion des freien gedämpften Pendels.
 
 ## Page 11
 
-![Figure 2.3.1b: Phase space plot showing a trajectory spiraling inward toward the origin (0,0) due to damping.]
+![Figure](docs/figures/fig_2_3_1b_damped_spiral.png)
 Abb. 2.3.1b: Phasentrajektorien des freien gedämpften Pendels.
 
 Wenn man das dissipative System mit Anfangsbedingungen (Punkten) aus einem vorgegebenen Gebiet des Phasenraums startet, gelangen alle diese Trajektorien schließlich auf den Attraktor (hier Fixpunkt), d.h., alle Punkte bewegen sich (gemäß den Bewegungsgleichungen) so, daß das von ihnen eingenommene Gebiet ("Volumen") im Phasenraum "schrumpft" (hier bis auf einen Punkt; aus einer Fläche - Dimension 2 - wurde also ein Punkt - Dimension 0).
@@ -334,16 +334,16 @@ C &= \frac{A}{I \sqrt{(\omega_0^2 - \omega_A^2)^2 + 4\gamma^2\omega_A^2}} \\
 
 Der erste Term in (2.4.1), die gedämpfte Eigenschwingung, klingt mit der Zeit ab (Einschwingvorgang). Nach dem Einschwingvorgang (transiente Bewegung) führt das Pendel eine periodische Bewegung mit der Frequenz $\omega_A$ der Erregerfunktion aus und zwar unabhängig von den Anfangsbedingungen. Die Amplitude $C$ ist nach (2.4.2) eine Funktion der Erregerfrequenz; sie ist unabhängig von den Anfangsbedingungen. $C(\omega_A)$ hat ein Maximum bei der Resonanzfrequenz $\omega_r = \sqrt{\omega_0^2 - 2\gamma^2}$, die von der Anregungsamplitude $A$ unabhängig ist. Die Phasentrajektorie bildet dann (für große Zeiten) eine geschlossene Kurve. Diese Art eines Attraktors nennt man einen **Grenzzyklus**. Die numerische Lösung der nichtlinearen Gleichungen (2.1.2) bestätigt dieses Verhalten auch bei größeren Ausschlägen; nach einer Einschwingzeit (z.B. ca. 10 s in Abb.2.4.1) schwingt das System periodisch.
 
-![Figure 2.4.1a: Waveform plot showing the transient behavior settling into a steady state oscillation.]
+![Figure](docs/figures/fig_2_4_1a_forced_transient.png)
 Abb. 2.4.1a: Winkel-Zeit-Funktion des erzwungenen gedämpften Pendels.
 $m = 0.2\text{ kg}, l = 0.25\text{ m}, \omega_A = 4.176\text{ /s}$
 $b = 0.02\text{ Nms}, A = 0.29\text{ Nm}$
 Anfangsbedingungen: $\phi_0 = 0, \dot{\phi}_0 = 0$
 
-![Figure 2.4.1b: Phase space plot showing a trajectory winding around and eventually settling onto a closed loop.]
+![Figure](docs/figures/fig_2_4_1b_winding_limit_cycle.png)
 Abb. 2.4.1b: Phasentrajektorie des erzwungenen gedämpften Pendels mit Einschwingvorgang und Grenzzyklus.
 
-![Figure 2.4.1c: Clean closed-loop phase portrait representing the stable attractor (limit cycle).]
+![Figure](docs/figures/fig_2_4_1c_limit_cycle.png)
 Abb. 2.4.1c: Grenzzyklus der Phasentrajektorie des erzwungenen gedämpften Pendels.
 
 Trägt man man für das nichtlineare getriebene Pendel die Schwingungsamplitude (bei unveränderter Dämpfung) verschiebt sich das Maximum der Schwingungsamplitude zu kleineren Frequenzen (erinnern Sie sich daran, daß sich die Schwingungsdauer des freien Pendels mit Vergrößerung der Schwingungsamplitude vergrößert).
@@ -354,7 +354,7 @@ Trägt man man für das nichtlineare getriebene Pendel die Schwingungsamplitude 
 
 ## Page 13
 
-![Figure 2.4.2: Resonance curves for different excitation amplitudes, demonstrating the characteristic bending of the resonance peak to the left (softening spring behavior).]
+![Figure](docs/figures/fig_2_4_2_resonance_curves.png)
 Abb. 2.4.2: Resonanzkurven für verschiedene Anregungsamplituden.
 Systemparameter:
 $m = 0.2\text{ kg}, l = 0.25\text{ m},$
@@ -364,10 +364,10 @@ Anfangsbedingungen: $(\phi_0 \text{ [grad]}, \dot{\phi}_0 \text{ [grad/s]}): (0,
 
 2. Bei relativ großer Anregungsamplitude (aber noch nicht so groß, daß Überschläge stattfinden) verändert sich bei einer bestimmten Erregerfrequenz die Pendelamplitude sprunghaft (**Sprungphänomen**, siehe auch [11,12]). Wenn man diese Resonanzkurve für verschiedene Anfangsbedingungen $^1$) berechnet, sieht man einen Frequenzbereich (überlappende Linien in Abb. 2.4.2), wo das System zwei stabile Schwingungen mit unterschiedlichen Amplituden ausführen kann (**Bistabilität**). Welche Schwingung realisiert wird, hängt von der Anfangsbedingung ab (Abb. 2.4.3). Bei nichtlinearen Systemen können also **mehrere Attraktoren koexistieren**. (Siehe auch [3-5,13-16]).
 
-![Figure 2.4.3a: Closed loop phase portrait for one stable oscillation state under coexisting conditions.]
+![Figure](docs/figures/fig_2_4_3_bistability.png)
 Abb. 2.4.3a
 
-![Figure 2.4.3b: Another closed loop phase portrait showing a distinctly different shape/amplitude under identical system parameters but different initial conditions.]
+![Figure](docs/figures/fig_2_4_3_bistability.png)
 Abb. 2.4.3b
 
 Abb. 2.4.3: Bistabilität: Koexistenz zweier verschiedener Schwingungen bei denselben Systemparametern. Die Anfangsbedingungen entscheiden, welche Schwingung realisiert wird.
