@@ -54,33 +54,30 @@ def get_page_range(book_text, start, end):
     return '\n\n'.join(parts)
 def render_book_content(markdown_text):
     """Render book content with equation support AND figure images."""
-    # Handle figure images first
     lines = markdown_text.split('\n')
-    output_lines = []
+    
     for line in lines:
-        img_match = re.match(r'!\[Figure\]\(([^)]+)\)', line)
+        if not line.strip():
+            continue
+        
+        # Check if this is a figure reference
+        img_match = re.match(r'!\[Figure\]\(([^)]+)\)', line.strip())
         if img_match:
             img_path = img_match.group(1)
-            # Show the image alongside any caption
             if os.path.exists(img_path):
-                output_lines.append(f'<div style="text-align: center;">')
-                output_lines.append(f'<img src="{img_path}" style="max-width:90%; border:1px solid #ddd; border-radius:4px; padding:4px;">')
-                output_lines.append(f'</div>')
+                st.image(img_path, use_container_width=True)
             else:
-                output_lines.append(f'*[Figure image not available: {img_path}]*')
+                st.markdown(f'*[Figure not available: {img_path}]*')
         else:
-            output_lines.append(line)
-    modified = '\n'.join(output_lines)
-    
-    # Now split for equation rendering
-    parts = re.split(r'(\$\$.*?\$\$)', modified, flags=re.DOTALL)
-    for part in parts:
-        if part.startswith('$$') and part.endswith('$$'):
-            latex = part[2:-2].strip().rstrip('\n')
-            if latex:
-                st.latex(latex)
-        elif part.strip():
-            st.markdown(part, unsafe_allow_html=True)
+            # Render as markdown with equation handling
+            parts = re.split(r'(\$\$.*?\$\$)', line, flags=re.DOTALL)
+            for part in parts:
+                if part.startswith('$$') and part.endswith('$$'):
+                    latex = part[2:-2].strip().rstrip('\n')
+                    if latex:
+                        st.latex(latex)
+                elif part.strip():
+                    st.markdown(part, unsafe_allow_html=True)
 
 def styled_plot(fig, title=None):
     if title:
