@@ -292,12 +292,14 @@ completely different trajectories within seconds.
 ARCHIVE_CHAPTERS = [
     {
         'id': 'vorwort',
-        'title': '📖 Vorwort',
+        'title_de': '📖 Vorwort',
+        'title_en': '📖 Foreword',
         'pages': [1],
     },
     {
         'id': 'ch1',
-        'title': '🔬 Kapitel I: Nichtlineare Schwingungen',
+        'title_de': '🔬 Kapitel I: Nichtlineare Schwingungen',
+        'title_en': '🔬 Chapter I: Nonlinear Oscillations',
         'pages': list(range(2, 16)),
         'sections': [
             ('1.1 Pendel', [2, 3]),
@@ -311,17 +313,20 @@ ARCHIVE_CHAPTERS = [
     },
     {
         'id': 'ch2',
-        'title': '✏️ Kapitel II: Aufgaben',
+        'title_de': '✏️ Kapitel II: Aufgaben',
+        'title_en': '✏️ Chapter II: Exercises',
         'pages': [16, 17],
     },
     {
         'id': 'ch3',
-        'title': '📐 Kapitel III: Grundlagen',
+        'title_de': '📐 Kapitel III: Grundlagen',
+        'title_en': '📐 Chapter III: Foundations',
         'pages': list(range(18, 30)),
     },
     {
         'id': 'ch4',
-        'title': '📋 Kapitel IV: Dokumentation',
+        'title_de': '📋 Kapitel IV: Dokumentation',
+        'title_en': '📋 Chapter IV: Documentation',
         'pages': list(range(30, 64)),
     },
 ]
@@ -346,25 +351,38 @@ if current_page == 'course':
 
 # Archive navigation
 elif current_page == 'archive':
-    st.sidebar.markdown("### 📖 Buchnavigation")
-    
-    # Language toggle
+    # Language toggle MUST come first so labels update on same click
     if 'archive_lang' not in st.session_state:
         st.session_state.archive_lang = 'de'
     lang = st.sidebar.radio("Sprache / Language", ["🇩🇪 Deutsch", "🇬🇧 English"],
                            index=0 if st.session_state.archive_lang == 'de' else 1,
                            key="archive_lang_radio")
     st.session_state.archive_lang = 'de' if 'Deutsch' in lang else 'en'
+    lang = st.session_state.archive_lang
+
+    # Language-dependent labels (now uses correct lang)
+    if lang == 'de':
+        nav_title = "📖 Buchnavigation"
+        ch_label = "Kapitel"
+        sec_label = "Abschnitt"
+        all_label = "Alle"
+    else:
+        nav_title = "📖 Book Navigation"
+        ch_label = "Chapter"
+        sec_label = "Section"
+        all_label = "All"
+
+    st.sidebar.markdown(f"### {nav_title}")
     st.sidebar.markdown("---")
-    
-    arch_titles = [ch['title'] for ch in ARCHIVE_CHAPTERS]
-    arch_sel = st.sidebar.radio("Kapitel / Chapter", arch_titles, key="arch_ch")
-    current_arch_ch = [ch for ch in ARCHIVE_CHAPTERS if ch['title'] == arch_sel][0]
+
+    arch_titles = [ch[f'title_{lang}'] for ch in ARCHIVE_CHAPTERS]
+    arch_sel = st.sidebar.radio(ch_label, arch_titles, key="arch_ch")
+    current_arch_ch = [ch for ch in ARCHIVE_CHAPTERS if ch[f'title_{lang}'] == arch_sel][0]
     arch_pages = current_arch_ch['pages']
     if 'sections' in current_arch_ch:
-        sec_labels = ["Alle / All"] + [s[0] for s in current_arch_ch['sections']]
-        sec_sel = st.sidebar.radio("Abschnitt / Section", sec_labels, key="arch_sec")
-        if sec_sel != "Alle / All":
+        sec_labels = [all_label] + [s[0] for s in current_arch_ch['sections']]
+        sec_sel = st.sidebar.radio(sec_label, sec_labels, key="arch_sec")
+        if sec_sel != all_label:
             for s_t, s_p in current_arch_ch['sections']:
                 if sec_sel == s_t:
                     arch_pages = s_p
@@ -809,7 +827,7 @@ def render_lab():
     # Notes
     st.markdown("---")
     st.subheader("📝 Lab Notes")
-    st.text_area("", height=100, placeholder="Record your observations here...", key="lab_notes")
+    st.text_area("Notes", height=100, placeholder="Record your observations here...", key="lab_notes")
 
 def render_about():
     st.title("📖 About")
