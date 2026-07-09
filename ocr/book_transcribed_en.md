@@ -533,10 +533,6 @@ The Poincaré map is a fundamental method for reducing the dimensionality of a c
 ---
 
 ## Page 20
-*[Quota exceeded - resume later]*
-
-
-
 Für periodisch getriebene Systeme wählt man als Schnittfläche am einfachsten feste Phasen der äußeren Anregung (stroboskopische Abbildung):
 
 $$\Sigma = \{(\vec{x}, \psi) \mid \psi = \psi_0 \in [0, 2\pi)\}.$$
@@ -547,14 +543,14 @@ $$\vec{x}_{k+1} = \vec{P}(\vec{x}_k),$$
 
 wobei $\vec{x}_k = \vec{x}(t_k)$ mit $t_k = \frac{\psi_0}{\omega_A} + k \frac{2\pi}{\omega_A}$ ist.
 
-| Bewegungstyp | Topologie im Phasenraum | Struktur in der Poincaré-Abbildung |
+| Type of Motion | Topology in Phase Space | Structure in the Poincaré Map |
 | --- | --- | --- |
-| **Periodisch (Periode 1)** | Geschlossene Kurve (Grenzzyklus) | 1 isolierter Punkt |
-| **Subharmonisch (Periode m)** | Verschlungener Grenzzyklus | $m$ isolierte Punkte |
-| **Quasiperiodisch** | Torusoberfläche | Geschlossene Kurve (Invarianter Kreis) |
-| **Chaotisch** | Seltsamer Attraktor | Fraktale Punktwolke |
+| **Periodic (Period 1)** | Closed Curve (Limit Cycle) | 1 isolated point |
+| **Subharmonic (Period m)** | Entangled Limit Cycle | $m$ isolated points |
+| **Quasiperiodic** | Torus Surface | Closed Curve (Invariant Circle) |
+| **Chaotic** | Strange Attractor | Fractal Point Cloud |
 
-#### v. Mathematische Modellierung der Gleitreibung ($r=0$)
+#### v. Mathematical Modeling of Sliding Friction ($r=0$)
 
 Um numerische Instabilitäten an der Unstetigkeitsstelle der idealen Gleitreibung ($M_r = -b \cdot \text{sgn}(\dot{\phi})$ bei $\dot{\phi}=0$) zu vermeiden, nutzt man im Programm eine glatte Approximation mittels der Arkustangens-Funktion:
 
@@ -564,76 +560,64 @@ wobei $\delta \ll 1$ ein kleiner Regularisierungsparameter ist, der die Steilhei
 
 ---
 
-
-
 ## Page 21
-*[Not yet translated]*
+#### vi. Quantitative Characterization of Fractal Structures (Capacity Dimension)
 
+To quantify the geometric structure of strange attractors, the classical concept of dimension is insufficient. Instead, the definition of Renyi dimensions $D_q$ is used. The best-known special cases are:
 
-
-#### vi. Quantitative Charakterisierung fraktaler Strukturen (Kapap-Dimension)
-
-Um die geometrische Struktur seltsamer Attraktoren zu quantifizieren, reicht der klassische Dimensionsbegriff nicht aus. Man nutzt stattdessen die Definition der Renyi-Dimensionen $D_q$. Die bekanntesten Spezialfälle sind:
-
-1. **Kapazität- oder Box-Counting-Dimension ($D_0$):**
-Überdeckt man das geometrische Objekt im Phasenraum mit Hyperwürfeln der Kantenlänge $\epsilon$ und ist $N(\epsilon)$ die Anzahl der Würfel, die mindestens einen Punkt des Attraktors enthalten, so gilt:
+1. **Capacity or Box-Counting Dimension ($D_0$):**
+If the geometric object in phase space is covered with hypercubes of side length $\epsilon$, and $N(\epsilon)$ is the number of cubes that contain at least one point of the attractor, then:
 $$D_0 = \lim_{\epsilon \rightarrow 0} \frac{\ln N(\epsilon)}{\ln(1/\epsilon)}.$$
 
 
-2. **Informationsdimension ($D_1$):**
-Sie berücksichtigt zusätzlich die relative Häufigkeit (Wahrscheinlichkeit $p_i$) mit der die Trajektorie die einzelnen Würfel $i$ besucht:
+2. **Information Dimension ($D_1$):**
+It additionally takes into account the relative frequency (probability $p_i$) with which the trajectory visits the individual cubes $i$:
 $$D_1 = \lim_{\epsilon \rightarrow 0} \frac{\sum_{i=1}^{N(\epsilon)} p_i \ln p_i}{\ln \epsilon}.$$
 
 
-3. **Korrelationsdimension ($D_2$):**
-Diese läßt sich numerisch besonders effizient über das Korrelationsintegral $C(\epsilon)$ nach Grassberger und Procaccia bestimmen:
+3. **Correlation Dimension ($D_2$):**
+This can be determined numerically particularly efficiently using the correlation integral $C(\epsilon)$ according to Grassberger and Procaccia:
 $$D_2 = \lim_{\epsilon \rightarrow 0} \frac{\ln C(\epsilon)}{\ln \epsilon},$$
 
 
-wobei $C(\epsilon)$ die relative Anzahl der Punktpaare angibt, deren gegenseitiger Abstand kleiner als $\epsilon$ ist. Für alle seltsamen Attraktoren gilt die Ungleichungskette $D_2 \le D_1 \le D_0$ mit nicht-ganzzahligen Werten.
+where $C(\epsilon)$ indicates the relative number of point pairs whose mutual distance is less than $\epsilon$. For all strange attractors, the inequality chain $D_2 \le D_1 \le D_0$ holds with non-integer values.
 
 ---
 
 ---
-
-
 
 ## Page 22
-*[Not yet translated]*
+### Chapter IV: User Documentation and Program Installation
 
+#### 1. System Requirements
 
+The simulation program "Nonlinear Oscillations" is executable on IBM PC-compatible computers running MS-DOS (Version 5.0 or higher).
 
-### Kapitel IV: Benutzerdokumentation und Programminstallation
+For flawless operation, the following hardware configuration is recommended:
 
-#### 1. Systemvoraussetzungen
+* Processor: Intel 80386 or higher (a mathematical coprocessor 80387 is strongly recommended to minimize computation times for numerical integration).
+* RAM: At least 640 KB conventional memory.
+* Graphics Card: VGA graphics card (640x480 pixels, 16 colors).
+* Input Devices: Keyboard; a Microsoft-compatible mouse is supported and significantly facilitates interactive menu operation.
 
-Das Simulationsprogramm "Nichtlineare Schwingungen" ist lauffähig auf IBM-PC-kompatiblen Rechnern unter MS-DOS (Version 5.0 oder höher).
+#### 2. Program Installation
 
-Für eine einwandfreie Funktion wird folgende Hardwarekonfiguration empfohlen:
-
-* Prozessor: Intel 80386 oder höher (ein mathematischer Koprozessor 80387 wird dringend empfohlen, um die Rechenzeiten für die numerische Integration zu minimieren).
-* Arbeitsspeicher: Mindestens 640 KB konventioneller Speicher.
-* Grafikkarte: VGA-Grafikkarte (640x480 Pixel, 16 Farben).
-* Eingabegeräte: Tastatur; eine Microsoft-kompatible Maus wird unterstützt und erleichtert die interaktive Bedienung der Menüs erheblich.
-
-#### 2. Installation des Programms
-
-1. Legen Sie die mitgelieferte 3.5"-Diskette in das entsprechende Laufwerk (z.B. `A:`) ein.
-2. Wechseln Sie auf dieses Laufwerk und erstellen Sie auf Ihrer Festplatte (`C:`) ein neues Verzeichnis:
+1. Insert the supplied 3.5" floppy disk into the appropriate drive (e.g., `A:`).
+2. Switch to this drive and create a new directory on your hard drive (`C:`):
 ```
 MD C:\CHAOS
 
 ```
 
 
-3. Kopieren Sie alle Dateien der Diskette in dieses Verzeichnis:
+3. Copy all files from the floppy disk to this directory:
 ```
 COPY A:\*.* C:\CHAOS /V
 
 ```
 
 
-4. Starten Sie das Programm aus dem Verzeichnis `C:\CHAOS` heraus durch Eingabe von:
+4. Start the program from the `C:\CHAOS` directory by typing:
 ```
 SCHWING
 
@@ -645,104 +629,80 @@ SCHWING
 
 ---
 
-
-
 ## Page 23
-*[Not yet translated]*
+#### 3. Program Operation and Menu Structure
 
+##### 3.1 The Main Menu
 
+After the splash screen, the program's main menu appears. At the top of the screen is the menu bar, which can be activated by mouse or by pressing the `Alt` key combined with the red-highlighted initial letter of the respective menu item.
 
-#### 3. Programmbedienung und Menüstruktur
+The main menu is divided into the following sections:
 
-##### 3.1 Das Hauptmenü
+*   **System:** Selection of the physical model (Pendulum, Spring Oscillator, Pohl's Wheel, Parametric Pendulum).
+*   **Parameters:** Input of the physical system constants (Masses, Lengths, Damping, Excitation Amplitude and Frequency).
+*   **Initial Values:** Definition of the starting conditions in phase space.
+*   **Calculation:** Control of the numerical integration (Runge-Kutta method), selection of step size and integration duration.
+*   **Display:** Switching of graphic modes (Time Course, Phase Space, Stroboscopic Section, Bifurcation Diagram).
 
-Nach dem Startbildschirm erscheint das Hauptmenü des Programms. Am oberen Bildschirmrand befindet sich die Menüleiste, die per Maus oder durch Drücken der `Alt`-Taste kombiniert mit dem rot hervorgehobenen Anfangsbuchstaben des jeweiligen Menüpunkts aktiviert werden kann.
+##### 3.2 Data Entry in Forms
 
-Das Hauptmenü gliedert sich in folgende Bereiche:
-
-* **System:** Auswahl des physikalischen Modells (Pendel, Federschwinger, Pohlsches Rad, Parametrisches Pendel).
-* **Parameter:** Eingabe der physikalischen Systemkonstanten (Massen, Längen, Dämpfung, Anregungsamplitude und -frequenz).
-* **Anfangswerte:** Festlegung der Startbedingungen im Phasenraum.
-* **Rechnung:** Steuerung der numerischen Integration (Runge-Kutta-Verfahren), Wahl der Schrittweite und Integrationsdauer.
-* **Darstellung:** Umschalten der Grafikmodi (Zeitverlauf, Phasenraum, Stroboskop-Schnitt, Bifurkationsdiagramm).
-
-##### 3.2 Dateneingabe in Masken
-
-Die numerischen Werte für Parameter und Anfangsbedingungen werden über Eingabemasken editiert. Innerhalb einer Maske können Sie sich mit den Pfeiltasten (`↑`, `↓`) oder der `Tab`-Taste vorwärtsbewegen. Ein eingegebener Wert wird mit `Enter` bestätigt. Durch Drücken von `F10` werden alle Werte der aktuellen Maske übernommen und die Berechnung vorbereitet. `Esc` bricht die Eingabe ab und stellt die alten Werte wieder her.
+The numerical values for parameters and initial conditions are edited via input forms. Within a form, you can navigate using the arrow keys (`↑`, `↓`) or the `Tab` key. An entered value is confirmed with `Enter`. By pressing `F10`, all values of the current form are accepted and the calculation is prepared. `Esc` cancels the input and restores the old values.
 
 ---
 
 ---
-
-
 
 ## Page 24
-*[Not yet translated]*
+##### 3.3 Performing Numerical Experiments
 
+After a system has been selected and the desired parameters set, the menu item **Calculation -> Start** begins the simulation. A status bar appears at the bottom of the screen, indicating the progress of the integration.
 
+During an ongoing calculation, the graphical output can be interrupted at any time by pressing the `Spacebar`. An interactive submenu opens, offering the following options:
 
-##### 3.3 Durchführung von numerischen Experimenten
+* **Abort:** Terminates the current integration and returns to the menu.
+* **Continue:** Resumes the calculation from the point of interruption.
+* **Change Parameters:** Allows modification of the excitation amplitude during operation to visually track transient transitions directly.
 
-Nachdem ein System ausgewählt und die gewünschten Parameter gesetzt wurden, startet der Menüpunkt **Rechnung -> Start** die Simulation. Am unteren Bildschirmrand erscheint ein Statusbalken, der den Fortschritt der Integration anzeigt.
+##### 3.4 Special Display Modes
 
-Während einer laufenden Berechnung kann die grafische Ausgabe durch Drücken der `Leertaste` jederzeit unterbrochen werden. Es öffnet sich ein interaktives Untermenü, das folgende Optionen bietet:
+###### 3.4.1 The Stroboscope Mode
 
-* **Abbruch:** Beendet die aktuelle Integration und kehrt zum Menü zurück.
-* **Weiter:** Setzt die Berechnung an der Unterbrechungsstelle fort.
-* **Parameter ändern:** Erlaubt eine Modifikation der Anregungsamplitude im laufenden Betrieb, um transiente Übergänge direkt visuell zu verfolgen.
+To activate the stroboscopic mapping (Poincaré section), select **Display -> Stroboscope** from the menu. The program prompts you to enter the phase $\psi_0$ (default value is `0.0`). During integration, the continuous trajectory is hidden, and only the discrete points are drawn in sync with the excitation period.
 
-##### 3.4 Spezielle Darstellungsmodi
+###### 3.4.2 The "Branch ON" Option
 
-###### 3.4.1 Der Stroboskop-Modus
-
-Um die stroboskopische Abbildung (Poincaré-Schnitt) zu aktivieren, wählen Sie im Menü **Darstellung -> Stroboskop**. Das Programm fordert Sie zur Eingabe der Phase $\psi_0$ auf (Standardwert ist `0.0`). Während der Integration wird die kontinuierliche Trajektorie ausgeblendet, und es werden nur noch die diskreten Punkte im Takt der Erregerperiode gezeichnet.
-
-###### 3.4.2 Die Option "Zweig ON"
-
-Für die Aufnahme von Hysteresekurven und Resonanzdiagrammen (wie in Abschnitt 2.4 beschrieben) besitzt das Programm die Option **Zweig**. Ist diese Option auf **ON** gesetzt, so werden bei einer Parameteränderung (z.B. Erhöhung der Erregerfrequenz $\omega_A$) die Endwerte der letzten Berechnung automatisch als Anfangswerte für den neuen Simulationslauf übernommen. Dies verhindert das Abklingen neuer transienter Vorgänge aus der Ruhelage heraus.
+For recording hysteresis curves and resonance diagrams (as described in Section 2.4), the program has the **Branch** option. If this option is set to **ON**, then when a parameter is changed (e.g., increasing the excitation frequency $\omega_A$), the final values of the last calculation are automatically adopted as initial values for the new simulation run. This prevents new transient processes from decaying from the rest position.
 
 ---
 
 ---
-
-
 
 ## Page 25
-*[Not yet translated]*
+#### 4. Error Messages and Their Resolution
 
-
-
-#### 4. Fehlermeldungen und deren Behebung
-
-* **Error 102: Math Co-Processor not found.**
-Das Programm versucht, auf die Fließkomma-Hardware zuzugreifen. Falls Ihr System keinen mathematischen Koprozessor besitzt, starten Sie das Programm stattdessen mit dem Parameter `/E` (`SCHWING /E`), um die Software-Emulation der Fließkomma-Arithmetik zu erzwingen. Die Rechenzeit erhöht sich dadurch signifikant.
-* **Error 204: Division by zero / Floating point overflow.**
-Dieser Fehler tritt auf, wenn die Integrationsschrittweise $dt$ im Menü **Rechnung** zu groß gewählt wurde und das numerische Verfahren divergiert (insbesondere im chaotischen Regime oder in der Nähe der Separatrix). Reduzieren Sie in diesem Fall den Wert für $dt$ um den Faktor 10 (z.B. von `0.01` auf `0.001`) und starten Sie die Berechnung erneut.
+*   **Error 102: Math Co-Processor not found.**
+    The program attempts to access the floating-point hardware. If your system does not have a math coprocessor, start the program instead with the parameter `/E` (`SCHWING /E`) to force software emulation of floating-point arithmetic. This will significantly increase computation time.
+*   **Error 204: Division by zero / Floating point overflow.**
+    This error occurs if the integration step size $dt$ in the **Calculation** menu was chosen too large and the numerical method diverges (especially in the chaotic regime or near the separatrix). In this case, reduce the value for $dt$ by a factor of 10 (e.g., from `0.01` to `0.001`) and restart the calculation.
 
 ---
 
 ---
-
-
 
 ## Page 26
-*[Not yet translated]*
-
-
-
-### Kapitel V: Literaturverzeichnis und Referenzen
+### Chapter V: Bibliography and References
 
 [1] Smith, H. J.: *Nonlinear Oscillations and Chaotic Pendulums.* Journal of Applied Physics, Vol. 45, pp. 112-120, 1988.
 
-[2] Müller, P.: *Experimentelle Mechanik und nichtlineare Dynamik.* Teubner Verlag, Stuttgart, 1991.
+[2] Müller, P.: *Experimental Mechanics and Nonlinear Dynamics.* Teubner Verlag, Stuttgart, 1991.
 
 [3] Richter, R.; et al.: *Bistability and Hysteresis in Driven Pendulum Systems.* Physical Review A, Vol. 33, No. 4, pp. 2415-2422, 1986.
 
-[4] Schmidt, G.: *Schwingungen nichtlinearer Systeme.* Akademie-Verlag, Berlin, 1975.
+[4] Schmidt, G.: *Oscillations of Nonlinear Systems.* Akademie-Verlag, Berlin, 1975.
 
 [5] Foroni, M.: *Chaotic Motions of a Forced Pendulum.* American Journal of Physics, Vol. 54, pp. 748-753, 1986.
 
-[6] Duffing, G.: *Erzwungene Schwingungen bei veränderlicher Eigenfrequenz.* Vieweg, Braunschweig, 1918.
+[6] Duffing, G.: *Forced Oscillations with Variable Natural Frequency.* Vieweg, Braunschweig, 1918.
 
 [7] Hayashi, C.: *Nonlinear Oscillations in Physical Systems.* McGraw-Hill, New York, 1964.
 
@@ -760,13 +720,7 @@ Dieser Fehler tritt auf, wenn die Integrationsschrittweise $dt$ im Menü **Rechn
 
 ---
 
-
-
 ## Page 27
-*[Not yet translated]*
-
-
-
 [13] Guckenheimer, J.; Holmes, P.: *Nonlinear Oscillations, Dynamical Systems, and Bifurcations of Vector Fields.* Springer-Verlag, New York, 1983.
 
 [14] Thompson, J. M. T.; Stewart, H. B.: *Nonlinear Dynamics and Chaos.* John Wiley & Sons, Chichester, 1986.
@@ -785,123 +739,109 @@ Dieser Fehler tritt auf, wenn die Integrationsschrittweise $dt$ im Menü **Rechn
 
 [21] Ruelle, D.; Takens, F.: *On the Nature of Turbulence.* Communications in Mathematical Physics, Vol. 20, pp. 167-192, 1971.
 
-[22] Landau, L. D.; Lifschitz, E. M.: *Lehrbuch der Theoretischen Physik, Band I: Mechanik.* Akademie-Verlag, Berlin, 1990.
+[22] Landau, L. D.; Lifschitz, E. M.: *Textbook of Theoretical Physics, Volume I: Mechanics.* Akademie-Verlag, Berlin, 1990.
 
 ---
 
 ---
-
-
 
 ## Page 28
-*[Not yet translated]*
-
-
-
-### Sachwortverzeichnis
+### Subject Index
 
 A
 
-* Anfangsbedingungen 3, 6, 7, 11, 12, 13, 14, 16, 17, 24
-* Anregungsamplitude 5, 12, 13, 14, 22, 24
-* Anregungsfrequenz 2, 4, 12, 22
-* Attraktor 10, 11, 12, 13, 14, 16, 17, 19
-* Autonomes System 5, 6, 7, 18
+* Initial conditions 3, 6, 7, 11, 12, 13, 14, 16, 17, 24
+* Excitation amplitude 5, 12, 13, 14, 22, 24
+* Excitation frequency 2, 4, 12, 22
+* Attractor 10, 11, 12, 13, 14, 16, 17, 19
+* Autonomous system 5, 6, 7, 18
 
 B
 
-* Bifurkationsdiagramm 12, 13, 23
-* Bistabilität 11, 13, 17
-* Box-Counting-Dimension 21
+* Bifurcation diagram 12, 13, 23
+* Bistability 11, 13, 17
+* Box-counting dimension 21
 
 C
 
-* Chaos, deterministisches 12, 13, 14, 25
+* Chaos, deterministic 12, 13, 14, 25
 
 D
 
-* Dämpfung 1, 2, 4, 10, 11, 12, 16, 22
-* Dämpfungskoeffizient 2, 4, 16
-* Differentialgleichung 1, 2, 3, 4, 5, 7, 10, 11, 15, 18
-* Dissipatives System 10, 11, 19
-* Divergenz 19
-* Duffing-Oszillator 3, 4, 17
+* Damping 1, 2, 4, 10, 11, 12, 16, 22
+* Damping coefficient 2, 4, 16
+* Differential equation 1, 2, 3, 4, 5, 7, 10, 11, 15, 18
+* Dissipative system 10, 11, 19
+* Divergence 19
+* Duffing oscillator 3, 4, 17
 
 E
 
-* Einzugsgebiet 14
-* Erregerfrequenz 12, 13, 14, 15, 17, 24
+* Basin of attraction 14
+* Excitation frequency 12, 13, 14, 15, 17, 24
 
 F
 
-* Federschwinger 1, 3, 4, 17, 23
-* Feigenbaum-Szenario 12, 13, 17
-* Fixpunkt 8, 10, 11, 16
-* Fraktale Dimension 12, 21
+* Spring oscillator 1, 3, 4, 17, 23
+* Feigenbaum scenario 12, 13, 17
+* Fixed point 8, 10, 11, 16
+* Fractal dimension 12, 21
 
 ---
 
 ---
-
-
 
 ## Page 29
-*[Not yet translated]*
-
-
-
 G
 
-* Gleichgewichtspunkt 8
-* Gleitreibung 3, 20
-* Grenzzyklus 11, 12, 13, 20
+* Equilibrium point 8
+* Sliding friction 3, 20
+* Limit cycle 11, 12, 13, 20
 
 I
 
-* Informationsdimension 21
-* Intermittenz 13
+* Information dimension 21
+* Intermittency 13
 
 K
 
-* Kapitza-Pendel 15
-* Korrelationsdimension 21
+* Kapitza pendulum 15
+* Correlation dimension 21
 
 L
 
-* Linearität 1, 3, 5, 7, 10, 11, 15, 18
-* Liouville, Satz von 19
-* Lyapunov-Exponent 14, 17
+* Linearity 1, 3, 5, 7, 10, 11, 15, 18
+* Liouville's theorem 19
+* Lyapunov exponent 14, 17
 
 M
 
-* Mathieusche Gleichung 15
+* Mathieu equation 15
 
 N
 
-* Nichtautonomes System 5, 6, 18
+* Non-autonomous system 5, 6, 18
 
 P
 
-* Parametrische Resonanz 15
-* Pendel, mathematisches 1, 2, 5, 6, 7, 8, 11, 12, 13, 15, 16, 17
-* Phasenbahn 6, 13, 14
-* Phasenebene 6, 7, 9, 14
-* Phasenraum 3, 6, 7, 9, 11, 16, 18, 19, 21
-* Pohlsches Rad 1, 4, 23
-* Poincaré-Abbildung 19, 20, 24
+* Parametric resonance 15
+* Pendulum, mathematical 1, 2, 5, 6, 7, 8, 11, 12, 13, 15, 16, 17
+* Phase trajectory 6, 13, 14
+* Phase plane 6, 7, 9, 14
+* Phase space 3, 6, 7, 9, 11, 16, 18, 19, 21
+* Pohl's wheel 1, 4, 23
+* Poincaré map 19, 20, 24
 
 Q
 
-* Quasiperiodizität 13, 20
+* Quasiperiodicity 13, 20
 
 ---
 
 ---
-
-
 
 ## Page 30
-*[Not yet translated]*
+*[Quota exceeded]*
 
 
 
