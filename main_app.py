@@ -46,12 +46,13 @@ def get_page_text(book_text, page_num):
         return match.group(1).strip()
     return '*[Page not found]*'
 
-def get_page_range(book_text, start, end):
+def get_page_range(book_text, start, end, lang='de'):
     parts = []
     for p in range(start, end + 1):
         content = get_page_text(book_text, p)
         if content and content != '*[Page not found]*':
-            parts.append(f'## Page {p}\n{content}')
+            label = f"Seite {p}" if lang == 'de' else f"Page {p}"
+            parts.append(f'*— {label} —*\n\n{content}')
     return '\n\n'.join(parts)
 def render_book_content(markdown_text):
     """Render book content with equation support AND figure images."""
@@ -678,7 +679,7 @@ def render_archive():
     show_scans = st.checkbox("📄 Show original scanned pages with figures", value=False, key="show_scans")
 
     # Get content
-    content = get_page_range(book_text, arch_pages[0], arch_pages[-1])
+    content = get_page_range(book_text, arch_pages[0], arch_pages[-1], lang)
 
     if show_scans:
         # Show scanned images and text in tabs
