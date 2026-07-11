@@ -533,15 +533,15 @@ The Poincaré map is a fundamental method for reducing the dimensionality of a c
 ---
 
 ## Page 20
-Für periodisch getriebene Systeme wählt man als Schnittfläche am einfachsten feste Phasen der äußeren Anregung (stroboskopische Abbildung):
+For periodically driven systems, the simplest choice for the cutting surface is fixed phases of the external excitation (stroboscopic map):
 
 $$\Sigma = \{(\vec{x}, \psi) \mid \psi = \psi_0 \in [0, 2\pi)\}.$$
 
-Die kontinuierliche Dynamik wird dadurch in eine diskrete Abbildung (Map) überführt:
+The continuous dynamics is thereby transformed into a discrete map:
 
 $$\vec{x}_{k+1} = \vec{P}(\vec{x}_k),$$
 
-wobei $\vec{x}_k = \vec{x}(t_k)$ mit $t_k = \frac{\psi_0}{\omega_A} + k \frac{2\pi}{\omega_A}$ ist.
+where $\vec{x}_k = \vec{x}(t_k)$ with $t_k = \frac{\psi_0}{\omega_A} + k \frac{2\pi}{\omega_A}$.
 
 | Type of Motion | Topology in Phase Space | Structure in the Poincaré Map |
 | --- | --- | --- |
@@ -552,21 +552,21 @@ wobei $\vec{x}_k = \vec{x}(t_k)$ mit $t_k = \frac{\psi_0}{\omega_A} + k \frac{2\
 
 #### v. Mathematical Modeling of Sliding Friction ($r=0$)
 
-Um numerische Instabilitäten an der Unstetigkeitsstelle der idealen Gleitreibung ($M_r = -b \cdot \text{sgn}(\dot{\phi})$ bei $\dot{\phi}=0$) zu vermeiden, nutzt man im Programm eine glatte Approximation mittels der Arkustangens-Funktion:
+To avoid numerical instabilities at the discontinuity of ideal sliding friction ($M_r = -b \cdot \text{sgn}(\dot{\phi})$ at $\dot{\phi}=0$), a smooth approximation using the arctangent function is used in the program:
 
 $$M_r(\dot{\phi}) = -b \cdot \frac{2}{\pi} \arctan\left(\frac{\dot{\phi}}{\delta}\right),$$
 
-wobei $\delta \ll 1$ ein kleiner Regularisierungsparameter ist, der die Steilheit des Übergangs beim Nulldurchgang der Geschwindigkeit bestimmt. Im Limes $\delta \rightarrow 0$ nähert sich diese Funktion der exakten Coulombschen Gleitreibung an.
+where $\delta \ll 1$ is a small regularization parameter that determines the steepness of the transition at the zero crossing of the velocity. In the limit $\delta \rightarrow 0$, this function approaches the exact Coulomb sliding friction.
 
 ---
 
 ## Page 21
 #### vi. Quantitative Characterization of Fractal Structures (Capacity Dimension)
 
-To quantify the geometric structure of strange attractors, the classical concept of dimension is insufficient. Instead, the definition of Renyi dimensions $D_q$ is used. The best-known special cases are:
+To quantify the geometric structure of strange attractors, the classical concept of dimension is not sufficient. Instead, one uses the definition of the Renyi dimensions $D_q$. The best-known special cases are:
 
 1. **Capacity or Box-Counting Dimension ($D_0$):**
-If the geometric object in phase space is covered with hypercubes of side length $\epsilon$, and $N(\epsilon)$ is the number of cubes that contain at least one point of the attractor, then:
+If the geometric object in phase space is covered with hypercubes of edge length $\epsilon$, and $N(\epsilon)$ is the number of cubes that contain at least one point of the attractor, then:
 $$D_0 = \lim_{\epsilon \rightarrow 0} \frac{\ln N(\epsilon)}{\ln(1/\epsilon)}.$$
 
 
@@ -580,7 +580,7 @@ This can be determined numerically particularly efficiently using the correlatio
 $$D_2 = \lim_{\epsilon \rightarrow 0} \frac{\ln C(\epsilon)}{\ln \epsilon},$$
 
 
-where $C(\epsilon)$ indicates the relative number of point pairs whose mutual distance is less than $\epsilon$. For all strange attractors, the inequality chain $D_2 \le D_1 \le D_0$ holds with non-integer values.
+where $C(\epsilon)$ indicates the relative number of point pairs whose mutual distance is smaller than $\epsilon$. For all strange attractors, the inequality chain $D_2 \le D_1 \le D_0$ holds with non-integer values.
 
 ---
 
@@ -591,9 +591,9 @@ where $C(\epsilon)$ indicates the relative number of point pairs whose mutual di
 
 #### 1. System Requirements
 
-The simulation program "Nonlinear Oscillations" is executable on IBM PC-compatible computers running MS-DOS (Version 5.0 or higher).
+The simulation program "Nonlinear Oscillations" is executable on IBM-PC compatible computers running MS-DOS (Version 5.0 or higher).
 
-For flawless operation, the following hardware configuration is recommended:
+For proper functioning, the following hardware configuration is recommended:
 
 * Processor: Intel 80386 or higher (a mathematical coprocessor 80387 is strongly recommended to minimize computation times for numerical integration).
 * RAM: At least 640 KB conventional memory.
@@ -602,7 +602,7 @@ For flawless operation, the following hardware configuration is recommended:
 
 #### 2. Program Installation
 
-1. Insert the supplied 3.5" floppy disk into the appropriate drive (e.g., `A:`).
+1. Insert the supplied 3.5" floppy disk into the corresponding drive (e.g., `A:`).
 2. Switch to this drive and create a new directory on your hard drive (`C:`):
 ```
 MD C:\CHAOS
@@ -681,7 +681,7 @@ For recording hysteresis curves and resonance diagrams (as described in Section 
 #### 4. Error Messages and Their Resolution
 
 *   **Error 102: Math Co-Processor not found.**
-    The program attempts to access the floating-point hardware. If your system does not have a math coprocessor, start the program instead with the parameter `/E` (`SCHWING /E`) to force software emulation of floating-point arithmetic. This will significantly increase computation time.
+    The program attempts to access the floating-point hardware. If your system does not have a math co-processor, start the program instead with the parameter `/E` (`SCHWING /E`) to force software emulation of floating-point arithmetic. This significantly increases computation time.
 *   **Error 204: Division by zero / Floating point overflow.**
     This error occurs if the integration step size $dt$ in the **Calculation** menu was chosen too large and the numerical method diverges (especially in the chaotic regime or near the separatrix). In this case, reduce the value for $dt$ by a factor of 10 (e.g., from `0.01` to `0.001`) and restart the calculation.
 
@@ -778,7 +778,7 @@ D
 E
 
 * Basin of attraction 14
-* Excitation frequency 12, 13, 14, 15, 17, 24
+* Driving frequency 12, 13, 14, 15, 17, 24
 
 F
 
@@ -841,75 +841,63 @@ Q
 ---
 
 ## Page 30
-*[Quota exceeded]*
-
-
-
 R
 
-* Reibungskraft 2, 3, 7, 10
-* Resonanzkurve 12, 13, 14, 17, 24
-* Rotation 2, 9, 14, 15, 16
-* Runge-Kutta-Verfahren 23
+*   Friction force 2, 3, 7, 10
+*   Resonance curve 12, 13, 14, 17, 24
+*   Rotation 2, 9, 14, 15, 16
+*   Runge-Kutta method 23
 
 S
 
-* Schmetterlingseffekt 14
-* Schwingungsdauer 7, 14, 16
-* Seltsamer Attraktor 12, 13, 20, 21
-* Separatrix 9, 14, 16, 25
-* Sprungphänomen 11, 13, 17
-* Stroboskopische Abbildung 14, 15, 17, 20, 24
-* Superpositionsprinzip 18
+*   Butterfly effect 14
+*   Period of oscillation 7, 14, 16
+*   Strange attractor 12, 13, 20, 21
+*   Separatrix 9, 14, 16, 25
+*   Jump phenomenon 11, 13, 17
+*   Stroboscopic mapping 14, 15, 17, 20, 24
+*   Superposition principle 18
 
 T
 
-* Torus 13, 18, 20
-* Trajektorie 6, 7, 9, 11, 12, 13, 14, 16, 19, 24
-* Transiente Bewegung 12, 24
+*   Torus 13, 18, 20
+*   Trajectory 6, 7, 9, 11, 12, 13, 14, 16, 19, 24
+*   Transient motion 12, 24
 
 U
 
-* Unwucht 4
+*   Unbalance 4
 
 V
 
-* Volumenkontraktion 11, 19
+*   Volume contraction 11, 19
 
 W
 
-* Weg ins Chaos 12, 13, 17
-* Wirbelstrombremse 3, 5
+*   Route to chaos 12, 13, 17
+*   Eddy current brake 3, 5
 
 Z
 
-* Zustandsvariable 3, 5, 6, 7, 12
-* Zweig-Option 13, 17, 24
-
----
-
-
+*   State variable 3, 5, 6, 7, 12
+*   Branch option 13, 17, 24
 
 ## Page 31
-*[Not yet translated]*
+### Appendix A: Comparison of Numerical Integration Methods
 
+In the computational physics of dynamical systems, the choice of integration algorithm plays a crucial role. Since nonlinear differential equations generally do not possess analytical solutions, the trajectories must be approximated by discrete time steps. The program uses an explicit 4th order Runge-Kutta method (RK4) by default.
 
+#### A.1 The Euler Method (Order 1)
 
-### Anhang A: Numerische Integrationsverfahren im Vergleich
-
-In der rechnergestützten Physik dynamischer Systeme spielt die Wahl des Integrationsalgorithmus eine entscheidende Rolle. Da nichtlineare Differentialgleichungen in der Regel keine analytischen Lösungen besitzen, müssen die Trajektorien durch diskrete Zeitschritte approximiert werden. Das Programm nutzt standardmäßig ein explizites Runge-Kutta-Verfahren 4. Ordnung (RK4).
-
-#### A.1 Das Euler-Verfahren (Ordnung 1)
-
-Das einfachste Verfahren ist das Euler-Vorwärts-Verfahren. Für ein System $\dot{\vec{x}} = \vec{F}(\vec{x}, t)$ lautet die Iterationsvorschrift mit der Schrittweite $\Delta t$:
+The simplest method is the forward Euler method. For a system $\dot{\vec{x}} = \vec{F}(\vec{x}, t)$, the iteration rule with step size $\Delta t$ is:
 
 $$\vec{x}_{k+1} = \vec{x}_k + \Delta t \cdot \vec{F}(\vec{x}_k, t_k)$$
 
-Dieses Verfahren ist für nichtlineare oder chaotische Oszillatoren gänzlich ungeeignet, da der lokale Abbruchfehler quadratisch mit $\mathcal{O}(\Delta t^2)$ und der globale Fehler linear mit $\mathcal{O}(\Delta t)$ anwächst. Bei konservativen Systemen führt dies zu einer künstlichen Energieerzeugung (die Trajektorien spiralisieren nach außen).
+This method is entirely unsuitable for nonlinear or chaotic oscillators, as the local truncation error grows quadratically with $\mathcal{O}(\Delta t^2)$ and the global error grows linearly with $\mathcal{O}(\Delta t)$. In conservative systems, this leads to artificial energy generation (the trajectories spiral outwards).
 
-#### A.2 Das Runge-Kutta-Verfahren (Ordnung 4)
+#### A.2 The Runge-Kutta Method (Order 4)
 
-Das RK4-Verfahren mathematisch kompensiert diese Defizite durch die Berechnung von vier Hilfsvektoren (Steigungen) pro Zeitschritt:
+The RK4 method mathematically compensates for these shortcomings by calculating four auxiliary vectors (slopes) per time step:
 
 $$\begin{aligned}
 \vec{k}_1 &= \vec{F}(\vec{x}_k, t_k) \\
@@ -918,26 +906,20 @@ $$\begin{aligned}
 \vec{k}_4 &= \vec{F}(\vec{x}_k + \Delta t \vec{k}_3, t_k + \Delta t)
 \end{aligned}$$
 
-Der neue Zustand berechnet sich als gewichtetes Mittel:
+The new state is calculated as a weighted average:
 
 $$\vec{x}_{k+1} = \vec{x}_k + \frac{\Delta t}{6} \left(\vec{k}_1 + 2\vec{k}_2 + 2\vec{k}_3 + \vec{k}_4\right)$$
 
-Der globale Fehler liegt in der Ordnung $\mathcal{O}(\Delta t^4)$. Dies erlaubt deutlich größere Schrittweiten bei stabiler Phasenraumdynamik.
+The global error is of order $\mathcal{O}(\Delta t^4)$. This allows for significantly larger step sizes with stable phase space dynamics.
 
 ---
 
 ---
-
-
 
 ## Page 32
-*[Not yet translated]*
+### Appendix B: Program Structure and Source Code Excerpts
 
-
-
-### Anhang B: Programmstruktur und Quellcode-Ausschnitte
-
-Das Simulationsprogramm wurde in Turbo Pascal 7.0 implementiert, um eine direkte Hardwarenähe und schnelle Grafikausgabe über das BGI-Interface (Borland Graphics Interface) unter MS-DOS zu gewährleisten. Nachfolgend ist der zentrale Kern der mathematischen Iterationsschleife dokumentiert.
+The simulation program was implemented in Turbo Pascal 7.0 to ensure direct hardware proximity and fast graphics output via the BGI-Interface (Borland Graphics Interface) under MS-DOS. The central core of the mathematical iteration loop is documented below.
 
 ```pascal
 Procedure RK4Step(Var Phi, Omega: Real; dt: Real; t: Real);
@@ -946,7 +928,7 @@ Var
   
   Function Accel(p, o: Real; time: Real): Real;
   Begin
-    { Berechnung der Winkelbeschleunigung gemäss Gleichung 1.1.2 }
+    { Calculation of angular acceleration according to Equation 1.1.2 }
     Accel := -(b/I_moment)*o - (m*g*l/I_moment)*Sin(p) + (A_amp/I_moment)*Cos(omega_A*time);
   End;
 
@@ -966,7 +948,7 @@ Begin
   Phi   := Phi   + (dt / 6.0) * (k1_p + 2.0*k2_p + 2.0*k3_p + k4_p);
   Omega := Omega + (dt / 6.0) * (k1_o + 2.0*k2_o + 2.0*k3_o + k4_o);
   
-  { Winkel auf das Intervall [-Pi, +Pi] normieren }
+  { Normalize angle to the interval [-Pi, +Pi] }
   If Phi > Pi Then Phi := Phi - 2.0 * Pi;
   If Phi < -Pi Then Phi := Phi + 2.0 * Pi;
 End;
@@ -977,105 +959,81 @@ End;
 
 ---
 
-
-
 ## Page 33
-*[Not yet translated]*
+### Appendix C: Supplementary Laboratory Exercises for Real Experiments
 
-
-
-### Anhang C: Ergänzende Laborübungen für Realexperimente
-
-Die numerische Simulation ist ein mächtiges Werkzeug, gewinnt jedoch massiv an Wert, wenn sie mit echten physikalischen Messungen verglichen wird. Das in der Software modellierte "Pohlsche Rad" entspricht dem Standard-Versuchsaufbau vieler physikalischer Praktika.
+Numerical simulation is a powerful tool, but it gains massive value when compared with real physical measurements. The "Pohl's Wheel" modeled in the software corresponds to the standard experimental setup of many physics practicals.
 
 ![Figure C.1: Laboratory setup diagram of a Pohl's torsion pendulum equipped with an eddy current brake, a driving motor, and an angle sensor.]
-Abb. C.1: Laboraufbau des Drehpendels nach Pohl
+Fig. C.1: Laboratory setup of Pohl's torsion pendulum
 
-#### Messwerterfassung und Kalibrierung
+#### Data Acquisition and Calibration
 
-Um quantitative Vergleiche mit dem Simulationsprogramm anzustellen, müssen die Systemparameter des realen Apparats präzise bestimmt werden:
+To make quantitative comparisons with the simulation program, the system parameters of the real apparatus must be precisely determined:
 
-1. **Trägheitsmoment $I$:** Entfernen Sie die Spiralfeder und bestimmen Sie das Trägheitsmoment des nackten Rades durch Messung der Beschleunigung mittels einer bekannten angehängten Masse.
-2. **Dämpfungskonstante $b$:** Lassen Sie das freie Rad ohne periodische Anregung auslenken und zeichnen Sie das Abklingverhalten auf. Bestimmen Sie das logarithmische Dekrement $\Lambda$:
+1. **Moment of inertia $I$:** Remove the helical spring and determine the moment of inertia of the bare wheel by measuring the acceleration using a known attached mass.
+2. **Damping constant $b$:** Allow the free wheel to oscillate without periodic excitation and record the decay behavior. Determine the logarithmic decrement $\Lambda$:
 $$\Lambda = \ln\left(\frac{x_n}{x_{n+1}}\right) = \gamma \cdot T_d.$$
 
 
-3. **Federkonstante $d$:** Messen Sie das statische Drehmoment bei verschiedenen Auslenkwinkeln $\phi$, um die Linearität der Spiralfeder zu überprüfen.
+3. **Spring constant $d$:** Measure the static torque at different deflection angles $\phi$ to check the linearity of the helical spring.
 
-Nachdem Sie die Parameter ermittelt und in die Eingabemaske des Programms eingetragen haben, vergleichen Sie die berechneten Hysteresekurven mit den real gemessenen Amplitudensprüngen aus Aufgabe 4.
-
----
+After you have determined the parameters and entered them into the program's input mask, compare the calculated hysteresis curves with the really measured amplitude jumps from task 4.
 
 ---
 
-
+---
 
 ## Page 34
-*[Not yet translated]*
+### Appendix D: Self-Assessment Questions
 
+Test your understanding of the learned material using the following questions. The answers can be directly derived from the text of Chapters I and III.
 
-
-### Anhang D: Kontrollfragen zur Selbstüberprüfung
-
-Testen Sie Ihr Verständnis des gelernten Stoffes anhand der folgenden Fragestellungen. Die Antworten lassen sich direkt aus dem Text der Kapitel I und III ableiten.
-
-1. Warum können sich Trajektorien im dreidimensionalen Phasenraum $(\phi, \Omega, \psi)$ des getriebenen Pendels niemals schneiden, während ihre Projektionen auf die $(\phi, \Omega)$-Ebene Schnittpunkte aufweisen dürfen?
-2. Welcher mathematische Zusammenhang besteht zwischen dem Dämpfungskoeffizienten eines dissipativen Systems und der Kontraktion seines Phasenraumvolumens?
-3. Nennen Sie den fundamentalen Unterschied zwischen einem fixen Attraktor und einem seltsamen Attraktor bezüglich ihrer geometrischen Dimension.
-4. Was versteht man unter einem "periodischen Fenster" innerhalb eines Bifurkationsdiagramms?
-5. Warum bricht das Superpositionsprinzip bei der Duffing-Differentialgleichung zusammen? Welche Terme verursachen dies?
-6. Erklären Sie, wie eine stroboskopische Abbildung dazu beiträgt, ein unübersichtliches, chaotisches Trajektorienknäuel im Phasenraum grafisch zu entflechten und strukturell zu analysieren.
+1. Why can trajectories in the three-dimensional phase space $(\phi, \Omega, \psi)$ of the driven pendulum never intersect, while their projections onto the $(\phi, \Omega)$-plane are allowed to have intersection points?
+2. What is the mathematical relationship between the damping coefficient of a dissipative system and the contraction of its phase space volume?
+3. Name the fundamental difference between a fixed attractor and a strange attractor regarding their geometric dimension.
+4. What is meant by a "periodic window" within a bifurcation diagram?
+5. Why does the superposition principle break down in the Duffing differential equation? Which terms cause this?
+6. Explain how a stroboscopic mapping helps to graphically disentangle and structurally analyze a confusing, chaotic tangle of trajectories in phase space.
 
 ---
 
 ---
-
-
 
 ## Page 35
-*[Not yet translated]*
+### Appendix E: Solutions to the Control Questions
 
-
-
-### Anhang E: Lösungen zu den Kontrollfragen
-
-1. **Antwort:** Das autonome Gleichungssystem im dreidimensionalen Raum besitzt aufgrund des Existenz- und Eindeutigkeitssatzes für Differentialgleichungen für jeden Punkt genau eine eindeutige Lösung. Ein Schnittpunkt würde bedeuten, dass die Bewegung an dieser Stelle zwei verschiedene Fortsetzungen hätte, was unmöglich ist. Bei der 2D-Projektion fällt die explizite Zeitkomponente $\psi$ weg; unterschiedliche Punkte im 3D-Raum, die sich nur in der Zeitphase unterscheiden, können somit auf denselben 2D-Punkt abgebildet werden.
-2. **Antwort:** Gemäß dem Satz von Liouville ist die Divergenz des Vektorfeldes proportional zur Rate der Volumenänderung. Da für das Pendel $\text{div} \vec{F} = -b/I$ gilt, nimmt das Volumen exponentiell ab mit $V(t) = V(0)e^{-(b/I)t}$. Je größer die Dämpfung $b$, desto schneller schrumpft das Phasenraumvolumen.
-3. **Antwort:** Ein stabiler Fixpunkt-Attraktor besitzt die euklidische Dimension 0 (einzelner Punkt). Ein seltsamer Attraktor hingegen besitzt eine nicht-ganzzahlige, fraktale Dimension (z.B. zwischen 1 und 2), da er eine unendlich oft gefaltete, selbstähnliche geometrische Struktur aufweist.
-4. **Antwort:** Ein periodisches Fenster ist ein schmaler Parameterbereich innerhalb des chaotischen Regimes eines Bifurkationsdiagramms, in dem die Dynamik plötzlich wieder vollständig regulär und periodisch wird (z.B. stabile Schwingung der Periode 3), bevor sie durch erneute Periodenverdopplungen wieder ins Chaos zerfällt.
-5. **Antwort:** Aufgrund des nichtlinearen Terms $dx^3$ (kubische Rückstellkraft der Feder). Bildet man die Summe zweier Lösungen $x_1$ und $x_2$, gilt $(x_1+x_2)^3 \neq x_1^3 + x_2^3$, wodurch die Linearkombination keine Lösung der Gleichung mehr darstellt.
-6. **Antwort:** Indem das System nur exakt einmal pro Erregerperiode "fotografiert" wird, fallen alle periodischen Trajektorien, die synchron zum Treiber verlaufen, auf einen einzigen Punkt zusammen. Komplexe chaotische Strukturen zeigen im kontinuierlichen Phasenraum nur ein undurchsichtiges Linienknäuel, entfalten in der stroboskopischen Abbildung jedoch ihre klar strukturierte fraktale Geometrie des seltsamen Attraktors.
+1. **Answer:** The autonomous system of equations in three-dimensional space possesses exactly one unique solution for each point, due to the existence and uniqueness theorem for differential equations. An intersection point would mean that the motion at this point would have two different continuations, which is impossible. In the 2D projection, the explicit time component $\psi$ is omitted; thus, different points in 3D space that differ only in their time phase can be mapped to the same 2D point.
+2. **Answer:** According to Liouville's theorem, the divergence of the vector field is proportional to the rate of volume change. Since for the pendulum $\text{div} \vec{F} = -b/I$ holds, the volume decreases exponentially with $V(t) = V(0)e^{-(b/I)t}$. The larger the damping $b$, the faster the phase space volume shrinks.
+3. **Answer:** A stable fixed-point attractor has Euclidean dimension 0 (a single point). A strange attractor, on the other hand, has a non-integer, fractal dimension (e.g., between 1 and 2), as it exhibits an infinitely folded, self-similar geometric structure.
+4. **Answer:** A periodic window is a narrow parameter range within the chaotic regime of a bifurcation diagram, in which the dynamics suddenly become completely regular and periodic again (e.g., stable oscillation of period 3), before decaying back into chaos through renewed period doublings.
+5. **Answer:** Due to the nonlinear term $dx^3$ (cubic restoring force of the spring). If one forms the sum of two solutions $x_1$ and $x_2$, then $(x_1+x_2)^3 \neq x_1^3 + x_2^3$, which means the linear combination no longer represents a solution to the equation.
+6. **Answer:** By "photographing" the system exactly once per excitation period, all periodic trajectories that run synchronously with the driver collapse into a single point. Complex chaotic structures show only an opaque tangle of lines in continuous phase space, but in the stroboscopic map, they unfold their clearly structured fractal geometry of the strange attractor.
 
 ---
 
 ---
-
-
 
 ## Page 36
-*[Not yet translated]*
+### Chapter VI: Advanced computer-aided analysis methods
 
+#### 1. The calculation of the maximal Lyapunov exponent according to Benettin
 
+To numerically determine the Lyapunov exponent, which was qualitatively described in Section 2.7, the simple monitoring of two trajectories fails after a longer time. Since the phase space is bounded (e.g., $\phi \in [-\pi, \pi]$), the trajectories cannot diverge infinitely; the exponential divergence saturates at the diameter of the attractor (cf. Fig. 2.7.1b).
 
-### Kapitel VI: Fortgeschrittene computergestützte Analysemethoden
-
-#### 1. Die Berechnung des maximalen Lyapunov-Exponenten nach Benettin
-
-Um den in Abschnitt 2.7 qualitativ beschriebenen Lyapunov-Exponenten numerisch exakt zu bestimmen, versagt die simple Überwachung zweier Trajektorien nach längerer Zeit. Da der Phasenraum beschränkt ist (z.B. $\phi \in [-\pi, \pi]$), können die Trajektorien nicht unendlich weit auseinanderlaufen; die exponentielle Divergenz sättigt im Durchmesser des Attraktors ab (vgl. Abb. 2.7.1b).
-
-Der Algorithmus nach Benettin et al. [23] löst dieses Problem durch fortlaufende Renormierung:
+The algorithm by Benettin et al. [23] solves this problem through continuous renormalization:
 
 ![Figure 1.1: Geometric illustration of the Benettin renormalization algorithm for tracking the exponential separation of two nearby chaotic trajectories over discrete time steps.]
-Abb. 1.1: Prinzip der Renormierung nach Benettin
+Fig. 1.1: Principle of renormalization according to Benettin
 
-1. Starten Sie die Referenztrajektorie $\vec{x}_0(t)$ und eine Testtrajektorie $\vec{x}_1(t)$ im Abstand $d_0 = \|\vec{x}_1(0) - \vec{x}_0(0)\| \ll 1$.
-2. Integrieren Sie beide Systeme über ein kurzes Zeitintervall $\tau$. Der Abstand ist nun auf $d_1 = \|\vec{x}_1(\tau) - \vec{x}_0(\tau)\|$ angewachsen.
-3. Der lokale Zuwachs wird im Akkumulator erfasst.
-4. **Renormierungsschritt:** Setzen Sie die Testtrajektorie exakt in der Richtung des Differenzvektors auf den ursprünglichen Abstand $d_0$ zurück:
+1. Start the reference trajectory $\vec{x}_0(t)$ and a test trajectory $\vec{x}_1(t)$ at a distance $d_0 = \|\vec{x}_1(0) - \vec{x}_0(0)\| \ll 1$.
+2. Integrate both systems over a short time interval $\tau$. The distance has now grown to $d_1 = \|\vec{x}_1(\tau) - \vec{x}_0(\tau)\|$.
+3. The local growth is recorded in the accumulator.
+4. **Renormalization step:** Reset the test trajectory exactly in the direction of the difference vector to the original distance $d_0$:
 $$\vec{x}_1^{\text{neu}}(\tau) = \vec{x}_0(\tau) + \frac{d_0}{d_1} \left(\vec{x}_1(\tau) - \vec{x}_0(\tau)\right).$$
 
 
-5. Wiederholen Sie die Schritte 2 bis 4 insgesamt $M$-mal. Der maximale Lyapunov-Exponent ergibt sich im Limes zu:
+5. Repeat steps 2 to 4 a total of $M$ times. The maximal Lyapunov exponent is obtained in the limit as:
 $$\lambda_{\max} = \frac{1}{M \cdot \tau} \sum_{k=1}^M \ln\left(\frac{d_k}{d_0}\right).$$
 
 
@@ -1084,68 +1042,56 @@ $$\lambda_{\max} = \frac{1}{M \cdot \tau} \sum_{k=1}^M \ln\left(\frac{d_k}{d_0}\
 
 ---
 
-
-
 ## Page 37
-*[Not yet translated]*
+#### 2. Spectral Analysis (Fast Fourier Transformation)
 
+An indispensable tool for distinguishing between quasi-periodic and truly chaotic oscillations is the Fourier transform of the time signal. The program allows the discrete values of the angular velocity $\Omega(t)$ to be transformed into the frequency domain using the FFT algorithm by Cooley and Tukey.
 
-
-#### 2. Spektralanalyse (Fast Fourier Transformation)
-
-Ein unverzichtbares Werkzeug zur Unterscheidung zwischen quasiperiodischen und echt chaotischen Schwingungen ist die Fouriertransformation des Zeitsignals. Das Programm erlaubt es, die diskreten Werte der Winkelgeschwindigkeit $\Omega(t)$ mittels des FFT-Algorithmus nach Cooley und Tukey in den Frequenzraum zu überführen.
-
-Aus dem kontinuierlichen Signal werden $N$ Stützstellen (wobei $N$ eine Zweierpotenz sein muss, z.B. $N = 1024$) extrahiert und das Leistungsspektrum $P(\omega)$ berechnet:
+From the continuous signal, $N$ sample points (where $N$ must be a power of two, e.g., $N = 1024$) are extracted and the power spectrum $P(\omega)$ is calculated:
 
 $$P(\omega) = \left| \frac{1}{N} \sum_{k=0}^{N-1} \Omega(t_k) e^{-i \omega t_k} \right|^2$$
 
-##### Interpretation der Spektren:
+##### Interpretation of the Spectra:
 
-* **Periodische Bewegung:** Das Spektrum zeigt scharfe, diskrete Linien (Delta-Peaks) exakt bei der Erregerfrequenz $\omega_A$ sowie deren ganzzahligen Oberwellen ($2\omega_A, 3\omega_A, \dots$) bzw. Subharmonischen im Falle von Periodenverdopplungen (z.B. $\omega_A/2, \omega_A/4$).
-* **Quasiperiodische Bewegung:** Es treten mehrere scharfe Peaks auf, deren Frequenzverhältnisse irrationale Zahlen bilden. Es gibt keine gemeinsame Grundfrequenz.
-* **Chaotische Bewegung:** Das Spektrum verliert seine diskrete Struktur. Es zeigt einen kontinuierlichen, breitbandigen Untergrund (Rauschteppich), oft kombiniert mit einem $1/f^\alpha$-Abfall zu höheren Frequenzen hin. Einzelne Peaks der treibenden Kraft können dem kontinuierlichen Spektrum überlagert sein.
-
----
+* **Periodic Motion:** The spectrum shows sharp, discrete lines (delta peaks) exactly at the excitation frequency $\omega_A$ as well as its integer harmonics ($2\omega_A, 3\omega_A, \dots$) or subharmonics in the case of period doublings (e.g., $\omega_A/2, \omega_A/4$).
+* **Quasi-periodic Motion:** Several sharp peaks appear, whose frequency ratios form irrational numbers. There is no common fundamental frequency.
+* **Chaotic Motion:** The spectrum loses its discrete structure. It shows a continuous, broadband background (noise floor), often combined with a $1/f^\alpha$ decay towards higher frequencies. Individual peaks of the driving force may be superimposed on the continuous spectrum.
 
 ---
 
-
+---
 
 ## Page 38
-*[Not yet translated]*
+### Chapter VII: Technical Documentation of the Simulation Package
 
+#### 1. Structure of Data Files (`*.DAT`)
 
+The program saves configurations, trajectory points, and stroboscopic sections in binary or ASCII-based data files to enable post-processing with external graphics programs (such as Gnuplot or Origin).
 
-### Kapitel VII: Technische Dokumentation des Simulationspakets
+##### Structure of a Parameter Configuration File (`SETUP.DAT`):
 
-#### 1. Struktur der Datendateien (`*.DAT`)
-
-Das Programm speichert Konfigurationen, Trajektorienpunkte und stroboskopische Schnitte in binären oder ASCII-basierten Datendateien ab, um eine Nachbereitung mit externen Grafikprogrammen (wie z.B. Gnuplot oder Origin) zu ermöglichen.
-
-##### Aufbau einer Parameter-Konfigurationsdatei (`SETUP.DAT`):
-
-Die Datei wird als reine Textdatei (ASCII) zeilenweise eingelesen. Jede Zeile enthält einen numerischen Wert gefolgt von einem Kommentarbezeichner.
+The file is read line by line as a plain text file (ASCII). Each line contains a numerical value followed by a comment identifier.
 
 ```text
-0.2000    ; Masse m in kg
-0.2500    ; Pendellaenge l in m
-0.0200    ; Daempfung b in Nms
-0.2250    ; Anregungsamplitude A in Nm
-4.1760    ; Erregerkreisfrequenz omega_A in 1/s
-0.0000    ; Anfangswinkel Phi_0 in rad
-0.0000    ; Anfangsgeschwindigkeit Omega_0 in rad/s
-0.0100    ; Integrationsschrittweite dt in s
-2000      ; Anzahl der maximal zu berechnenden Schritte
-1         ; Flag fuer Darstellung (1=Phasenraum, 2=Stroboskop)
+0.2000    ; Mass m in kg
+0.2500    ; Pendulum length l in m
+0.0200    ; Damping b in Nms
+0.2250    ; Excitation amplitude A in Nm
+4.1760    ; Exciter angular frequency omega_A in 1/s
+0.0000    ; Initial angle Phi_0 in rad
+0.0000    ; Initial velocity Omega_0 in rad/s
+0.0100    ; Integration step size dt in s
+2000      ; Number of maximum steps to be calculated
+1         ; Flag for display (1=Phase space, 2=Stroboscope)
 
 ```
 
-##### Aufbau einer Trajektoriendatei (`TRAJ.DAT`):
+##### Structure of a Trajectory File (`TRAJ.DAT`):
 
-Beim Aktivieren der Export-Funktion schreibt das Programm die berechneten Bahnpunkte spaltenweise als Fließkommazahlen im Exponentialformat:
+When the export function is activated, the program writes the calculated trajectory points column by column as floating-point numbers in exponential format:
 
 ```text
-# Zeit t [s]    Phi [rad]       Omega [rad/s]
+# Time t [s]    Phi [rad]       Omega [rad/s]
 0.000000e+00    0.000000e+00    0.000000e+00
 1.000000e-02    1.245000e-04    2.489000e-02
 2.000000e-02    4.978000e-04    4.975000e-02
@@ -1157,18 +1103,12 @@ Beim Aktivieren der Export-Funktion schreibt das Programm die berechneten Bahnpu
 
 ---
 
-
-
 ## Page 39
-*[Not yet translated]*
+#### 2. Hardware-level Graphics Programming under MS-DOS
 
+To achieve smooth animations of the pendulum motion on systems of that time without dedicated 3D accelerators, the software utilizes the technique of **Page-Flipping** (double buffering). VGA graphics cards in mode $12\text{h}$ ($640 \times 480$ pixels, 16 colors) have multiple memory banks in video memory (VRAM).
 
-
-#### 2. Hardwarenahe Grafikprogrammierung unter MS-DOS
-
-Um flüssige Animationen der Pendelbewegung auf damaligen Systemen ohne dedizierte 3D-Beschleuniger zu realisieren, nutzt die Software die Technik des **Page-Flippings** (Doppelpufferung). VGA-Grafikkarten im Modus $12\text{h}$ ($640 \times 480$ Pixel, 16 Farben) verfügen über mehrere Speicherbänke im Videospeicher (VRAM).
-
-Während die aktuelle Trajektorie auf der sichtbaren Grafikseite (Video-Page 0) vom Benutzer betrachtet wird, zeichnet der Berechnungsalgorithmus im Hintergrund unbemerkt die nächste Trajektorienänderung auf die unsichtbare Grafikseite (Video-Page 1). Nach Abschluss des Rechenschritts wird dem Grafikcontroller per Registerbefehl signalisiert, die Speicheradresse der anzuzeigenden Seite umzuschalten:
+While the current trajectory is viewed by the user on the visible graphics page (Video-Page 0), the calculation algorithm imperceptibly draws the next trajectory change onto the invisible graphics page (Video-Page 1) in the background. After the calculation step is completed, the graphics controller is signaled via a register command to switch the memory address of the page to be displayed:
 
 ```pascal
 Procedure SwapBuffers;
@@ -1184,264 +1124,221 @@ End;
 
 ```
 
-Durch diese Methode wird ein störendes Bildschirmflackern vollständig eliminiert, da der Bildaufbau synchron zum vertikalen Rückstrahlflug (Vertical Retrace) des Monitors durchgeführt werden kann.
+This method completely eliminates annoying screen flickering, as the image can be built up synchronously with the monitor's vertical retrace.
 
 ---
 
 ---
-
-
 
 ## Page 40
-*[Not yet translated]*
+### Afterword and Outlook
 
+The study of order and chaos in nonlinear oscillations marks a paradigm shift in the natural sciences. Well into the 20th century, the idea was widespread that an exact deterministic mathematical description of a system automatically implies long-term predictability. The discovery of deterministic chaos has fundamentally disproven this assumption.
 
+As you were able to understand for yourself within the framework of this self-study program and the numerical experiments, even the simplest mechanical systems with only a single nonlinear term generate a complexity that eludes any analytical calculation. However, the geometric beauty of strange attractors and the universal mathematical structure of bifurcation cascades show that strict regularities also prevail even in apparent chaos.
 
-### Nachwort und Ausblick
+The methods discussed in this booklet – from the phase portrait to the Poincaré map and the Lyapunov exponents – form the foundation of the modern theory of dynamical systems. Today, they are no longer only applied in mechanics but are indispensable in the modeling of weather phenomena, electronic circuits, chemical reactions (Belousov-Zhabotinsky reaction), as well as in population dynamics and economics.
 
-Das Studium von Ordnung und Chaos bei nichtlinearen Schwingungen markiert einen Paradigmenwechsel in den Naturwissenschaften. Noch bis weit in das 20. Jahrhundert hinein war die Vorstellung weit verbreitet, dass eine exakte deterministische mathematische Beschreibung eines Systems automatisch auch eine langfristige Vorhersagbarkeit impliziert. Die Entdeckung des deterministischen Chaos hat diese Annahme grundlegend widerlegt.
-
-Wie Sie im Rahmen dieses Selbststudienprogramms und der numerischen Experimente selbst nachvollziehen konnten, erzeugen bereits einfachste mechanische Systeme mit nur einem einzigen nichtlinearen Term eine Komplexität, die sich jeder analytischen Berechnung entzieht. Die geometrische Schönheit seltsamer Attraktoren und die universelle mathematische Struktur von Bifurkationskaskaden zeigen jedoch, dass auch im scheinbaren Chaos strenge Gesetzmäßigkeiten herrschen.
-
-Die in diesem Heft behandelten Methoden – vom Phasenportrait über die Poincaré-Abbildung bis hin zu den Lyapunov-Exponenten – bilden das Fundament der modernen Theorie dynamischer Systeme. Sie finden heute nicht mehr nur in der Mechanik Anwendung, sondern sind unverzichtbar bei der Modellierung von Wetterphänomenen, elektronischen Schaltkreisen, chemischen Reaktionen (Belousov-Zhabotinsky-Reaktion) sowie in der Populationsdynamik und der Ökonomie.
-
-Möge dieses Programm Ihr Interesse an den faszinierenden Strukturen der nichtlinearen Welt geweckt haben.
+May this program have sparked your interest in the fascinating structures of the nonlinear world.
 
 ---
 
-**Ende des Begleithefts.**
+**End of the Companion Booklet.**
 *Copyright © 1995 – Soft-Physics Publishing GmbH, Berlin.*
-*Alle Rechte vorbehalten.*
+*All rights reserved.*
 
 ---
 
-Damit sind alle von Ihnen hochgeladenen Seiten vollständig und buchstabengetreu transkribiert. Wenn Sie noch Fragen zu den physikalischen Modellen oder Algorithmen haben, stehe ich Ihnen gerne zur Verfügung!
+All pages you have uploaded have now been fully and literally transcribed. If you have any further questions about the physical models or algorithms, I am happy to assist you!
 
-
-Hier ist die exakte Transkription der nächsten zehn Seiten (Seiten 41 bis 50) Ihres Buches, fortlaufend im gleichen Format:
-
----
+Here is the exact transcription of the next ten pages (pages 41 to 50) of your book, continuously in the same format:
 
 ---
 
-
+---
 
 ## Page 41
-*[Not yet translated]*
+### Appendix F: List of Used Symbols
 
+The following is a summary of the physical and mathematical symbols used in the text and in the simulation masks.
 
-
-### Anhang F: Verzeichnis der verwendeten Formelzeichen
-
-Im Folgenden sind die im Text und in den Simulationsmasken verwendeten physikalischen und mathematischen Symbole zusammenfassend aufgeführt.
-
-| Symbol | Physikalische Bedeutung | Standard-Einheit (SI) |
+| Symbol | Physical Meaning | Standard Unit (SI) |
 | --- | --- | --- |
-| $\phi$ | Auslenkwinkel (Pendel, Pohlsches Rad) | rad / grad |
-| $\Omega, \dot{\phi}$ | Winkelgeschwindigkeit | rad/s / grad/s |
-| $\ddot{\phi}$ | Winkelbeschleunigung | $\text{rad/s}^2$ |
-| $x$ | Lineare Auslenkung (Federschwinger) | m |
-| $\dot{x}$ | Lineare Schwingungsgeschwindigkeit | m/s |
-| $m$ | Masse des Oszillators / der Unwucht | kg |
-| $l$ | Pendellänge / Abstand der Zusatzmasse | m |
-| $I$ | Trägheitsmoment des rotierenden Körpers | $\text{kg}\cdot\text{m}^2$ |
-| $g$ | Schwerebeschleunigung ($9.81$) | $\text{m/s}^2$ |
-| $b$ | Dämpfungs- bzw. Reibungskoeffizient | Nms / Ns/m |
-| $r$ | Reibungsexponent | – |
-| $A$ | Amplitude der erregenden Kraft / des Moments | Nm / N |
-| $\omega_A$ | Kreisfrequenz der äußeren Anregung | 1/s |
-| $T$ | Periodendauer der Schwingung | s |
-| $c$ | Lineare Federkonstante | N/m |
-| $d$ | Kubischer Koeffizient der Rückstellkraft | $\text{N/m}^3$ |
-| $\lambda$ | Lyapunov-Exponent | 1/s |
-| $\psi$ | Phasenwinkel der harmonischen Anregung | rad |
+| $\phi$ | Deflection angle (pendulum, Pohl's wheel) | rad / deg |
+| $\Omega, \dot{\phi}$ | Angular velocity | rad/s / deg/s |
+| $\ddot{\phi}$ | Angular acceleration | $\text{rad/s}^2$ |
+| $x$ | Linear displacement (spring-mass system) | m |
+| $\dot{x}$ | Linear oscillation velocity | m/s |
+| $m$ | Mass of the oscillator / unbalance | kg |
+| $l$ | Pendulum length / distance of the additional mass | m |
+| $I$ | Moment of inertia of the rotating body | $\text{kg}\cdot\text{m}^2$ |
+| $g$ | Gravitational acceleration ($9.81$) | $\text{m/s}^2$ |
+| $b$ | Damping or friction coefficient | Nms / Ns/m |
+| $r$ | Friction exponent | – |
+| $A$ | Amplitude of the exciting force / moment | Nm / N |
+| $\omega_A$ | Angular frequency of the external excitation | 1/s |
+| $T$ | Period of oscillation | s |
+| $c$ | Linear spring constant | N/m |
+| $d$ | Cubic coefficient of the restoring force | $\text{N/m}^3$ |
+| $\lambda$ | Lyapunov exponent | 1/s |
+| $\psi$ | Phase angle of the harmonic excitation | rad |
 
 ---
 
 ---
-
-
 
 ## Page 42
-*[Not yet translated]*
+### Appendix G: Installation Notes for Networks and Windows 95
 
+Although the simulation program was designed as a native MS-DOS application, it can be operated stably in modern system environments as well as in Novell networks, provided certain configurations are adhered to.
 
+#### G.1 Operation under Windows 95
 
-### Anhang G: Installationshinweise für Netzwerke und Windows 95
+Under the Windows 95 operating system, the program can be started either in MS-DOS mode or in a DOS box (DOS prompt). For smooth graphics output without stuttering, creating a PIF file is recommended:
 
-Obwohl das Simulationsprogramm als native MS-DOS-Anwendung konzipiert wurde, lässt es sich in modernen Systemumgebungen sowie in Novell-Netzwerken stabil betreiben, wenn bestimmte Konfigurationen eingehalten werden.
+1. Right-click on the `SCHWING.EXE` file and select **Properties**.
+2. Switch to the **Program** tab and click on **Advanced**.
+3. Activate the **MS-DOS mode** checkbox as well as **Specify current MS-DOS configuration**.
+4. In the **Screen** tab, under "Usage", enter the value **Full-screen**. This prevents Windows from attempting to emulate the VGA signal in a scalable window.
 
-#### G.1 Betrieb unter Windows 95
+#### G.2 Installation in School Networks (e.g., Novell NetWare)
 
-Unter dem Betriebssystem Windows 95 kann das Programm entweder im MS-DOS-Modus oder in einer DOS-Box (DOS-Eingabeaufforderung) gestartet werden. Für eine flüssige Grafikausgabe ohne Ruckeln wird die Erstellung einer PIF-Datei empfohlen:
+When used in physics lessons or computer labs, the program can be stored centrally on a server drive:
 
-1. Klicken Sie mit der rechten Maustaste auf die Datei `SCHWING.EXE` und wählen Sie **Eigenschaften**.
-2. Wechseln Sie zur Registerkarte **Programm** und klicken Sie auf **Erweitert**.
-3. Aktivieren Sie das Kontrollkästchen **MS-DOS-Modus** sowie **Aktuelle MS-DOS-Konfiguration spezifizieren**.
-4. Tragen Sie in der Registerkarte **Bildschirm** unter "Nutzung" den Wert **Vollbild** ein. Dadurch wird verhindert, dass Windows versucht, das VGA-Signal in einem skalierbaren Fenster zu emulieren.
-
-#### G.2 Installation in Schulnetzwerken (z.B. Novell NetWare)
-
-Beim Einsatz im Physikunterricht oder in Computerlaboren kann das Programm zentral auf einem Serverlaufwerk hinterlegt werden:
-
-* Die ausführbare Datei benötigt nur Leserechte (`Read` und `File Scan`).
-* **Wichtig:** Da das Programm temporäre Dateien für den Grafikexport und die Parameter-Konfiguration (`SETUP.DAT`) schreibt, muss das Arbeitsverzeichnis des jeweiligen lokalen Benutzers Schreibrechte (`Write`, `Create`, `Erase`) besitzen. Nutzen Sie hierzu das DOS-Kommando `SET` zur Umleitung temporärer Pfade, falls notwendig.
+* The executable file only requires read permissions (`Read` and `File Scan`).
+* **Important:** Since the program writes temporary files for graphics export and parameter configuration (`SETUP.DAT`), the working directory of the respective local user must have write permissions (`Write`, `Create`, `Erase`). Use the DOS command `SET` to redirect temporary paths, if necessary.
 
 ---
 
 ---
-
-
 
 ## Page 43
-*[Not yet translated]*
+### Appendix H: Further Theoretical Deepenings
 
+#### H.1 The Hamilton Formalism for Nonlinear Systems
 
+For theoretically interested readers, the transition from Newton's equations of motion to Hamiltonian mechanics, which allows for an elegant geometric interpretation of phase space, will be briefly outlined here.
 
-### Anhang H: Weiterführende theoretische Vertiefungen
-
-#### H.1 Das Hamilton-Formalismus für nichtlineare Systeme
-
-Für theoretisch interessierte Leser soll hier kurz der Übergang von den Newtonschen Bewegungsgleichungen zur Hamiltonschen Mechanik skizziert werden, die eine elegante geometrische Interpretation des Phasenraums ermöglicht.
-
-Für das ungedämpfte, freie mathematische Pendel (Abschnitt 2.2) lautet die Lagrange-Funktion $L = T - V$ (Kinetische Energie minus Potenzielle Energie):
+For the undamped, free mathematical pendulum (Section 2.2), the Lagrange function $L = T - V$ (Kinetic Energy minus Potential Energy) is:
 
 $$L(\phi, \dot{\phi}) = \frac{1}{2} m l^2 \dot{\phi}^2 - mgl(1 - \cos\phi)$$
 
-Der kanonisch konjugierte Impuls $p_\phi$ berechnet sich durch Differentiation nach der verallgemeinerten Geschwindigkeit:
+The canonically conjugate momentum $p_\phi$ is calculated by differentiation with respect to the generalized velocity:
 
 $$p_\phi = \frac{\partial L}{\partial \dot{\phi}} = m l^2 \dot{\phi} = I \cdot \Omega$$
 
-Die Hamilton-Funktion $H = T + V$, welche der Gesamtenergie des Systems entspricht, lautet somit:
+The Hamilton function $H = T + V$, which corresponds to the total energy of the system, is thus:
 
 $$H(\phi, p_\phi) = \frac{p_\phi^2}{2 I} + mgl(1 - \cos\phi)$$
 
-Die Hamiltonschen Bewegungsgleichungen bilden ein System zweier gekoppelter Differentialgleichungen erster Ordnung:
+Hamilton's equations of motion form a system of two coupled first-order differential equations:
 
 $$\begin{aligned}
 \dot{\phi} &= \frac{\partial H}{\partial p_\phi} = \frac{p_\phi}{I} \\
 \dot{{p}_\phi} &= -\frac{\partial H}{\partial \phi} = -mgl \sin\phi
 \end{aligned}$$
 
-Dieses System ist exakt äquivalent zu den Gleichungen (2.2.1). Im Phasenraum $(\phi, p_\phi)$ entsprechen die Trajektorien den Höhenlinien der Funktion $H(\phi, p_\phi) = E = \text{const}$. Da die Energie erhalten bleibt, findet bei ungedämpften Systemen keine Phasenraumkontraktion statt; die Divergenz des Vektorfeldes ist identisch Null (Satz von Liouville für konservative Systeme).
+This system is exactly equivalent to equations (2.2.1). In phase space $(\phi, p_\phi)$, the trajectories correspond to the contour lines of the function $H(\phi, p_\phi) = E = \text{const}$. Since energy is conserved, no phase space contraction occurs in undamped systems; the divergence of the vector field is identically zero (Liouville's theorem for conservative systems).
 
 ---
 
 ---
-
-
 
 ## Page 44
-*[Not yet translated]*
+#### H.2 Linearization in the Vicinity of Fixed Points
 
+The qualitative analysis of nonlinear systems typically begins with the determination of fixed points (equilibrium positions) and their stability behavior. A fixed point $(\phi^*, \Omega^*)$ is defined by the vanishing of all time derivatives.
 
-
-#### H.2 Die Linearisierung in der Umgebung von Fixpunkten
-
-Die qualitative Analyse nichtlinearer Systeme beginnt standardmäßig mit der Bestimmung der Fixpunkte (Gleichgewichtslagen) und deren Stabilitätsverhalten. Ein Fixpunkt $(\phi^*, \Omega^*)$ ist dadurch definiert, dass alle zeitlichen Ableitungen verschwinden.
-
-Für das freie Pendel (Gleichung 2.3.1) bedeutet dies:
+For the free pendulum (Equation 2.3.1), this means:
 
 $$\begin{aligned}
 \Omega^* &= 0 \\
 -\frac{b}{I}\Omega^* - \frac{mgl}{I}\sin\phi^* &= 0 \implies \sin\phi^* = 0
 \end{aligned}$$
 
-Daraus ergeben sich im Intervall $[-\pi, +\pi]$ zwei physikalische Fixpunkte:
+This yields two physical fixed points in the interval $[-\pi, +\pi]$:
 
-1. Der Fixpunkt $F_1 = (0, 0)$ – die untere Ruhelage.
-2. Der Fixpunkt $F_2 = (\pi, 0)$ – die obere vertikale Ruhelage.
+1. The fixed point $F_1 = (0, 0)$ – the lower equilibrium position.
+2. The fixed point $F_2 = (\pi, 0)$ – the upper vertical equilibrium position.
 
-Um die Dynamik in der unmittelbaren Nähe eines Fixpunkts zu untersuchen, führt man eine Taylor-Entwicklung (Linearisierung) durch. Wir setzen $\phi = \phi^* + \xi$ und $\Omega = \Omega^* + \eta$, wobei $\xi, \eta \ll 1$ kleine Auslenkungen darstellen.
+To investigate the dynamics in the immediate vicinity of a fixed point, a Taylor expansion (linearization) is performed. We set $\phi = \phi^* + \xi$ and $\Omega = \Omega^* + \eta$, where $\xi, \eta \ll 1$ represent small displacements.
 
-Die Jacobi-Matrix $J$ des Systems (2.3.1) lautet allgemein:
+The Jacobian matrix $J$ of the system (2.3.1) is generally:
 
 $$J(\phi, \Omega) = \begin{pmatrix} 
 0 & 1 \\ 
 -\frac{mgl}{I}\cos\phi & -\frac{b}{I} 
 \end{pmatrix}$$
 
-Aus den Eigenwerten $\mu$ der linearisierten Matrix, bestimmt aus der charakteristischen Gleichung $\det(J - \mu \cdot E) = 0$, lässt sich das Stabilitätsverhalten exakt klassifizieren.
+From the eigenvalues $\mu$ of the linearized matrix, determined from the characteristic equation $\det(J - \mu \cdot E) = 0$, the stability behavior can be precisely classified.
 
 ---
 
 ---
-
-
 
 ## Page 45
-*[Not yet translated]*
+##### Case 1: Investigation of the lower equilibrium position $F_1 = (0, 0)$
 
+If one inserts the coordinates of the lower fixed point into the Jacobi matrix, one obtains due to $\cos(0) = 1$:
 
-
-##### Fall 1: Untersuchung der unteren Ruhelage $F_1 = (0, 0)$
-
-Setzt man die Koordinaten des unteren Fixpunkts in die Jacobi-Matrix ein, erhält man wegen $\cos(0) = 1$:
-
-$$J(0,0) = \begin{pmatrix} 
-0 & 1 \\ 
--\frac{mgl}{I} & -\frac{b}{I} 
+$$J(0,0) = \begin{pmatrix}
+0 & 1 \\
+-\frac{mgl}{I} & -\frac{b}{I}
 \end{pmatrix}$$
 
-Die charakteristische Gleichung lautet:
+The characteristic equation is:
 
 $$\mu^2 + \frac{b}{I}\mu + \frac{mgl}{I} = 0$$
 
-Die Eigenwerte ergeben sich zu:
+The eigenvalues are given by:
 
 $$\mu_{1,2} = -\frac{b}{2I} \pm \sqrt{\left(\frac{b}{2I}\right)^2 - \frac{mgl}{I}}$$
 
-Für kleine Dämpfungen ($b < 2\sqrt{mglI}$) ist der Term unter der Wurzel negativ. Die Eigenwerte sind komplex konjugiert mit einem negativen Realteil:
+For small dampings ($b < 2\sqrt{mglI}$), the term under the square root is negative. The eigenvalues are complex conjugate with a negative real part:
 
 $$\mu_{1,2} = -\gamma \pm i\omega_d$$
 
-Dies entspricht mathematisch einem **stabilen Fokus** (Spirale im Phasenraum). Alle nahen Trajektorien spiralisieren im Laufe der Zeit in den Ursprung hinein, wie experimentell in Abb. 2.3.1b gezeigt.
+This mathematically corresponds to a **stable focus** (spiral in phase space). All nearby trajectories spiral into the origin over time, as experimentally shown in Fig. 2.3.1b.
 
-##### Fall 2: Untersuchung der oberen Ruhelage $F_2 = (\pi, 0)$
+##### Case 2: Investigation of the upper equilibrium position $F_2 = (\pi, 0)$
 
-Setzt man die Koordinaten des oberen Fixpunkts ein, erhält man wegen $\cos(\pi) = -1$:
+If one inserts the coordinates of the upper fixed point, one obtains due to $\cos(\pi) = -1$:
 
-$$J(\pi,0) = \begin{pmatrix} 
-0 & 1 \\ 
-+\frac{mgl}{I} & -\frac{b}{I} 
+$$J(\pi,0) = \begin{pmatrix}
+0 & 1 \\
++\frac{mgl}{I} & -\frac{b}{I}
 \end{pmatrix}$$
 
-Die Eigenwerte berechnen sich hier zu:
+The eigenvalues are calculated here as:
 
 $$\mu_{1,2} = -\frac{b}{2I} \pm \sqrt{\left(\frac{b}{2I}\right)^2 + \frac{mgl}{I}}$$
 
-Da der Term unter der Wurzel stets größer als $(b/2I)^2$ ist, ist die Wurzel reell und größer als der Betrag des Vorfaktors. Wir erhalten zwei reelle Eigenwerte mit unterschiedlichen Vorzeichen: $\mu_1 > 0$ und $\mu_2 < 0$. Ein solcher Fixpunkt wird als **Sattelpunkt** bezeichnet. Er ist instabil, da Trajektorien entlang der Richtung des positiven Eigenwerts exponentiell weggedrückt werden.
+Since the term under the square root is always greater than $(b/2I)^2$, the root is real and greater than the absolute value of the prefactor. We obtain two real eigenvalues with different signs: $\mu_1 > 0$ and $\mu_2 < 0$. Such a fixed point is called a **saddle point**. It is unstable because trajectories are exponentially pushed away along the direction of the positive eigenvalue.
 
 ---
 
 ---
-
-
 
 ## Page 46
-*[Not yet translated]*
+#### H.3 Analytical Approximation for the Amplitude Behavior at Large Displacements
 
-
-
-#### H.3 Analytische Näherung für das Amplitudenverhalten bei großen Ausschlägen
-
-Wie in Abschnitt 2.2 dargelegt, wächst die Periodendauer $T$ des ungedämpften freien Pendels mit zunehmender Amplitude $\phi_m$. Eine exakte analytische Berechnung führt auf ein elliptisches Integral erster Gattung, das sich nicht geschlossen auflösen lässt:
+As explained in Section 2.2, the period $T$ of the undamped free pendulum increases with increasing amplitude $\phi_m$. An exact analytical calculation leads to an elliptic integral of the first kind, which cannot be solved in closed form:
 
 $$T = 4 \sqrt{\frac{l}{2g}} \int_0^{\phi_m} \frac{d\phi}{\sqrt{\cos\phi - \cos\phi_m}} = T_0 \cdot \frac{2}{\pi} K\left(\sin\frac{\phi_m}{2}\right)$$
 
-wobei $T_0 = 2\pi\sqrt{l/g}$ die Schwingungsdauer für infinitesimale Amplituden ist. Mittels einer Taylor-Reihenentwicklung der Funktion $K$ lässt sich eine präzise Näherungsformel für die Praxis ableiten:
+where $T_0 = 2\pi\sqrt{l/g}$ is the oscillation period for infinitesimal amplitudes. By means of a Taylor series expansion of the function $K$, a precise approximation formula for practical use can be derived:
 
 $$T \approx T_0 \left( 1 + \frac{1}{4}\sin^2\left(\frac{\phi_m}{2}\right) + \frac{9}{64}\sin^4\left(\frac{\phi_m}{2}\right) + \dots \right)$$
 
-Für Winkel bis zu $\phi_m \approx 90^\circ$ reicht meist die erste Korrekturstufe aus, die oft auch vereinfacht als Borda-Formel geschrieben wird:
+For angles up to $\phi_m \approx 90^\circ$, the first correction term is usually sufficient, which is often also written in a simplified form as the Borda formula:
 
-$$T \approx T_0 \left( 1 + \frac{\phi_m^2}{16} \right) \quad (\phi_m \text{ in Radiant})$$
+$$T \approx T_0 \left( 1 + \frac{\phi_m^2}{16} \right) \quad (\phi_m \text{ in radians})$$
 
-##### Vergleichstabelle für die Laborpraxis (Aufgabe 1):
+##### Comparison Table for Laboratory Practice (Task 1):
 
-Die folgende Tabelle zeigt die Abweichungen zwischen der linearen Näherung und der exakten nichtlinearen Periodendauer, die Sie in Aufgabe 1 numerisch verifizieren können.
+The following table shows the deviations between the linear approximation and the exact nonlinear period, which you can numerically verify in Task 1.
 
-| Amplitude $\phi_m$ (grad) | Amplitude $\phi_m$ (rad) | Relativer Faktor $T/T_0$ | Abweichung zur harmonischen Schwingung |
+| Amplitude $\phi_m$ (deg) | Amplitude $\phi_m$ (rad) | Relative Factor $T/T_0$ | Deviation from harmonic oscillation |
 | --- | --- | --- | --- |
 | $5^\circ$ | $0.0873$ | $1.0005$ | $+0.05\%$ |
 | $20^\circ$ | $0.3491$ | $1.0077$ | $+0.77\%$ |
@@ -1454,169 +1351,132 @@ Die folgende Tabelle zeigt die Abweichungen zwischen der linearen Näherung und 
 
 ---
 
-
-
 ## Page 47
-*[Not yet translated]*
+### Appendix I: Complementary Exercise Collection (Advanced Level)
 
+The following additional exercises are aimed at students in higher semesters and require a combination of numerical simulation and analytical derivation.
 
+#### Exercise 7: Melnikov Method for Chaos Prediction
 
-### Anhang I: Komplementäre Aufgabensammlung (Fortgeschrittenen-Niveau)
+For the driven pendulum, the transition from regular dynamics to chaotic behavior can be approximately analytically delimited. The Melnikov method investigates the intersection of stable and unstable manifolds (separatrix splitting) under the influence of a small perturbation (weak damping $b$ and small amplitude $A$).
 
-Die folgenden Zusatzaufgaben richten sich an Studierende höherer Semester und erfordern eine Kombination aus numerischer Simulation und analytischer Herleitung.
-
-#### Aufgabe 7: Melnikov-Methode zur Chaos-Vorhersage
-
-Für das getriebene Pendel lässt sich der Übergang von regulärer Dynamik zu chaotischem Verhalten näherungsweise analytisch eingrenzen. Die Melnikov-Methode untersucht das Schneiden der stabilen und instabilen Mannigfaltigkeiten (Separatrix-Splitting) unter dem Einfluss einer kleinen Störung (schwache Dämpfung $b$ und kleine Amplitude $A$).
-
-1. Der kritische Zustand ist erreicht, wenn die Melnikov-Funktion $M(t_0)$ Nullstellen besitzt. Für das System (1.1.2) lautet die theoretische Bedingung für chaotische Ausreißer:
+1. The critical state is reached when the Melnikov function $M(t_0)$ has zeros. For system (1.1.2), the theoretical condition for chaotic excursions is:
 $$\frac{A}{b} \ge \frac{4g}{l \cdot \omega_A \cdot \cosh\left(\frac{\pi \omega_A}{2 \omega_0}\right)}$$
 
+2. Verify this analytical limit in the experimental part of the program. Choose extremely small values for damping and excitation and test whether chaotic behavior can already be detected just below the critical ratio $A/b$.
 
-2. Überprüfen Sie diese analytische Grenze im Experimentierteil des Programms. Wählen Sie extrem kleine Werte für Dämpfung und Anregung und testen Sie, ob knapp unterhalb des kritischen Verhältnisses $A/b$ bereits chaotisches Verhalten detektiert werden kann.
+#### Exercise 8: Investigation of the Fractal Basin of Attraction
 
-#### Aufgabe 8: Untersuchung des fraktalen Einzugsgebiets
+If two attractors coexist in the system (as in Section 2.4, Fig. 2.4.3), the separatrix determines the fate of the trajectory.
 
-Koexistieren im System zwei Attraktoren (wie in Abschnitt 2.4, Abb. 2.4.3), entscheidet die Separatrix über das Schicksal der Trajektorie.
-
-1. Nutzen Sie das Programm, um das Einzugsgebiet systematisch zu rastern. Variieren Sie dazu die Anfangsbedingungen $\phi_0$ im Bereich von $-180^\circ$ bis $+180^\circ$ und $\dot{\phi}_0$ im Bereich von $-5$ bis $+5$ in Schritten von $2^\circ$.
-2. Markieren Sie manuell auf einem Millimeterpapier Punkte, die im kleinen Grenzzyklus enden, mit einem Kreuz und Punkte, die im großen Grenzzyklus enden, mit einem Kreis.
-3. Analysieren Sie die Grenzlinie (Separatrix). Zeigt sie eine glatte Geometrie oder weist sie selbstähnliche, fraktale Strukturen auf? (Stichwort: *Fractal Basin Boundaries* [13]).
-
----
+1. Use the program to systematically raster the basin of attraction. To do this, vary the initial conditions $\phi_0$ in the range from $-180^\circ$ to $+180^\circ$ and $\dot{\phi}_0$ in the range from $-5$ to $+5$ in steps of $2^\circ$.
+2. Manually mark on graph paper points that end in the small limit cycle with a cross and points that end in the large limit cycle with a circle.
+3. Analyze the boundary line (separatrix). Does it show a smooth geometry or does it exhibit self-similar, fractal structures? (Keyword: *Fractal Basin Boundaries* [13]).
 
 ---
 
-
+---
 
 ## Page 48
-*[Not yet translated]*
+### Appendix J: List of Numerical Experiments and System Parameters
 
+For a quick reproduction of the graphics printed in the learning section, all exact parameter values and the corresponding mask configurations are tabulated below.
 
+#### J.1 Standard Configurations for the Mathematical Pendulum
 
-### Anhang J: Verzeichnis der numerischen Experimente und Systemparameter
+In all examples of the first chapter, unless explicitly stated otherwise, the following basic mechanical parameters were used:
 
-Für eine schnelle Reproduktion der im Lernteil abgedruckten Grafiken sind nachfolgend alle exakten Parameterwerte und die zugehörigen Masken-Konfigurationen tabellarisch zusammengestellt.
+* Mass of the pendulum $m = 0.2\text{ kg}$
+* Length of the massless rod $l = 0.25\text{ m}$
+* Moment of inertia $I = m \cdot l^2 = 0.0125\text{ kg}\cdot\text{m}^2$
+* Natural angular frequency of the linear approximation $\omega_0 = \sqrt{g/l} \approx 6.264\text{ s}^{-1}$
 
-#### J.1 Standard-Konfigurationen für das mathematische Pendel
+##### Overview of Simulation Datasets:
 
-In allen Beispielen des ersten Kapitels wurden, sofern nicht explizit anders angegeben, die folgenden mechanischen Grundparameter verwendet:
-
-* Masse des Pendels $m = 0.2\text{ kg}$
-* Länge der masselosen Stange $l = 0.25\text{ m}$
-* Trägheitsmoment $I = m \cdot l^2 = 0.0125\text{ kg}\cdot\text{m}^2$
-* Eigenkreisfrequenz der Linearnäherung $\omega_0 = \sqrt{g/l} \approx 6.264\text{ s}^{-1}$
-
-##### Übersicht der Simulations-Datensätze:
-
-| Abbildung im Text | Dämpfung $b$ (Nms) | Treiber $A$ (Nm) | Frequenz $\omega_A$ (1/s) | Anfangswerte $(\phi_0, \Omega_0)$ | Beobachtetes Phänomen |
+| Figure in Text | Damping $b$ (Nms) | Driver $A$ (Nm) | Frequency $\omega_A$ (1/s) | Initial Values $(\phi_0, \Omega_0)$ | Observed Phenomenon |
 | --- | --- | --- | --- | --- | --- |
-| **Abb. 2.2.1a** | $0.0000$ | $0.0000$ | $0.0000$ | $(10^\circ, 0.0)$ | Harmonische Schwingung, Periode konstant |
-| **Abb. 2.2.1b** | $0.0000$ | $0.0000$ | $0.0000$ | $(120^\circ, 0.0)$ | Nichtlineare Verzerrung, Periode vergrößert |
-| **Abb. 2.2.2** | $0.0000$ | $0.0000$ | $0.0000$ | $(179.9^\circ, 0.0)$ | Extremes Plateau in der Nähe des Sattelpunkts |
-| **Abb. 2.3.1b** | $0.0200$ | $0.0000$ | $0.0000$ | $(150^\circ, 2.0)$ | Phasenraumkontraktion auf Fixpunkt-Attraktor |
-| **Abb. 2.4.1b** | $0.0200$ | $0.2900$ | $4.1760$ | $(0^\circ, 0.0)$ | Transienter Einschwingvorgang auf T1-Grenzzyklus |
-| **Abb. 2.5.2b** | $0.0400$ | $0.5350$ | $4.1760$ | $(10^\circ, 0.0)$ | Periodenverdopplung (2 Punkte im Poincaré-Schnitt) |
-| **Abb. 2.5.4b** | $0.0400$ | $0.5500$ | $4.1760$ | $(0^\circ, 0.0)$ | Deterministisches Chaos, Seltsamer Attraktor |
+| **Abb. 2.2.1a** | $0.0000$ | $0.0000$ | $0.0000$ | $(10^\circ, 0.0)$ | Harmonic oscillation, period constant |
+| **Abb. 2.2.1b** | $0.0000$ | $0.0000$ | $0.0000$ | $(120^\circ, 0.0)$ | Nonlinear distortion, period increased |
+| **Abb. 2.2.2** | $0.0000$ | $0.0000$ | $0.0000$ | $(179.9^\circ, 0.0)$ | Extreme plateau near the saddle point |
+| **Abb. 2.3.1b** | $0.0200$ | $0.0000$ | $0.0000$ | $(150^\circ, 2.0)$ | Phase space contraction to fixed-point attractor |
+| **Abb. 2.4.1b** | $0.0200$ | $0.2900$ | $4.1760$ | $(0^\circ, 0.0)$ | Transient settling process to T1 limit cycle |
+| **Abb. 2.5.2b** | $0.0400$ | $0.5350$ | $4.1760$ | $(10^\circ, 0.0)$ | Period doubling (2 points in Poincaré section) |
+| **Abb. 2.5.4b** | $0.0400$ | $0.5500$ | $4.1760$ | $(0^\circ, 0.0)$ | Deterministic Chaos, Strange Attractor |
 
 ---
 
 ---
-
-
 
 ## Page 49
-*[Not yet translated]*
+### Appendix K: Notes on Numerical Precision and Hardware Influences
 
+When performing long-running chaotic simulations (e.g., when generating the dense bifurcation diagram in Fig. 2.6.1), subtle deviations can occur between the results from different computers. This characteristic is essentially not a software malfunction, but a direct consequence of the mathematical nature of chaos.
 
+#### K.1 Rounding Error Amplification
 
-### Anhang K: Hinweise zur numerischen Präzision und Hardware-Einflüssen
+Since the Lyapunov exponent is positive in the chaotic regime ($\lambda > 0$), the distance between two trajectories increases by a factor of $e^{\lambda t}$ per unit of time. This applies not only to deviations in the physical initial conditions (as in Exercise 6), but also to purely numerical errors.
 
-Bei der Durchführung langandauernder chaotischer Simulationen (wie z.B. bei der Generierung des dichten Bifurkationsdiagramms in Abb. 2.6.1) kann es zu feinen Abweichungen zwischen den Ergebnissen verschiedener Computer kommen. Diese Eigenschaft ist im Wesentlichen keine Fehlfunktion der Software, sondern eine direkte Konsequenz der mathematischen Natur des Chaos.
+A typical PC calculates floating-point numbers according to the IEEE-754-Standard with a precision of 64 Bit (Double Precision), which corresponds to approximately 15-17 significant decimal places. The unavoidable rounding error at the smallest integration step is thus unstoppably amplified in the chaotic domain. After a characteristic time duration – the so-called **Lyapunov time** $t_L \approx 1/\lambda$ – the error has grown to the macroscopic level. From this moment on, the calculated curve no longer describes the exact physical path of the real system, but a so-called "pseudotrajectory".
 
-#### K.1 Rundungsfehler-Verstärkung
-
-Da im chaotischen Regime der Lyapunov-Exponent positiv ist ($\lambda > 0$), wird der Abstand zweier Trajektorien pro Zeiteinheit um den Faktor $e^{\lambda t}$ vergrößert. Dies gilt nicht nur für Abweichungen in den physikalischen Anfangsbedingungen (wie in Aufgabe 6), sondern auch für rein numerische Fehler.
-
-Ein typischer PC berechnet Fließkommazahlen nach dem IEEE-754-Standard mit einer Genauigkeit von 64 Bit (Double Precision), was ca. 15-17 signifikanten Dezimalstellen entspricht. Der unvermeidbare Rundungsfehler beim kleinsten Integrationsschritt wird somit im chaotischen Bereich unaufhaltsam verstärkt. Nach einer charakteristischen Zeitdauer – der sogenannten **Lyapunov-Zeit** $t_L \approx 1/\lambda$ – ist der Fehler auf die Makroebene angewachsen. Ab diesem Moment beschreibt die berechnete Kurve nicht mehr die exakte physikalische Bahn des realen Systems, sondern eine sogenannte "Pseudotrajektorie".
-
-> **Wichtiger Hinweis für die Lehre:**
-> Dank des *Shadowing-Theorems* (Beschattungssatz) der Topologie ist das qualitative Ergebnis im Phasenraum (die fraktale Geometrie des seltsamen Attraktors und die statistischen Kennwerte) trotz der Rundungsfehler mathematisch absolut verlässlich. Es existiert für jede numerische Pseudotrajektorie eine echte, exakte Trajektorie zu leicht veränderten Anfangsbedingungen, die exakt denselben Pfad beschreibt.
+> **Important Note for Teaching:**
+> Thanks to the *Shadowing-Theorem* (Beschattungssatz) of topology, the qualitative result in phase space (the fractal geometry of the strange attractor and the statistical characteristics) is mathematically absolutely reliable despite rounding errors. For every numerical pseudotrajectory, there exists a true, exact trajectory with slightly altered initial conditions that describes exactly the same path.
 
 ---
 
 ---
-
-
 
 ## Page 50
-*[Not yet translated]*
+#### K.2 Influence of the Mathematical Coprocessor (FPU)
 
+Should you perform calculations on systems without a coprocessor using the emulation parameter `/E` (see Section IV.4), the software utilizes internal 32-bit routines to emulate the mathematical operations.
 
-
-#### K.2 Einfluss des mathematischen Koprozessors (FPU)
-
-Sollten Sie Berechnungen auf Systemen ohne Koprozessor unter Verwendung des Emulationsparameters `/E` (siehe Abschnitt IV.4) durchführen, nutzt die Software interne 32-Bit-Routinen zur Nachbildung der mathematischen Operationen.
-
-Dies führt dazu, dass der Punkt des Umschlagens in eine chaotische Phase im Bifurkationsdiagramm im Vergleich zu Berechnungen mit einer echten Hardware-FPU (Intel 80387) minimal verschoben sein kann. Für quantitative Vergleiche in Versuchsprotokollen wird daher dringend empfohlen, alle Messreihen innerhalb einer Arbeitsgruppe auf baugleichen Rechnerarchitekturen durchzuführen.
+This may result in the point of transition into a chaotic phase in the bifurcation diagram being minimally shifted compared to calculations performed with a genuine hardware FPU (Intel 80387). For quantitative comparisons in experimental protocols, it is therefore strongly recommended to conduct all measurement series within a working group on identical computer architectures.
 
 ---
 
-### Verzeichnis der im Text erwähnten Programmdateien
+### Directory of Program Files Mentioned in the Text
 
-* `SCHWING.EXE` – Das ausführbare Hauptprogramm (Simulationsumgebung).
-* `SCHWING.OVR` – Overlay-Datei für die Speicherverwaltung unter MS-DOS.
-* `EGAVGA.BGI` – Grafiktreiber für EGA- und VGA-Bildschirme.
-* `LERN.TXT` – Online-Hilfe und Begleittext für den Lernteil.
-* `SETUP.DAT` – Standard-Parameterdatei (wird automatisch generiert).
-* `READ.ME` – Aktuelle Last-Minute-Hinweise zur Hardwarekompatibilität.
+* `SCHWING.EXE` – The main executable program (simulation environment).
+* `SCHWING.OVR` – Overlay file for memory management under MS-DOS.
+* `EGAVGA.BGI` – Graphics driver for EGA and VGA screens.
+* `LERN.TXT` – Online help and accompanying text for the learning section.
+* `SETUP.DAT` – Standard parameter file (automatically generated).
+* `READ.ME` – Current last-minute notes on hardware compatibility.
 
 ---
 
-**Ende des technischen Anhangs.**
-*Dieses Begleitmaterial ist integraler Bestandteil des Softwarepakets "Nichtlineare Dynamik".*
+**End of the technical appendix.**
+*This accompanying material is an integral part of the "Nonlinear Dynamics" software package.*
 *Printed in Germany 1995.*
 
 ---
 
-
-
 ## Page 51
-*[Not yet translated]*
+### Appendix L: Supplementary Graphics for the Simulation Models
 
-
-
-### Anhang L: Ergänzende Grafiken zu den Simulationsmodellen
-
-Die folgenden Abbildungen zeigen typische Bildschirmausgaben des Programms im hochauflösenden VGA-Modus, wie sie bei der Durchführung der Laborübungen (Kapitel II) aufgezeichnet werden können.
+The following figures show typical screen outputs of the program in high-resolution VGA mode, as they can be recorded during the execution of the laboratory exercises (Chapter II).
 
 ![Figure L.1: Phase portrait of the Duffing Oscillator showing the classic double-scroll chaotic attractor trajectory looping symmetrically between two main wells.]
-Abb. L.1: Phasenportrait des Duffing-Oszillators im chaotischen Zustand (Harte Feder mit harmonischer Anregung, vgl. Aufgabe 4).
-Systemparameter: $c = -1.0, d = 1.0, b = 0.3, A = 0.4, \omega_A = 1.4$.
+Fig. L.1: Phase portrait of the Duffing oscillator in the chaotic state (Hard spring with harmonic excitation, cf. Task 4).
+System parameters: $c = -1.0, d = 1.0, b = 0.3, A = 0.4, \omega_A = 1.4$.
 
 ![Figure L.2: Stroboskopische Abbildung (Poincaré-Schnitt) of the Duffing attractor, displaying highly resolved fractal filaments and stretching-and-folding structures.]
-Abb. L.2: Stroboskopische Abbildung (Poincaré-Schnitt) zu der in Abb. L.1 gezeigten chaotischen Bewegung. Die fraktale Filamentstruktur des seltsamen Attraktors wird durch das Ausblenden der transienten Übergänge deutlich sichtbar.
+Fig. L.2: Stroboscopic map (Poincaré section) for the chaotic motion shown in Fig. L.1. The fractal filament structure of the strange attractor becomes clearly visible by hiding the transient transitions.
 
 ---
 
 ---
-
-
 
 ## Page 52
-*[Not yet translated]*
+### Appendix M: Numerical Values for Root Finding
 
+In the analytical calculation of fixed points and bifurcation boundaries, transcendental equations arise. The following are important reference values listed for numerical adjustment routines.
 
+#### M.1 The first ten zeros of the Bessel function of the first kind $J_0(x)$
 
-### Anhang M: Numerische Werte zur Nullstellenbestimmung
+These values are particularly needed as critical frequency ratios in the theoretical investigation of frequency-modulated systems and coupled oscillators.
 
-Bei der analytischen Berechnung von Fixpunkten und Bifurkationsgrenzen treten transzendente Gleichungen auf. Nachfolgend sind wichtige Referenzwerte für numerische Abgleichsroutinen gelistet.
-
-#### M.1 Die ersten zehn Nullstellen der Besselfunktion erster Gattung $J_0(x)$
-
-Diese Werte werden insbesondere bei der theoretischen Untersuchung von frequenzmodulierten Systemen und gekoppelten Oszillatoren als kritische Frequenzverhältnisse benötigt.
-
-| Ordnung $n$ | Nullstelle $x_n$ | $J_1(x_n)$ | Ordnung $n$ | Nullstelle $x_n$ | $J_1(x_n)$ |
+| Order $n$ | Zero $x_n$ | $J_1(x_n)$ | Order $n$ | Zero $x_n$ | $J_1(x_n)$ |
 | --- | --- | --- | --- | --- | --- |
 | **1** | $2.40482556$ | $+0.5191$ | **6** | $18.07106397$ | $-0.2051$ |
 | **2** | $5.52007811$ | $-0.3403$ | **7** | $21.21163663$ | $+0.1903$ |
@@ -1624,17 +1484,17 @@ Diese Werte werden insbesondere bei der theoretischen Untersuchung von frequenzm
 | **4** | $11.79153444$ | $-0.2325$ | **9** | $27.49347913$ | $+0.1686$ |
 | **5** | $14.93091770$ | $+0.2114$ | **10** | $30.63460647$ | $-0.1603$ |
 
-#### M.2 Die Feigenbaum-Konstanten (Universelle Skalenfaktoren)
+#### M.2 The Feigenbaum Constants (Universal Scaling Factors)
 
-Für Systeme, die über eine Kaskade von Periodenverdopplungen ins Chaos übergehen (Feigenbaum-Szenario, vgl. Abschnitt 2.6), gelten die folgenden universellen Grenzwerte:
+For systems that transition into chaos via a cascade of period-doublings (Feigenbaum scenario, cf. Section 2.6), the following universal limit values apply:
 
-* **Das Bifurkationsverhältnis ($\delta$):**
-Bestimmt das exponentielle Verhältnis der Parameterintervalle zwischen aufeinanderfolgenden Verdopplungen:
+* **The Bifurcation Ratio ($\delta$):**
+Determines the exponential ratio of parameter intervals between successive doublings:
 $$\delta = \lim_{n \rightarrow \infty} \frac{\mu_n - \mu_{n-1}}{\mu_{n+1} - \mu_n} \approx 4.669201609102990$$
 
 
-* **Der Skalenfaktor für die Pitchfork-Breite ($\alpha$):**
-Beschreibt das Skalierungsverhalten der geometrischen Abstände der Bifurkationszweige:
+* **The Scaling Factor for the Pitchfork Width ($\alpha$):**
+Describes the scaling behavior of the geometric distances of the bifurcation branches:
 $$\alpha = \lim_{n \rightarrow \infty} \frac{d_n}{d_{n+1}} \approx 2.502907875095892$$
 
 
@@ -1643,16 +1503,10 @@ $$\alpha = \lim_{n \rightarrow \infty} \frac{d_n}{d_{n+1}} \approx 2.50290787509
 
 ---
 
-
-
 ## Page 53
-*[Not yet translated]*
+### Appendix N: Source Code for Data Conversion (ASCII Export)
 
-
-
-### Anhang N: Quellcode zur Daten-Konvertierung (ASCII-Export)
-
-Die vom Simulationsprogramm generierten Binärdateien (`*.BIN`) können mit dem folgenden kleinen Hilfsprogramm in lesbare Textdateien (ASCII) umgewandelt werden, falls kein direkter Export über das Menü durchgeführt wurde.
+The binary files (`*.BIN`) generated by the simulation program can be converted into readable text files (ASCII) using the following small utility program, if no direct export was performed via the menu.
 
 ```pascal
 Program Bin2Ascii;
@@ -1674,9 +1528,9 @@ Var
 
 Begin
   ClrScr;
-  Write('Geben Sie den Namen der Binaerdatei ein (z.B. TRAJ.BIN): ');
+  Write('Enter the name of the binary file (e.g., TRAJ.BIN): ');
   ReadLn(NameIn);
-  Write('Geben Sie den Namen der Ausgabedatei ein (z.B. DATA.TXT): ');
+  Write('Enter the name of the output file (e.g., DATA.TXT): ');
   ReadLn(NameOut);
   
   Assign(InFile, NameIn);
@@ -1684,7 +1538,7 @@ Begin
   Assign(OutFile, NameOut);
   Rewrite(OutFile);
   
-  WriteLn(OutFile, '# Zeit [s]', #9, 'Winkel [rad]', #9, 'Omega [rad/s]');
+  WriteLn(OutFile, '# Time [s]', #9, 'Angle [rad]', #9, 'Omega [rad/s]');
   
   While Not Eof(InFile) Do
   Begin
@@ -1694,7 +1548,7 @@ Begin
   
   Close(InFile);
   Close(OutFile);
-  WriteLn('Konvertierung erfolgreich abgeschlossen.');
+  WriteLn('Conversion successfully completed.');
 End.
 
 ```
@@ -1703,333 +1557,271 @@ End.
 
 ---
 
-
-
 ## Page 54
-*[Not yet translated]*
+### Appendix O: Calibration Data for Pohl's Torsional Pendulum
 
+For users operating the experimental "Pohl's Wheel" in the laboratory (cf. Appendix C), the factory specifications of the standard model are listed below. These data serve as an ideal starting configuration for a realistic simulation.
 
+#### O.1 Mechanical Dimensions and Material Constants
 
-### Anhang O: Kalibrierungsdaten für das Pohlsche Drehpendel
+* Diameter of the copper flywheel: $D = 220\text{ mm}$
+* Total mass of the rotating system: $M = 0.385\text{ kg}$
+* Moment of inertia of the copper disk: $I_0 = 1.85 \cdot 10^{-3}\text{ kg}\cdot\text{m}^2$
+* Restoring constant of the helical spring (torsional spring constant): $D^* = 0.0245\text{ Nm/rad}$
+* Maximum permissible twist angle: $\phi_{\max} = \pm 190^\circ$
 
-Für Anwender, die das experimentelle "Pohlsche Rad" im Labor betreiben (vgl. Anhang C), sind nachfolgend die Werksspezifikationen des Standardmodells aufgeführt. Diese Daten dienen als ideale Startkonfiguration für eine realitätsnahe Simulation.
+#### O.2 Electrical Specifications of the Eddy Current Brake
 
-#### O.1 Mechanische Abmessungen und Materialkonstanten
-
-* Durchmeser des Kupfer-Drehrades: $D = 220\text{ mm}$
-* Gesamtmasse des rotierenden Systems: $M = 0.385\text{ kg}$
-* Trägheitsmoment der Kupferscheibe: $I_0 = 1.85 \cdot 10^{-3}\text{ kg}\cdot\text{m}^2$
-* Richtgröße der Spiralfeder (Torsionsfederkonstante): $D^* = 0.0245\text{ Nm/rad}$
-* Maximal zulässiger Verdrehwinkel: $\phi_{\max} = \pm 190^\circ$
-
-#### O.2 Elektrische Spezifikationen der Wirbelstrombremse
-
-Die Bremswirkung wird über den Stromfluss $I_B$ in den Feldspulen der Elektromagnete reguliert. Die Dämpfungskonstante $b$ verhält sich näherungsweise quadratisch zur angelegten Stromstärke:
+The braking effect is regulated via the current flow $I_B$ in the field coils of the electromagnets. The damping constant $b$ behaves approximately quadratically with the applied current strength:
 
 $$b(I_B) \approx \kappa \cdot I_B^2,$$
 
-wobei der Apparatekoeffizient für dieses Modell mit $\kappa \approx 0.0115\text{ Nms/A}^2$ bestimmt wurde.
+where the apparatus coefficient for this model was determined to be $\kappa \approx 0.0115\text{ Nms/A}^2$.
 
-##### Referenztabelle zur Dämpfungsjustierung:
+##### Reference Table for Damping Adjustment:
 
-| Bremsstrom $I_B$ (A) | Dämpfungskoeffizient $b$ (Nms) | Abklingkonstante $\gamma$ (1/s) | Charakter des Systems |
+| Brake Current $I_B$ (A) | Damping Coefficient $b$ (Nms) | Decay Constant $\gamma$ (1/s) | System Character |
 | --- | --- | --- | --- |
-| `0.0` | $0.0002$ | $0.054$ | Fast ungedämpft |
-| `0.2` | $0.0007$ | $0.189$ | Schwache Dämpfung |
-| `0.5` | $0.0031$ | $0.838$ | Schwingfall (Praktikum) |
-| `1.0` | $0.0117$ | $3.162$ | Starke Dämpfung |
-| `1.5` | $0.0261$ | $7.054$ | Kriechgrenze erreicht |
+| `0.0` | $0.0002$ | $0.054$ | Almost undamped |
+| `0.2` | $0.0007$ | $0.189$ | Weak damping |
+| `0.5` | $0.0031$ | $0.838$ | Oscillatory case (Lab course) |
+| `1.0` | $0.0117$ | $3.162$ | Strong damping |
+| `1.5` | $0.0261$ | $7.054$ | Creep limit reached |
 
 ---
 
 ---
-
-
 
 ## Page 55
-*[Not yet translated]*
+### Appendix P: Mathematical Supplements to Nonlinear Potentials
 
+The dynamic behavior of an undamped, unforced system can be directly derived from the topology of its potential landscape $V(x)$. For a one-dimensional system of the form $\ddot{x} = -\frac{dV}{dx}$, the total energy corresponds to a conserved quantity.
 
+#### P.1 The Potential of the Duffing Oscillator
 
-### Anhang P: Mathematische Ergänzungen zu nichtlinearen Potentialen
-
-Das dynamische Verhalten eines ungedämpften, ungetriebenen Systems lässt sich direkt aus der Topologie seiner Potentiallandschaft $V(x)$ ableiten. Für ein eindimensionales System der Form $\ddot{x} = -\frac{dV}{dx}$ entspricht die Gesamtenergie einer Erhaltungsgröße.
-
-#### P.1 Das Potential des Duffing-Oszillators
-
-Die Bewegungsgleichung des freien Duffing-Oszillators lautet:
+The equation of motion of the free Duffing oscillator is:
 
 $$\ddot{x} + c \cdot x + d \cdot x^3 = 0$$
 
-Das zugehörige mechanische Potential ergibt sich durch Integration zu:
+The corresponding mechanical potential is obtained by integration as:
 
 $$V(x) = \int (c \cdot x + d \cdot x^3) dx = \frac{1}{2}c \cdot x^2 + \frac{1}{4}d \cdot x^4$$
 
-Man unterscheidet je nach Vorzeichen der Parameter zwei fundamentale Fälle:
+One distinguishes two fundamental cases depending on the sign of the parameters:
 
-##### 1. Das "Harte Feder"-Potential ($c > 0, d > 0$)
+##### 1. The "Hard Spring" Potential ($c > 0, d > 0$)
 
-Das Potential besitzt ein einzelnes, parabolisches Minimum im Ursprung ($x=0$). Die Rückstellkraft wächst überproportional mit der Auslenkung. Alle Trajektorien sind globale, geschlossene Schwingungen.
+The potential has a single, parabolic minimum at the origin ($x=0$). The restoring force grows disproportionately with the displacement. All trajectories are global, closed oscillations.
 
-##### 2. Das "Doppelmulden-Potential" (*Double-Well*) ($c < 0, d > 0$)
+##### 2. The "Double-Well" Potential (*Double-Well*) ($c < 0, d > 0$)
 
-Dieses System beschreibt eine elastische Knickstange oder ein inverses Pendel zwischen zwei Magneten. Der Ursprung $x=0$ wird zu einem lokalen Maximum (instabiler Sattelpunkt). Es entstehen zwei neue, symmetrische Minima (stabile Fixpunkte) bei:
+This system describes an elastic buckling rod or an inverted pendulum between two magnets. The origin $x=0$ becomes a local maximum (unstable saddle point). Two new, symmetric minima (stable fixed points) arise at:
 
 $$x^*_{\pm} = \pm \sqrt{-\frac{c}{d}}$$
 
-Trajektorien mit geringer Gesamtenergie oszillieren lokal in einer der beiden Mulden. Trajektorien mit hoher Energie kreuzen das zentrale Maximum und umschlingen beide Fixpunkte.
+Trajectories with low total energy oscillate locally in one of the two wells. Trajectories with high energy cross the central maximum and encircle both fixed points.
 
 ---
 
 ---
-
-
 
 ## Page 56
-*[Not yet translated]*
+### Appendix Q: Numerical Step Size Control in Comparison
 
+Although the program operates by default with a fixed step size $dt$ (cf. Section IV.4), the option for an adaptive Runge-Kutta-Fehlberg method (RKF45) is prepared in the mathematical module. This serves for control in the presence of extremely steep gradients in phase space.
 
+#### Q.1 The Principle of Embedded Methods
 
-### Anhang Q: Numerische Schrittweitensteuerung im Vergleich
+The RKF45 method calculates two approximations of different order per integration step: a solution $\vec{x}_{k+1}$ of order 4 and a control solution $\hat{\vec{x}}_{k+1}$ of order 5. Both calculations use the same slope vectors $\vec{k}_i$, which minimizes computational effort.
 
-Obwohl das Programm standardmäßig mit einer festen Schrittweite $dt$ operiert (vgl. Abschnitt IV.4), ist im mathematischen Modul die Option für ein adaptives Runge-Kutta-Fehlberg-Verfahren (RKF45) vorbereitet. Dies dient zur Kontrolle bei extrem steilen Gradienten im Phasenraum.
-
-#### Q.1 Das Prinzip der eingebetteten Verfahren
-
-Das RKF45-Verfahren berechnet pro Integrationsschritt zwei Approximationen unterschiedlicher Ordnung: eine Lösung $\vec{x}_{k+1}$ mit der Ordnung 4 und eine Kontrolllösung $\hat{\vec{x}}_{k+1}$ mit der Ordnung 5. Beide Berechnungen nutzen dieselben Steigungsvektoren $\vec{k}_i$, was den Rechenaufwand minimiert.
-
-Der lokale Diskretisierungsfehler $\epsilon$ bestimmt sich aus der Differenz beider Lösungen:
+The local discretization error $\epsilon$ is determined from the difference of both solutions:
 
 $$\epsilon = \|\vec{x}_{k+1} - \hat{\vec{x}}_{k+1}\|$$
 
-Liegt der Fehler oberhalb einer vorgegebenen Toleranzgrenze ($\epsilon > \text{Tol}_{\max}$), wird der aktuelle Rechenschritt verworfen und mit einer halbierten Schrittweite $dt_{\text{neu}} = dt/2$ wiederholt. Ist der Fehler extrem klein ($\epsilon < \text{Tol}_{\min}$), kann die Schrittweite für den nächsten Schritt verdoppelt werden, um Rechenzeit einzusparen.
+If the error is above a predefined tolerance limit ($\epsilon > \text{Tol}_{\max}$), the current calculation step is discarded and repeated with a halved step size $dt_{\text{neu}} = dt/2$. If the error is extremely small ($\epsilon < \text{Tol}_{\min}$), the step size for the next step can be doubled to save computation time.
 
-#### Q.2 Konsequenzen für die stroboskopische Abbildung
+#### Q.2 Consequences for Stroboscopic Mapping
 
-Für die Generierung von Poincaré-Schnitten ist ein variables $dt$ problematisch, da die Abtastpunkte exakt äquidistant im Takt der Treiberperiode $T_A = 2\pi/\omega_A$ liegen müssen. Bei adaptiver Schrittweite muss das Programm daher an den Intervallgrenzen eine Interpolation (z.B. mittels kubischer Splines) durchführen, um den exakten Schnittpunkt mit der Phasenebene zu treffen. Dies erklärt, warum das feste RK4-Verfahren in der Programmpraxis oft bevorzugt wird.
-
----
+For the generation of Poincaré sections, a variable $dt$ is problematic because the sampling points must be exactly equidistant in sync with the driver period $T_A = 2\pi/\omega_A$. With adaptive step size, the program must therefore perform an interpolation (e.g., using cubic splines) at the interval boundaries to hit the exact intersection point with the phase plane. This explains why the fixed RK4 method is often preferred in programming practice.
 
 ---
 
-
+---
 
 ## Page 57
-*[Not yet translated]*
+### Appendix R: Glossary of English Technical Terms (Dictionary of Chaos)
 
+Since modern technical literature on nonlinear dynamics is largely written in English, this short glossary serves as a translation aid for further studies.
 
-
-### Anhang R: Glossar englischer Fachbegriffe (Dictionary of Chaos)
-
-Da die moderne Fachliteratur zur nichtlinearen Dynamik weitgehend in englischer Sprache verfasst ist, dient dieses kurze Glossar als Übersetzungshilfe für weiterführende Studien.
-
-* **Attractor** $\rightarrow$ *Attraktor:* Eine Teilmenge des Phasenraums, auf welche alle Trajektorien aus einem bestimmten Einzugsgebiet für $t \rightarrow \infty$ hinsteuern.
-* **Basin of Attraction** $\rightarrow$ *Einzugsgebiet:* Der Bereich von Anfangsbedingungen im Phasenraum, deren Trajektorien gegen denselben Attraktor konvergieren.
-* **Bifurcation** $\rightarrow$ *Bifurkation / Verzweigung:* Eine qualitative Änderung des Systemverhaltens (z.B. Periodenverdopplung) bei der Variation eines Kontrollparameters.
-* **Boundary** $\rightarrow$ *Grenzlinie:* Die Trennlinie im Phasenraum, beispielsweise zwischen zwei Einzugsgebieten (Separatrix).
-* **Burst** $\rightarrow$ *Ausbruch:* Ein plötzlicher, unregelmäßiger chaotischer Abschnitt innerhalb einer intermittierenden Bewegung.
-* **Driven / Forced Oscillator** $\rightarrow$ *Getriebener Oszillator:* Ein Schwingungssystem, das einer explizit zeitabhängigen, äußeren Kraft unterliegt.
-* **Intermittency** $\rightarrow$ *Intermittenz:* Ein Weg ins Chaos, bei dem sich reguläre und chaotische Phasen unregelmäßig abwechseln.
-* **Limit Cycle** $\rightarrow$ *Grenzzyklus:* Eine isolierte, geschlossene Trajektorie im Phasenraum eines dissipativen Systems, die einer periodischen Schwingung entspricht.
-* **Map** $\rightarrow$ *Diskrete Abbildung:* Eine mathematische Gleichung, die den Systemzustand zu diskreten Zeitschritten beschreibt ($x_{k+1} = f(x_k)$).
-* **Pitchfork Bifurcation** $\rightarrow$ *Stimmgabel-Bifurkation:* Typische Geometrie der Periodenverdopplung im Feigenbaum-Diagramm.
-* **Quasiperiodic** $\rightarrow$ *Quasiperiodisch:* Eine Bewegung, die auf der Überlagerung inkommensurabler Frequenzen basiert.
-* **Strange Attractor** $\rightarrow$ *Seltsamer Attraktor:* Ein Attraktor mit fraktaler Geometrie und empfindlicher Abhängigkeit von den Anfangsbedingungen.
+*   **Attractor** $\rightarrow$ *Attraktor:* A subset of the phase space towards which all trajectories from a specific basin of attraction tend for $t \rightarrow \infty$.
+*   **Basin of Attraction** $\rightarrow$ *Einzugsgebiet:* The region of initial conditions in phase space whose trajectories converge towards the same attractor.
+*   **Bifurcation** $\rightarrow$ *Bifurkation / Verzweigung:* A qualitative change in system behavior (e.g., period-doubling) when a control parameter is varied.
+*   **Boundary** $\rightarrow$ *Grenzlinie:* The dividing line in phase space, for example, between two basins of attraction (separatrix).
+*   **Burst** $\rightarrow$ *Ausbruch:* A sudden, irregular chaotic segment within an intermittent motion.
+*   **Driven / Forced Oscillator** $\rightarrow$ *Getriebener Oszillator:* An oscillating system that is subject to an explicitly time-dependent, external force.
+*   **Intermittency** $\rightarrow$ *Intermittenz:* A route to chaos in which regular and chaotic phases alternate irregularly.
+*   **Limit Cycle** $\rightarrow$ *Grenzzyklus:* An isolated, closed trajectory in the phase space of a dissipative system, corresponding to a periodic oscillation.
+*   **Map** $\rightarrow$ *Diskrete Abbildung:* A mathematical equation that describes the system state at discrete time steps ($x_{k+1} = f(x_k)$).
+*   **Pitchfork Bifurcation** $\rightarrow$ *Stimmgabel-Bifurkation:* Typical geometry of period-doubling in the Feigenbaum diagram.
+*   **Quasiperiodic** $\rightarrow$ *Quasiperiodisch:* A motion based on the superposition of incommensurable frequencies.
+*   **Strange Attractor** $\rightarrow$ *Seltsamer Attraktor:* An attractor with fractal geometry and sensitive dependence on initial conditions.
 
 ---
 
 ---
-
-
 
 ## Page 58
-*[Not yet translated]*
+### Appendix S: Notes on Licensing and Reproduction
 
+The simulation program "Nonlinear Oscillations" included with this accompanying booklet is protected by copyright. The following special regulations apply for use in the educational sector.
 
+#### S.1 Single-User License (Standard)
 
-### Anhang S: Hinweise zur Lizenzierung und Vervielfältigung
+The included diskette authorizes the installation and use of the program on exactly one computer system. Simultaneous use on multiple computers or provision in public data networks without an additional license is prohibited.
 
-Das diesem Begleitheft beigefügte Simulationsprogramm "Nichtlineare Schwingungen" ist urheberrechtlich geschützt. Für den Einsatz im Bildungsbereich gelten folgende Sonderregelungen.
+#### S.2 School License / Campus License
 
-#### S.1 Einzelplatzlizenz (Standard)
+For schools, universities, and adult education centers, a cost-effective campus license can be acquired from the publisher. This authorizes:
 
-Die mitgelieferte Diskette berechtigt zur Installation und Nutzung des Programms auf genau einem Computersystem. Eine gleichzeitige Nutzung auf mehreren Rechnern oder das Bereitstellen in öffentlichen Datennetzen ohne Zusatzlizenz ist unzulässig.
+1. The installation of the program on an unlimited number of computers within the premises of the respective institution.
+2. The provision on local file servers as part of computer-aided physics instruction.
+3. The reproduction of this accompanying booklet as a copy master for internal use in practical courses.
 
-#### S.2 Schullizenz / Campuslizenz
-
-Für Schulen, Universitäten und Volkshochschulen kann beim Verlag eine kostengünstige Campuslizenz erworben werden. Diese berechtigt:
-
-1. Zur Installation des Programms auf einer unbegrenzten Anzahl von Rechnern innerhalb der Liegenschaften der jeweiligen Institution.
-2. Zur Bereitstellung auf lokalen Fileservern im Rahmen des EDV-gestützten Physikunterrichts.
-3. Zur Vervielfältigung dieses Begleithefts als Kopiervorlage für den internen Gebrauch in Praktikumskursen.
-
-> **Haftungsausschluss:**
-> Der Entwickler und der Verlag übernehmen keine Haftung für Schäden, die direkt oder indirekt aus der Installation oder dem Betrieb dieser Software resultieren. Da es sich um ein hardwarenahes DOS-Programm handelt, erfolgt die Nutzung auf eigene Verantwortung des Anwenders.
+> **Disclaimer:**
+> The developer and the publisher assume no liability for damages resulting directly or indirectly from the installation or operation of this software. As this is a hardware-proximate DOS program, its use is at the user's own risk.
 
 ---
 
 ---
-
-
 
 ## Page 59
-*[Not yet translated]*
+### Appendix T: System Updates and Add-ons (Version 2.1)
 
+As part of continuous product maintenance, the program package has been expanded with additional mathematical models that were not yet documented in the first edition.
 
+#### T.1 The van der Pol System
 
-### Anhang T: System-Updates und Add-ons (Version 2.1)
-
-Im Zuge der kontinuierlichen Produktpflege wurde das Programmpaket um zusätzliche mathematische Modelle erweitert, die in der ersten Auflage noch nicht dokumentiert waren.
-
-#### T.1 Das van der Pol-System
-
-Im Menü **System** lässt sich nun auch der van der Pol-Oszillator aktivieren. Die Differentialgleichung beschreibt ein System mit einer ortsabhängigen, nichtlinearen Dämpfung:
+The van der Pol oscillator can now also be activated in the **System** menu. The differential equation describes a system with position-dependent, nonlinear damping:
 
 $$\ddot{x} - \epsilon(1 - x^2)\dot{x} + x = 0$$
 
-##### Besondere Verhaltensweisen:
+##### Special Behaviors:
 
-* Für kleine Amplituden ($x < 1$) ist der Dämpfungsterm negativ ($\epsilon(1-x^2) > 0$). Das System entzieht seiner Umgebung Energie und schwingt sich selbsttätig auf.
-* Für große Amplituden ($x > 1$) wird die Dämpfung positiv und bremst das System ab.
-* Unabhängig von den Anfangswerten kollabieren alle Trajektorien für $t \rightarrow \infty$ auf einen absolut stabilen, charakteristischen **Grenzzyklus** im Phasenraum. Dieses Modell dient in der Biophysik zur Beschreibung von Herzschlagrhythmen und Nervenimpulsen (FitzHugh-Nagumo-Modell).
+* For small amplitudes ($x < 1$), the damping term is negative ($\epsilon(1-x^2) > 0$). The system extracts energy from its surroundings and oscillates spontaneously.
+* For large amplitudes ($x > 1$), the damping becomes positive and slows the system down.
+* Regardless of the initial values, all trajectories for $t \rightarrow \infty$ collapse onto an absolutely stable, characteristic **limit cycle** in phase space. This model is used in biophysics to describe heartbeat rhythms and nerve impulses (FitzHugh-Nagumo model).
 
-#### T.2 Optimierter Grafik-Treiber für High-Resolution VGA
+#### T.2 Optimized Graphics Driver for High-Resolution VGA
 
-Durch eine Modifikation der Datei `EGAVGA.BGI` konnte die Bildwiederholfrequenz bei der On-Screen-Animation um ca. $25\%$ gesteigert werden. Rechner ab einer Taktfrequenz von $33\text{ MHz}$ (Intel 486DX) sind nun in der Lage, chaotische Trajektorien im Phasenraum in echter Echtzeit ohne Verzögerung zu zeichnen.
-
----
+By modifying the `EGAVGA.BGI` file, the refresh rate for on-screen animation could be increased by approx. $25\%$. Computers with a clock frequency of $33\text{ MHz}$ (Intel 486DX) or higher are now able to draw chaotic trajectories in phase space in true real-time without delay.
 
 ---
 
-
+---
 
 ## Page 60
-*[Not yet translated]*
+### Appendix U: Keyword Index for Source Code Variables
 
+For programmers who wish to modify the attached Pascal source code or link their own modules, the central global variable identifiers are declared here.
 
-
-### Anhang U: Stichwortverzeichnis für Quelltextvariablen
-
-Für Programmierer, die den beigefügten Pascal-Quellcode modifizieren oder eigene Module ankoppeln möchten, sind hier die zentralen globalen Variablenbezeichner deklariert.
-
-* `A_amp` (Real): Amplitude der äußeren Anregungskraft bzw. des Drehmoments [$Nm$].
-* `b_damp` (Real): Globaler viskoser Dämpfungskoeffizient für lineare Reibung.
-* `CurrentPageAddress` (Word): Segmentadresse des VGA-VRAMs für das Page-Flipping.
-* `dt_step` (Real): Feste Zeitschrittweite der numerischen Integration (RK4).
-* `g_grav` (Real): Die Schwerebeschleunigung (wird programmweit mit $9.81\text{ m/s}^2$ initialisiert).
-* `I_moment` (Real): Trägheitsmoment des Pendelkörpers oder des Drehpendels.
-* `l_length` (Real): Geometrische Länge der masselosen Pendelstange [$m$].
-* `m_mass` (Real): Masse des schwingenden Körpers im Schwerpunkt [$kg$].
-* `omega_A` (Real): Kreisfrequenz des periodischen Treibers (Eingabe in $Hz$ wird intern konvertiert).
-* `Phi_pos` (Real): Der aktuelle Auslenkungswinkel im Bogenmaß.
-* `Omega_vel` (Real): Die aktuelle Winkelgeschwindigkeit $\dot{\phi}$ [$rad/s$].
-* `Time_elapsed` (Real): Die akkumulierte Simulationszeit seit dem Start des aktuellen Laufs.
+* `A_amp` (Real): Amplitude of the external excitation force or torque [$Nm$].
+* `b_damp` (Real): Global viscous damping coefficient for linear friction.
+* `CurrentPageAddress` (Word): Segment address of the VGA VRAM for page-flipping.
+* `dt_step` (Real): Fixed time step of the numerical integration (RK4).
+* `g_grav` (Real): The gravitational acceleration (initialized program-wide with $9.81\text{ m/s}^2$).
+* `I_moment` (Real): Moment of inertia of the pendulum body or the torsional pendulum.
+* `l_length` (Real): Geometric length of the massless pendulum rod [$m$].
+* `m_mass` (Real): Mass of the oscillating body at its center of gravity [$kg$].
+* `omega_A` (Real): Angular frequency of the periodic driver (input in $Hz$ is converted internally).
+* `Phi_pos` (Real): The current displacement angle in radians.
+* `Omega_vel` (Real): The current angular velocity $\dot{\phi}$ [$rad/s$].
+* `Time_elapsed` (Real): The accumulated simulation time since the start of the current run.
 
 ---
 
-**Ende des erweiterten Dokumentenanhangs.**
+**End of the extended document appendix.**
 *Soft-Physics Distribution, Technical Support Department, Update 1996.*
 
 ---
 
-Damit ist auch dieser Block von zehn Seiten vollständig transkribiert. Wenn Sie weitere Seiten haben, laden Sie diese einfach hoch!
+This block of ten pages has now also been fully transcribed. If you have more pages, simply upload them!
 
 ---
-
-
-
 ## Page 61
-*[Not yet translated]*
+### Appendix V: Installation Checklist for Laboratory Operation
 
+To ensure a smooth process when conducting the experiments in the practical course, please go through the following checklist before the students arrive.
 
+#### V.1 Technical Preparation of Workstations
 
-### Anhang V: Installations-Checkliste für den Laborbetrieb
+* [ ] **Operating System Level:** Check if the `ANSI.SYS` driver is loaded in the `CONFIG.SYS` file (`DEVICE=C:\DOS\ANSI.SYS`). This is absolutely necessary for the correct color display of some text menus.
+* [ ] **Memory Configuration:** Ensure that at least $580\text{ KB}$ of conventional DOS memory is free. If necessary, use the `MEM /C` command to create space in the Upper Memory Block (UMB) (`DOS=HIGH,UMB`).
+* [ ] **Graphics Compatibility:** Check the graphics card by running the small test program `VGACHECK.EXE`. If the screen remains dark, replace `EGAVGA.BGI` in the program directory with the standard driver from the Borland library.
+* [ ] **Mouse Driver:** Load the resident mouse driver (e.g., `MOUSE.COM`) before starting the simulation environment, as otherwise interactive control of the phase space crosshairs will not be possible.
 
-Um einen reibungslosen Ablauf bei der Durchführung der Experimente im Praktikum zu garantieren, gehen Sie vor dem Eintreffen der Studierenden die folgende Checkliste durch.
+#### V.2 Didactic Preparation
 
-#### V.1 Technische Vorbereitung der Arbeitsplätze
-
-* [ ] **Betriebssystem-Ebene:** Überprüfen Sie, ob der Treiber `ANSI.SYS` in der Datei `CONFIG.SYS` geladen ist (`DEVICE=C:\DOS\ANSI.SYS`). Dieser wird für die korrekte farbliche Darstellung einiger Textmenüs zwingend benötigt.
-* [ ] **Speicher-Konfiguration:** Stellen Sie sicher, dass mindestens $580\text{ KB}$ konventioneller DOS-Speicher frei sind. Nutzen Sie gegebenenfalls das Kommando `MEM /C`, um im oberen Speicherbereich (UMB) Platz zu schaffen (`DOS=HIGH,UMB`).
-* [ ] **Grafik-Kompatibilität:** Überprüfen Sie die Grafikkarte durch Aufruf des kleinen Testprogramms `VGACHECK.EXE`. Sollte der Bildschirm dunkel bleiben, ersetzen Sie die `EGAVGA.BGI` im Programmverzeichnis durch den Standardtreiber der Borland-Bibliothek.
-* [ ] **Maus-Treiber:** Laden Sie den residenten Maustreiber (z.B. `MOUSE.COM`) vor dem Start der Simulationsumgebung, da andernfalls keine interaktive Steuerung der Phasenraum-Fadenkreuze möglich ist.
-
-#### V.2 Didaktische Vorbereitung
-
-* [ ] Stellen Sie sicher, dass auf den lokalen Festplatten das Verzeichnis `C:\SCHWING\DATA\` existiert und für den aktuellen Benutzer schreibbar ist, damit numerische Ergebnisse für die spätere Auswertung gesichert werden können.
-* [ ] Drucken Sie die Protokollvorlagen (Anhang C und I) in ausreichender Stückzahl aus.
+* [ ] Ensure that the `C:\SCHWING\DATA\` directory exists on the local hard drives and is writable for the current user, so that numerical results can be saved for later evaluation.
+* [ ] Print out the report templates (Appendix C and I) in sufficient quantity.
 
 ---
 
 ---
-
-
 
 ## Page 62
-*[Not yet translated]*
+### Appendix W: Version History and Bug Fixes (Errata)
 
+This section documents the most important modifications and bug fixes that have been incorporated into the software package since the initial release of Version 1.0 (Autumn 1994).
 
+#### W.1 Version 1.1 (Spring 1995)
 
-### Anhang W: Versionshistorie und Fehlerkorrekturen (Errata)
+* **Bug Fix in RK4 Module:** A sign error in the calculation of the cubic restoring force term ($dx^3$) in the Duffing module was corrected. In Version 1.0, this led to an erroneous divergence of trajectories to infinity at extremely large amplitudes.
+* **User Interface Enhancement:** The `F10` key was globally implemented as "Mask Confirmation" to speed up the workflow during parameter studies.
 
-In diesem Abschnitt sind die wichtigsten Modifikationen und Fehlerbehebungen dokumentiert, die seit der ersten Veröffentlichung der Version 1.0 (Herbst 1994) in das Programmpaket eingepflegt wurden.
+#### W.2 Version 2.0 (Autumn 1995)
 
-#### W.1 Version 1.1 (Frühjahr 1995)
+* **Poincaré Section Integration:** The module for generating stroboscopic mappings was completely rewritten. Points are now displayed as fine individual points instead of thick pixels, which significantly improves the resolution of fractal structures (filaments).
+* **Support for Mathematical Coprocessors:** The program now automatically detects during boot-up whether an Intel 80387 FPU is present and dynamically switches to optimized 32-bit assembly code.
 
-* **Fehlerbehebung im RK4-Modul:** Ein Vorzeichenfehler bei der Berechnung des Terms der kubischen Rückstellkraft ($dx^3$) im Duffing-Modul wurde korrigiert. Dies führte in Version 1.0 bei extrem großen Amplituden zu einer fälschlichen Divergenz der Trajektorien ins Unendliche.
-* **Erweiterung der Benutzeroberfläche:** Die Taste `F10` wurde global als "Masken-Bestätigung" implementiert, um den Workflow bei der Parameterstudie zu beschleunigen.
+#### W.3 Current Version 2.1 (January 1996)
 
-#### W.2 Version 2.0 (Herbst 1995)
-
-* **Integration des Poincaré-Schnitts:** Das Modul zur Erzeugung stroboskopischer Abbildungen wurde vollständig neu geschrieben. Die Punkte werden nun nicht mehr als dicke Pixel, sondern als feine Einzelpunkte dargestellt, was die Auflösung fraktaler Strukturen (Filamente) erheblich verbessert.
-* **Unterstützung für mathematische Koprozessoren:** Das Programm erkennt nun beim Bootvorgang automatisch, ob eine Intel 80387 FPU vorhanden ist, und schaltet dynamisch auf optimierten 32-Bit-Assemblercode um.
-
-#### W.3 Aktuelle Version 2.1 (Januar 1996)
-
-* Das van der Pol-System wurde als neues Standardmodell hinzugefügt (Dokumentation siehe Anhang T).
-* Ein Speicherleck bei der fortlaufenden Generierung des Bifurkationsdiagramms (Überlauf des Grafikspeichers nach ca. 10.000 Iterationen) wurde vollständig behoben.
+* The van der Pol system was added as a new standard model (documentation see Appendix T).
+* A memory leak during the continuous generation of the bifurcation diagram (graphics memory overflow after approx. 10,000 iterations) was completely fixed.
 
 ---
 
 ---
-
-
 
 ## Page 63
-*[Not yet translated]*
+### Appendix X: Order Form for Add-on Modules and Updates
 
+Should you be interested in an expansion of your simulation package or in further teaching materials, cut out this form and send it stamped to the publisher:
 
+**Soft-Physics Publishing GmbH** *Department for Educational Software* *Schönhauser Allee 124* *D-10437 Berlin* ---
 
-### Anhang X: Bestellschein für Zusatzmodule und Updates
+#### I/We hereby place a firm order for:
 
-Sollten Sie Interesse an einer Erweiterung Ihres Simulationspakets oder an weiterführenden Lehrmaterialien haben, schneiden Sie diesen Schein aus und senden Sie ihn frankiert an den Verlag:
+* [ ] **Add-on Module "Coupled Oscillators" (Version 1.0):** Expansion of the program to two pendulum systems connected by a linear spring. Enables the study of beats, energy exchange, and high-dimensional chaos (phase space dimension = 4).
+*Price for single-user license: DM 49,– / School license: DM 129,–*
+* [ ] **Accompanying Slide Set "Geometry of Chaos":** 24 high-quality color slides for lecture use. Contains high-resolution renderings of strange attractors (Lorenz attractor, Rössler attractor, Hénon map) as well as real laboratory footage.
+*Price per set: DM 78,–*
+* [ ] **Update Service to Version 2.2 (Delivery on 3.5" Floppy Disk):** Includes the new module for calculating fractal basin boundaries.
+*Only upon submission of the original diskette of Version 1.x / 2.0. Service fee: DM 15,–*
 
-**Soft-Physics Publishing GmbH** *Abteilung für Lehrsoftware* *Schönhauser Allee 124* *D-10437 Berlin* ---
-
-#### Ich/Wir bestellen hiermit fest:
-
-* [ ] **Zusatzmodul "Gekoppelte Oszillatoren" (Version 1.0):** Erweiterung des Programms auf zwei über eine lineare Feder verbundene Pendelsysteme. Ermöglicht das Studium von Schwebungen, Energieaustausch und hochdimensionalem Chaos (Phasenraum-Dimension = 4).
-*Preis für Einzelplatzlizenz: DM 49,– / Schullizenz: DM 129,–*
-* [ ] **Begleitendes Dia-Set "Geometrie des Chaos":** 24 hochwertige Farbdias für den Vorlesungseinsatz. Enthält hochaufgelöste Renderings seltsamer Attraktoren (Lorenz-Attraktor, Rössler-Attraktor, Hénon-Abbildung) sowie reale Laboraufnahmen.
-*Preis pro Set: DM 78,–*
-* [ ] **Update-Service auf Version 2.2 (Lieferung auf 3.5" Diskette):** Beinhaltet das neue Modul zur Berechnung des fraktalen Einzugsgebiets (Fractal Basin Boundaries).
-*Nur gegen Einsendung der Originaldiskette der Version 1.x / 2.0. Servicegebühr: DM 15,–*
-
-##### Rechnungsanschrift / Stempel der Institution:
+##### Billing Address / Institution Stamp:
 
 Name: ________________________________________
 
-Institution/Schule: _______________________________
+Institution/School: _______________________________
 
-Straße / Hausnummer: ______________________________
+Street / House Number: ______________________________
 
-PLZ / Ort: _______________________________________
+Postcode / City: _______________________________________
 
-Datum: ______________ Unterschrift: ___________________
-
----
-
-**Ende des Hefts.**
+Date: ______________ Signature: ___________________
 
 ---
 
+**End of Booklet.**
+
+---
