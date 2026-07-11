@@ -323,13 +323,13 @@ ARCHIVE_CHAPTERS = [
         'title_en': '🔬 Chapter I: Nonlinear Oscillations',
         'pages': list(range(2, 16)),
         'sections': [
-            ('1.1 Pendel', [2, 3]),
-            ('1.2 Duffing', [3, 4]),
-            ('1.3 Phasenraum', [5, 6]),
-            ('1.4 Amplitudenabhängigkeit', [7, 8, 9]),
-            ('1.5 Dissipatives System', [10, 11]),
-            ('1.6 Grenzzyklus', [11, 12, 13, 14]),
-            ('1.7 Stroboskopisch', [14, 15]),
+            ('1.1 Pendel', '1.1 Pendulum', [2, 3]),
+            ('1.2 Duffing', '1.2 Duffing Oscillator', [3, 4]),
+            ('1.3 Phasenraum', '1.3 Phase Space', [5, 6]),
+            ('1.4 Amplitudenabhängigkeit', '1.4 Amplitude Dependence', [7, 8, 9]),
+            ('1.5 Dissipatives System', '1.5 Dissipative System', [10, 11]),
+            ('1.6 Grenzzyklus', '1.6 Limit Cycle', [11, 12, 13, 14]),
+            ('1.7 Stroboskopisch', '1.7 Stroboscopic Map', [14, 15]),
         ],
     },
     {
@@ -401,11 +401,12 @@ elif current_page == 'archive':
     current_arch_ch = [ch for ch in ARCHIVE_CHAPTERS if ch[f'title_{lang}'] == arch_sel][0]
     arch_pages = current_arch_ch['pages']
     if 'sections' in current_arch_ch:
-        sec_labels = [all_label] + [s[0] for s in current_arch_ch['sections']]
+        sec_labels = [all_label] + [s[1 if lang == 'en' else 0] for s in current_arch_ch['sections']]
         sec_sel = st.sidebar.radio(sec_label, sec_labels, key="arch_sec")
         if sec_sel != all_label:
-            for s_t, s_p in current_arch_ch['sections']:
-                if sec_sel == s_t:
+            for s_t_de, s_t_en, s_p in current_arch_ch['sections']:
+                lang_label = s_t_en if lang == 'en' else s_t_de
+                if sec_sel == lang_label:
                     arch_pages = s_p
                     break
     st.sidebar.markdown("---")
@@ -841,16 +842,27 @@ def render_lab():
         c1, c2 = st.columns(2)
         with c1:
             fig, ax = plt.subplots(figsize=(8, 3))
-            ax.plot(t, th, 'b-', lw=0.7)
-            ax.set_xlabel('Time (s)'); ax.set_ylabel('θ (rad)')
+            ax.plot(t, np.degrees(th), 'b-', lw=0.7)
+            ax.set_xlabel('Time (s)'); ax.set_ylabel('θ (degrees)')
             ax.set_title(f'Pendulum — θ₀={theta0}°, γ={gamma}'); ax.grid(alpha=0.3)
             st.pyplot(fig)
         with c2:
             fig, ax = plt.subplots(figsize=(5, 4))
             ax.plot(th, om, 'r-', lw=0.5)
-            ax.set_xlabel('θ'); ax.set_ylabel('dθ/dt')
+            ax.set_xlabel('θ (rad)'); ax.set_ylabel('dθ/dt (rad/s)')
             ax.set_title('Phase Portrait'); ax.grid(alpha=0.3); ax.axis('equal')
             st.pyplot(fig)
+        
+        # Period readout
+        if forcing == 0 and gamma == 0:
+            T0 = small_angle_period()
+            actual_T = period_estimate(th0_rad)
+            if actual_T:
+                col_a, col_b, col_c = st.columns(3)
+                col_a.metric("Period T", f"{actual_T:.3f}s")
+                col_b.metric("Small-angle T₀", f"{T0:.3f}s")
+                col_c.metric("T / T₀", f"{actual_T/T0:.3f}×")
+                st.markdown("---")
 
     elif sim_id == 'logistic':
         r = st.sidebar.slider("r", 2.5, 4.0, 3.8, 0.001)
